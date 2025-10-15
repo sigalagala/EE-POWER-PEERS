@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EE Power Peers - Shoutouts & Birthdays</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --secondary: #3f37c9;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #4cc9f0;
+            --border-radius: clamp(8px, 2vw, 12px);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --card-padding: clamp(1rem, 3vw, 1.5rem);
+            --section-spacing: clamp(1.5rem, 4vw, 2rem);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: clamp(1rem, 3vw, 2rem);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: var(--section-spacing);
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--primary);
+            margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        .header p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: var(--gray);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: var(--section-spacing);
+            border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+            gap: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        .tab {
+            padding: clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
+            background: none;
+            border: none;
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: clamp(0.25rem, 1vw, 0.5rem);
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .tab:hover:not(.active) {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+            margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: clamp(0.25rem, 1vw, 0.5rem);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+            gap: clamp(1rem, 3vw, 1.5rem);
+            margin-bottom: var(--section-spacing);
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card.today {
+            border-left: 5px solid var(--accent);
+            position: relative;
+        }
+
+        .today-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            color: white;
+            padding: clamp(0.2rem, 0.8vw, 0.25rem) clamp(0.4rem, 1.2vw, 0.5rem);
+            border-radius: 20px;
+            font-size: clamp(0.7rem, 2vw, 0.8rem);
+            font-weight: 600;
+        }
+
+        .card-image {
+            width: 100%;
+            height: clamp(150px, 40vw, 180px);
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: var(--card-padding);
+        }
+
+        .card-title {
+            font-size: clamp(1.1rem, 3vw, 1.25rem);
+            margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
+            color: var(--dark);
+        }
+
+        .card-subtitle {
+            color: var(--gray);
+            font-size: clamp(0.85rem, 2.2vw, 0.9rem);
+            margin-bottom: clamp(0.5rem, 1.5vw, 0.75rem);
+        }
+
+        .card-message {
+            margin-bottom: clamp(0.75rem, 2vw, 1rem);
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+
+        .reactions {
+            display: flex;
+            gap: clamp(0.25rem, 1vw, 0.5rem);
+            margin-top: clamp(0.75rem, 2vw, 1rem);
+            flex-wrap: wrap;
+        }
+
+        .reaction-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: clamp(0.15rem, 0.8vw, 0.25rem);
+            padding: clamp(0.2rem, 0.8vw, 0.25rem) clamp(0.4rem, 1.2vw, 0.5rem);
+            border-radius: 20px;
+            transition: var(--transition);
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+
+        .reaction-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .reaction-btn.active {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .reaction-count {
+            font-size: clamp(0.75rem, 2vw, 0.8rem);
+        }
+
+        .share-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: clamp(0.15rem, 0.8vw, 0.25rem);
+            padding: clamp(0.2rem, 0.8vw, 0.25rem) clamp(0.4rem, 1.2vw, 0.5rem);
+            border-radius: 20px;
+            transition: var(--transition);
+            margin-top: clamp(0.25rem, 1vw, 0.5rem);
+            color: var(--gray);
+            font-size: clamp(0.85rem, 2.2vw, 0.9rem);
+        }
+
+        .share-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--primary);
+        }
+
+        .add-shoutout-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: clamp(0.25rem, 1vw, 0.5rem);
+            margin: 0 auto clamp(1.5rem, 4vw, 2rem);
+            transition: var(--transition);
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+
+        .add-shoutout-btn:hover {
+            background: var(--secondary);
+        }
+
+        /* Upcoming Birthdays List */
+        .upcoming-list {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: var(--card-padding);
+            margin-bottom: var(--section-spacing);
+        }
+
+        .upcoming-list-item {
+            display: flex;
+            align-items: center;
+            padding: clamp(0.5rem, 1.5vw, 0.75rem) 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .upcoming-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .upcoming-list-photo {
+            width: clamp(40px, 10vw, 50px);
+            height: clamp(40px, 10vw, 50px);
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: clamp(0.5rem, 1.5vw, 0.75rem);
+        }
+
+        .upcoming-list-info {
+            flex: 1;
+        }
+
+        .upcoming-list-name {
+            font-weight: 600;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+
+        .upcoming-list-date {
+            color: var(--gray);
+            font-size: clamp(0.8rem, 2.2vw, 0.85rem);
+        }
+
+        .upcoming-list-days {
+            background: var(--primary-light);
+            color: white;
+            padding: clamp(0.2rem, 0.8vw, 0.25rem) clamp(0.4rem, 1.2vw, 0.5rem);
+            border-radius: 20px;
+            font-size: clamp(0.7rem, 2vw, 0.75rem);
+            font-weight: 600;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+            padding: clamp(1rem, 3vw, 2rem);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: zoomIn 0.3s ease;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: clamp(0.75rem, 2vw, 1rem);
+            right: clamp(0.75rem, 2vw, 1rem);
+            background: none;
+            border: none;
+            font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+            cursor: pointer;
+            color: var(--gray);
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            color: var(--dark);
+        }
+
+        .modal-header {
+            padding: var(--card-padding);
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .modal-body {
+            padding: var(--card-padding);
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: clamp(200px, 50vw, 300px);
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            margin-bottom: clamp(0.75rem, 2vw, 1rem);
+        }
+
+        .form-group {
+            margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
+            font-weight: 600;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: clamp(0.5rem, 1.5vw, 0.75rem);
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            transition: var(--transition);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .form-textarea {
+            min-height: clamp(100px, 30vw, 120px);
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: clamp(0.5rem, 1.5vw, 1rem);
+            margin-top: clamp(1rem, 2.5vw, 1.5rem);
+        }
+
+        .btn {
+            padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+        }
+
+        .btn-secondary {
+            background: #e9ecef;
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #dee2e6;
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1001;
+        }
+
+        /* Layout improvements */
+        .birthdays-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--section-spacing);
+        }
+
+        @media (min-width: 768px) {
+            .birthdays-content {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            color: var(--gray);
+        }
+
+        .empty-state-icon {
+            font-size: clamp(2.5rem, 7vw, 3rem);
+            margin-bottom: clamp(0.75rem, 2vw, 1rem);
+            opacity: 0.5;
+        }
+
+        /* Notification for shared birthday */
+        .shared-birthday-notification {
+            background: var(--success);
+            color: white;
+            padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
+            border-radius: var(--border-radius);
+            margin-bottom: var(--section-spacing);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        
+        /*back to home button*/
+ .float-btn {
+    z-index: 1000;
+      position: fixed;
+      bottom: clamp(7px, 5vw, 14px);
+      right: clamp(7px, 5vw, 14px);
+      background-color: #4CAF50;
+      color: #fff;
+      padding: clamp(6px, 2vw, 16px) clamp(8px, 4vw, 20px);
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background-color 0.3s ease-in-out;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+      font-size: clamp(9px, 2vw, 15px);
+    }
+
+    .float-btn:hover {
+      background-color: #3e8e41;
+      box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 768px) {
+      .float-btn {
+        border-radius: 30px;
+        padding: clamp(6px, 2vw, 12px) clamp(12px, 4vw, 18px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .float-btn {
+        bottom: 10px;
+        right: 10px;
+        padding: 2px 12px;
+        font-size: 10px;
+      }
+    }
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 Shoutouts & Birthdays</h1>
+            <p>Celebrate your peers' milestones and achievements</p>
+        </div>
+
+        <div id="shared-birthday-notification" class="shared-birthday-notification" style="display: none;">
+            <span id="notification-message">You've been shared a birthday celebration!</span>
+            <button class="notification-close" id="close-notification">&times;</button>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="birthdays">🎂 Birthdays</button>
+            <button class="tab" data-tab="shoutouts">📣 Shoutouts</button>
+        </div>
+
+        <!-- Birthdays Tab -->
+        <div id="birthdays" class="tab-content active">
+            <div class="birthdays-content">
+                <div>
+                    <h2 class="section-title">🎂 Today's Birthdays</h2>
+                    <div id="today-birthdays" class="cards-grid">
+                        <!-- Today's birthdays will be populated here -->
+                    </div>
+
+                    <h2 class="section-title">📅 Upcoming Birthdays</h2>
+                    <div id="upcoming-birthdays" class="cards-grid">
+                        <!-- Upcoming birthdays will be populated here -->
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 class="section-title">📋 Upcoming List</h2>
+                    <div class="upcoming-list" id="upcoming-birthdays-list">
+                        <!-- Upcoming birthdays list will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shoutouts Tab -->
+        <div id="shoutouts" class="tab-content">
+            <button id="add-shoutout-btn" class="add-shoutout-btn">
+                <i class="fas fa-plus"></i> Add Shoutout
+            </button>
+            <div id="shoutouts-container" class="cards-grid">
+                <!-- Shoutouts will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Birthday Modal -->
+    <div id="birthday-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-header">
+                <h2 id="modal-birthday-name">John Mwangi</h2>
+                <p id="modal-birthday-date">October 3</p>
+            </div>
+            <div class="modal-body">
+                <img id="modal-birthday-photo" src="" alt="" class="modal-image">
+                <p id="modal-birthday-message">Happy Birthday!</p>
+                <div class="reactions">
+                    <button class="reaction-btn" data-reaction="cake">
+                        <i class="fas fa-birthday-cake"></i> <span class="reaction-count">0</span>
+                    </button>
+                    <button class="reaction-btn" data-reaction="heart">
+                        <i class="fas fa-heart"></i> <span class="reaction-count">0</span>
+                    </button>
+                    <button class="reaction-btn" data-reaction="clap">
+                        <i class="fas fa-hands-clapping"></i> <span class="reaction-count">0</span>
+                    </button>
+                </div>
+                <button class="share-btn" id="modal-share-btn">
+                    <i class="fas fa-share-alt"></i> Share this Celebration
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shoutout Modal -->
+    <div id="shoutout-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-header">
+                <h2>Add New Shoutout</h2>
+            </div>
+            <div class="modal-body">
+                <form id="shoutout-form">
+                    <div class="form-group">
+                        <label class="form-label" for="from-name">From</label>
+                        <input type="text" id="from-name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="to-name">To</label>
+                        <input type="text" id="to-name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="shoutout-message">Message</label>
+                        <textarea id="shoutout-message" class="form-textarea" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancel-shoutout">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit Shoutout</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+      <a href="index.html" class="float-btn">Back to Home</a>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <script>
+        // Data sources
+        const birthdaysData = [
+            {
+                "id": 1,
+                "name": "John Mwangi",
+                "dob": "2003-10-03",
+                "photo": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+                "message": "Happy 22nd Birthday! 🎂 Wishing you a day filled with joy and celebration!"
+            },
+            {
+                "id": 2,
+                "name": "Mary Achieng",
+                "dob": "2004-10-07",
+                "photo": "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+                "message": "Best wishes on your special day! 🎉 May this year bring you success and happiness!"
+            },
+            {
+                "id": 3,
+                "name": "David Kimani",
+                "dob": "2002-10-10",
+                "photo": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+                "message": "Happy Birthday! Hope your day is as amazing as you are!"
+            },
+            {
+                "id": 4,
+                "name": "Sarah Johnson",
+                "dob": "2003-10-15",
+                "photo": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+                "message": "Wishing you a fantastic birthday filled with joy and laughter!"
+            },
+            {
+                "id": 5,
+                "name": "Michael Ochieng",
+                "dob": "2003-10-20",
+                "photo": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+                "message": "Have a wonderful birthday! May all your dreams come true!"
+            }
+        ];
+
+        const shoutoutsData = [
+            {
+                "id": 1,
+                "from": "Alice",
+                "to": "Kevin",
+                "message": "Shoutout to Kevin for acing the lab test! Your dedication and hard work really paid off.",
+                "date": "2025-10-02"
+            },
+            {
+                "id": 2,
+                "from": "Michael",
+                "to": "Team Alpha",
+                "message": "Great job on the project presentation yesterday! The client was very impressed with our work.",
+                "date": "2025-10-01"
+            }
+        ];
+
+        // DOM Elements
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const todayBirthdaysContainer = document.getElementById('today-birthdays');
+        const upcomingBirthdaysContainer = document.getElementById('upcoming-birthdays');
+        const upcomingBirthdaysList = document.getElementById('upcoming-birthdays-list');
+        const shoutoutsContainer = document.getElementById('shoutouts-container');
+        const birthdayModal = document.getElementById('birthday-modal');
+        const shoutoutModal = document.getElementById('shoutout-modal');
+        const addShoutoutBtn = document.getElementById('add-shoutout-btn');
+        const cancelShoutoutBtn = document.getElementById('cancel-shoutout');
+        const shoutoutForm = document.getElementById('shoutout-form');
+        const confettiCanvas = document.getElementById('confetti-canvas');
+        const modalShareBtn = document.getElementById('modal-share-btn');
+        const sharedBirthdayNotification = document.getElementById('shared-birthday-notification');
+        const closeNotificationBtn = document.getElementById('close-notification');
+
+        // State
+        let shoutouts = [];
+        let birthdays = [];
+        let reactions = {};
+        let currentBirthdayId = null;
+
+        // Initialize the application
+        function init() {
+            loadData();
+            setupEventListeners();
+            renderBirthdays();
+            renderShoutouts();
+            checkForSharedBirthday();
+        }
+
+        // Load data from localStorage or use default data
+        function loadData() {
+            // Load birthdays
+            const storedBirthdays = localStorage.getItem('eeBirthdays');
+            birthdays = storedBirthdays ? JSON.parse(storedBirthdays) : birthdaysData;
+            
+            // Load shoutouts
+            const storedShoutouts = localStorage.getItem('eeShoutouts');
+            shoutouts = storedShoutouts ? JSON.parse(storedShoutouts) : shoutoutsData;
+            
+            // Load reactions
+            const storedReactions = localStorage.getItem('eeReactions');
+            reactions = storedReactions ? JSON.parse(storedReactions) : {};
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('eeBirthdays', JSON.stringify(birthdays));
+            localStorage.setItem('eeShoutouts', JSON.stringify(shoutouts));
+            localStorage.setItem('eeReactions', JSON.stringify(reactions));
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Tab switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Show corresponding content
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === tabId) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+            // Modal close buttons
+            document.querySelectorAll('.modal-close').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    birthdayModal.classList.remove('active');
+                    shoutoutModal.classList.remove('active');
+                });
+            });
+
+            // Add shoutout button
+            addShoutoutBtn.addEventListener('click', () => {
+                shoutoutModal.classList.add('active');
+            });
+
+            // Cancel shoutout
+            cancelShoutoutBtn.addEventListener('click', () => {
+                shoutoutModal.classList.remove('active');
+                shoutoutForm.reset();
+            });
+
+            // Submit shoutout form
+            shoutoutForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const fromName = document.getElementById('from-name').value;
+                const toName = document.getElementById('to-name').value;
+                const message = document.getElementById('shoutout-message').value;
+                
+                if (fromName && toName && message) {
+                    addShoutout(fromName, toName, message);
+                    shoutoutModal.classList.remove('active');
+                    shoutoutForm.reset();
+                }
+            });
+
+            // Modal share button
+            modalShareBtn.addEventListener('click', () => {
+                if (currentBirthdayId) {
+                    shareBirthday(currentBirthdayId);
+                }
+            });
+
+            // Close notification
+            closeNotificationBtn.addEventListener('click', () => {
+                sharedBirthdayNotification.style.display = 'none';
+            });
+
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === birthdayModal) {
+                    birthdayModal.classList.remove('active');
+                }
+                if (e.target === shoutoutModal) {
+                    shoutoutModal.classList.remove('active');
+                }
+            });
+        }
+
+        // Check if a birthday was shared via URL
+        function checkForSharedBirthday() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sharedBirthdayId = urlParams.get('birthday');
+            
+            if (sharedBirthdayId) {
+                const birthday = birthdays.find(b => b.id === parseInt(sharedBirthdayId));
+                if (birthday) {
+                    // Show notification
+                    document.getElementById('notification-message').textContent = 
+                        `You've been shared ${birthday.name}'s birthday celebration!`;
+                    sharedBirthdayNotification.style.display = 'flex';
+                    
+                    // Open the birthday modal
+                    openBirthdayModal(birthday);
+                    
+                    // Clean up the URL
+                    const newUrl = window.location.href.split('?')[0];
+                    window.history.replaceState({}, document.title, newUrl);
+                }
+            }
+        }
+
+        // Render birthdays
+        function renderBirthdays() {
+            const today = new Date();
+            const todayMonth = today.getMonth();
+            const todayDate = today.getDate();
+            
+            // Filter today's birthdays
+            const todayBirthdays = birthdays.filter(birthday => {
+                const dob = new Date(birthday.dob);
+                return dob.getMonth() === todayMonth && dob.getDate() === todayDate;
+            });
+            
+            // Filter upcoming birthdays (next 5)
+            const upcomingBirthdays = birthdays
+                .filter(birthday => {
+                    const dob = new Date(birthday.dob);
+                    // Set year to current year for comparison
+                    dob.setFullYear(today.getFullYear());
+                    
+                    // If birthday has already passed this year, set to next year
+                    if (dob < today) {
+                        dob.setFullYear(today.getFullYear() + 1);
+                    }
+                    
+                    return dob.getMonth() !== todayMonth || dob.getDate() !== todayDate;
+                })
+                .sort((a, b) => {
+                    const dobA = new Date(a.dob);
+                    const dobB = new Date(b.dob);
+                    
+                    // Set to current year for comparison
+                    dobA.setFullYear(today.getFullYear());
+                    dobB.setFullYear(today.getFullYear());
+                    
+                    // If birthday has passed, set to next year
+                    if (dobA < today) dobA.setFullYear(today.getFullYear() + 1);
+                    if (dobB < today) dobB.setFullYear(today.getFullYear() + 1);
+                    
+                    return dobA - dobB;
+                })
+                .slice(0, 5);
+            
+            // Clear containers
+            todayBirthdaysContainer.innerHTML = '';
+            upcomingBirthdaysContainer.innerHTML = '';
+            upcomingBirthdaysList.innerHTML = '';
+            
+            // Render today's birthdays
+            if (todayBirthdays.length > 0) {
+                todayBirthdays.forEach(birthday => {
+                    todayBirthdaysContainer.appendChild(createBirthdayCard(birthday, true));
+                });
+            } else {
+                todayBirthdaysContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎂</div>
+                        <p>No birthdays today. Check upcoming birthdays below!</p>
+                    </div>
+                `;
+            }
+            
+            // Render upcoming birthdays in grid
+            if (upcomingBirthdays.length > 0) {
+                upcomingBirthdays.forEach(birthday => {
+                    upcomingBirthdaysContainer.appendChild(createBirthdayCard(birthday, false));
+                });
+            } else {
+                upcomingBirthdaysContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📅</div>
+                        <p>No upcoming birthdays.</p>
+                    </div>
+                `;
+            }
+            
+            // Render upcoming birthdays in list
+            if (upcomingBirthdays.length > 0) {
+                upcomingBirthdays.forEach(birthday => {
+                    upcomingBirthdaysList.appendChild(createUpcomingBirthdayListItem(birthday));
+                });
+            } else {
+                upcomingBirthdaysList.innerHTML = `
+                    <div class="empty-state">
+                        <p>No upcoming birthdays</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Create upcoming birthday list item
+        function createUpcomingBirthdayListItem(birthday) {
+            const item = document.createElement('div');
+            item.className = 'upcoming-list-item';
+            
+            const dob = new Date(birthday.dob);
+            const today = new Date();
+            const nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+            
+            if (nextBirthday < today) {
+                nextBirthday.setFullYear(today.getFullYear() + 1);
+            }
+            
+            const daysUntil = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+            const formattedDate = dob.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric' 
+            });
+            
+            item.innerHTML = `
+                <img src="${birthday.photo}" alt="${birthday.name}" class="upcoming-list-photo">
+                <div class="upcoming-list-info">
+                    <div class="upcoming-list-name">${birthday.name}</div>
+                    <div class="upcoming-list-date">${formattedDate}</div>
+                </div>
+                <div class="upcoming-list-days">${daysUntil}d</div>
+            `;
+            
+            // Add click event to open modal
+            item.addEventListener('click', () => {
+                openBirthdayModal(birthday);
+            });
+            
+            return item;
+        }
+
+        // Create birthday card
+        function createBirthdayCard(birthday, isToday) {
+            const card = document.createElement('div');
+            card.className = `card ${isToday ? 'today' : ''}`;
+            
+            const dob = new Date(birthday.dob);
+            const formattedDate = dob.toLocaleDateString('en-US', { 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            // Initialize reactions if not exists
+            if (!reactions[`birthday-${birthday.id}`]) {
+                reactions[`birthday-${birthday.id}`] = {
+                    cake: 0,
+                    heart: 0,
+                    clap: 0
+                };
+            }
+            
+            const birthdayReactions = reactions[`birthday-${birthday.id}`];
+            
+            card.innerHTML = `
+                ${isToday ? '<div class="today-badge">🎉 Today</div>' : ''}
+                <img src="${birthday.photo}" alt="${birthday.name}" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">${birthday.name}</h3>
+                    <p class="card-subtitle">${formattedDate}</p>
+                    <p class="card-message">${birthday.message}</p>
+                    <div class="reactions">
+                        <button class="reaction-btn" data-type="birthday" data-id="${birthday.id}" data-reaction="cake">
+                            <i class="fas fa-birthday-cake"></i> <span class="reaction-count">${birthdayReactions.cake}</span>
+                        </button>
+                        <button class="reaction-btn" data-type="birthday" data-id="${birthday.id}" data-reaction="heart">
+                            <i class="fas fa-heart"></i> <span class="reaction-count">${birthdayReactions.heart}</span>
+                        </button>
+                        <button class="reaction-btn" data-type="birthday" data-id="${birthday.id}" data-reaction="clap">
+                            <i class="fas fa-hands-clapping"></i> <span class="reaction-count">${birthdayReactions.clap}</span>
+                        </button>
+                    </div>
+                    <button class="share-btn" data-type="birthday" data-id="${birthday.id}">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                </div>
+            `;
+            
+            // Add click event to open modal
+            card.addEventListener('click', (e) => {
+                if (!e.target.closest('.reaction-btn') && !e.target.closest('.share-btn')) {
+                    openBirthdayModal(birthday);
+                }
+            });
+            
+            // Add reaction events
+            const reactionBtns = card.querySelectorAll('.reaction-btn');
+            reactionBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    handleReaction(
+                        btn.getAttribute('data-type'),
+                        parseInt(btn.getAttribute('data-id')),
+                        btn.getAttribute('data-reaction')
+                    );
+                });
+            });
+            
+            // Add share event
+            const shareBtn = card.querySelector('.share-btn');
+            shareBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                shareBirthday(birthday.id);
+            });
+            
+            return card;
+        }
+
+        // Render shoutouts
+        function renderShoutouts() {
+            shoutoutsContainer.innerHTML = '';
+            
+            if (shoutouts.length > 0) {
+                // Sort shoutouts by date (newest first)
+                const sortedShoutouts = [...shoutouts].sort((a, b) => 
+                    new Date(b.date) - new Date(a.date)
+                );
+                
+                sortedShoutouts.forEach(shoutout => {
+                    shoutoutsContainer.appendChild(createShoutoutCard(shoutout));
+                });
+            } else {
+                shoutoutsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📣</div>
+                        <p>No shoutouts yet. Be the first to give a shoutout!</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Create shoutout card
+        function createShoutoutCard(shoutout) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            const date = new Date(shoutout.date);
+            const formattedDate = date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            // Initialize reactions if not exists
+            if (!reactions[`shoutout-${shoutout.id}`]) {
+                reactions[`shoutout-${shoutout.id}`] = {
+                    thumbsup: 0,
+                    heart: 0,
+                    laugh: 0,
+                    clap: 0
+                };
+            }
+            
+            const shoutoutReactions = reactions[`shoutout-${shoutout.id}`];
+            
+            card.innerHTML = `
+                <div class="card-content">
+                    <h3 class="card-title">From: ${shoutout.from} → To: ${shoutout.to}</h3>
+                    <p class="card-subtitle">${formattedDate}</p>
+                    <p class="card-message">${shoutout.message}</p>
+                    <div class="reactions">
+                        <button class="reaction-btn" data-type="shoutout" data-id="${shoutout.id}" data-reaction="thumbsup">
+                            <i class="fas fa-thumbs-up"></i> <span class="reaction-count">${shoutoutReactions.thumbsup}</span>
+                        </button>
+                        <button class="reaction-btn" data-type="shoutout" data-id="${shoutout.id}" data-reaction="heart">
+                            <i class="fas fa-heart"></i> <span class="reaction-count">${shoutoutReactions.heart}</span>
+                        </button>
+                        <button class="reaction-btn" data-type="shoutout" data-id="${shoutout.id}" data-reaction="laugh">
+                            <i class="fas fa-laugh"></i> <span class="reaction-count">${shoutoutReactions.laugh}</span>
+                        </button>
+                        <button class="reaction-btn" data-type="shoutout" data-id="${shoutout.id}" data-reaction="clap">
+                            <i class="fas fa-hands-clapping"></i> <span class="reaction-count">${shoutoutReactions.clap}</span>
+                        </button>
+                    </div>
+                    <button class="share-btn" data-type="shoutout" data-id="${shoutout.id}">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                </div>
+            `;
+            
+            // Add reaction events
+            const reactionBtns = card.querySelectorAll('.reaction-btn');
+            reactionBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    handleReaction(
+                        btn.getAttribute('data-type'),
+                        parseInt(btn.getAttribute('data-id')),
+                        btn.getAttribute('data-reaction')
+                    );
+                });
+            });
+            
+            // Add share event
+            const shareBtn = card.querySelector('.share-btn');
+            shareBtn.addEventListener('click', () => {
+                shareContent(
+                    'shoutout',
+                    shoutout.id,
+                    `${shoutout.from} gave a shoutout to ${shoutout.to}: ${shoutout.message}`
+                );
+            });
+            
+            return card;
+        }
+
+        // Open birthday modal
+        function openBirthdayModal(birthday) {
+            currentBirthdayId = birthday.id;
+            
+            const dob = new Date(birthday.dob);
+            const formattedDate = dob.toLocaleDateString('en-US', { 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            document.getElementById('modal-birthday-name').textContent = birthday.name;
+            document.getElementById('modal-birthday-date').textContent = formattedDate;
+            document.getElementById('modal-birthday-photo').src = birthday.photo;
+            document.getElementById('modal-birthday-photo').alt = birthday.name;
+            document.getElementById('modal-birthday-message').textContent = birthday.message;
+            
+            // Update reaction counts in modal
+            const birthdayReactions = reactions[`birthday-${birthday.id}`] || {
+                cake: 0,
+                heart: 0,
+                clap: 0
+            };
+            
+            const reactionBtns = birthdayModal.querySelectorAll('.reaction-btn');
+            reactionBtns.forEach(btn => {
+                const reactionType = btn.getAttribute('data-reaction');
+                const countSpan = btn.querySelector('.reaction-count');
+                countSpan.textContent = birthdayReactions[reactionType];
+                
+                // Update button active state
+                if (birthdayReactions[reactionType] > 0) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Add reaction events to modal buttons
+            reactionBtns.forEach(btn => {
+                btn.onclick = () => {
+                    handleReaction('birthday', birthday.id, btn.getAttribute('data-reaction'));
+                    
+                    // Update modal counts after reaction
+                    const updatedReactions = reactions[`birthday-${birthday.id}`];
+                    const updatedCountSpan = btn.querySelector('.reaction-count');
+                    updatedCountSpan.textContent = updatedReactions[btn.getAttribute('data-reaction')];
+                    
+                    // Update button active state
+                    if (updatedReactions[btn.getAttribute('data-reaction')] > 0) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                };
+            });
+            
+            birthdayModal.classList.add('active');
+            triggerConfetti();
+        }
+
+        // Handle reactions
+        function handleReaction(type, id, reaction) {
+            const key = `${type}-${id}`;
+            
+            if (!reactions[key]) {
+                reactions[key] = {};
+            }
+            
+            if (!reactions[key][reaction]) {
+                reactions[key][reaction] = 0;
+            }
+            
+            // Toggle reaction (increment/decrement)
+            reactions[key][reaction] = reactions[key][reaction] === 0 ? 1 : 0;
+            
+            saveData();
+            
+            // Update UI
+            if (type === 'birthday') {
+                renderBirthdays();
+            } else {
+                renderShoutouts();
+            }
+        }
+
+        // Add new shoutout
+        function addShoutout(from, to, message) {
+            const newShoutout = {
+                id: shoutouts.length > 0 ? Math.max(...shoutouts.map(s => s.id)) + 1 : 1,
+                from: from,
+                to: to,
+                message: message,
+                date: new Date().toISOString().split('T')[0] // YYYY-MM-DD format
+            };
+            
+            shoutouts.push(newShoutout);
+            saveData();
+            renderShoutouts();
+        }
+
+        // Share birthday with unique URL
+        function shareBirthday(birthdayId) {
+            const birthday = birthdays.find(b => b.id === birthdayId);
+            if (!birthday) return;
+            
+            const shareUrl = `${window.location.href.split('?')[0]}?birthday=${birthdayId}`;
+            const shareText = `${birthday.name} is celebrating their birthday! ${birthday.message}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Birthday Celebration',
+                    text: shareText,
+                    url: shareUrl
+                })
+                .catch(error => console.log('Error sharing:', error));
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(`${shareText} ${shareUrl}`)
+                    .then(() => alert('Birthday celebration link copied to clipboard!'))
+                    .catch(err => console.error('Failed to copy: ', err));
+            }
+        }
+
+        // Share content using Web Share API
+        function shareContent(type, id, text) {
+            if (navigator.share) {
+                navigator.share({
+                    title: type === 'birthday' ? 'Birthday Celebration' : 'Peer Shoutout',
+                    text: text,
+                    url: window.location.href
+                })
+                .catch(error => console.log('Error sharing:', error));
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(text)
+                    .then(() => alert('Content copied to clipboard!'))
+                    .catch(err => console.error('Failed to copy: ', err));
+            }
+        }
+
+        // Confetti animation
+        function triggerConfetti() {
+            const canvas = confettiCanvas;
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const confettiCount = 200;
+            const confetti = [];
+            
+            // Confetti properties
+            for (let i = 0; i < confettiCount; i++) {
+                confetti.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    r: Math.random() * 6 + 2,
+                    d: Math.random() * confettiCount,
+                    color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                    tilt: Math.random() * 10 - 10,
+                    tiltAngle: 0,
+                    tiltAngleIncrement: Math.random() * 0.1 + 0.05
+                });
+            }
+            
+            let animationFrame;
+            let time = 0;
+            
+            function drawConfetti() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                confetti.forEach((c, i) => {
+                    ctx.beginPath();
+                    ctx.lineWidth = c.r / 2;
+                    ctx.strokeStyle = c.color;
+                    ctx.moveTo(c.x + c.tilt + c.r / 4, c.y);
+                    ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 4);
+                    ctx.stroke();
+                    
+                    // Update confetti position
+                    c.tiltAngle += c.tiltAngleIncrement;
+                    c.y += (Math.cos(c.d + time) + 1 + c.r / 2) / 2;
+                    c.x += Math.sin(time);
+                    c.tilt = Math.sin(c.tiltAngle) * 15;
+                    
+                    // If confetti is out of screen, reset to top
+                    if (c.y > canvas.height) {
+                        confetti[i] = {
+                            x: Math.random() * canvas.width,
+                            y: -10,
+                            r: c.r,
+                            d: c.d,
+                            color: c.color,
+                            tilt: c.tilt,
+                            tiltAngle: c.tiltAngle,
+                            tiltAngleIncrement: c.tiltAngleIncrement
+                        };
+                    }
+                });
+                
+                time += 0.1;
+                
+                if (time < 300) { // Stop after 300 frames (~5 seconds)
+                    animationFrame = requestAnimationFrame(drawConfetti);
+                } else {
+                    cancelAnimationFrame(animationFrame);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            
+            drawConfetti();
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus School Timetable</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6b8cbc;
+            --light-color: #f8f9fa;
+            --border-color: #dee2e6;
+            --shadow: 0 2px 5px rgba(0,0,0,0.1);
+            --border-radius: 6px;
+            --monday-color: #e3f2fd;
+            --tuesday-color: #e8f5e9;
+            --wednesday-color: #fff3e0;
+            --thursday-color: #fce4ec;
+            --friday-color: #f3e5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+            padding: clamp(10px, 2vw, 20px);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: clamp(1.2rem, 3vw, 2rem);
+            color: var(--primary-color);
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: clamp(8px, 2vw, 15px);
+            margin-bottom: clamp(15px, 3vw, 20px);
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: clamp(8px, 2vw, 10px) clamp(15px, 3vw, 20px);
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .timetable-container {
+            overflow-x: auto;
+            margin-bottom: clamp(15px, 3vw, 20px);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            background-color: white;
+        }
+
+        .timetable {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        .timetable th, .timetable td {
+            padding: clamp(8px, 1.5vw, 12px) clamp(6px, 1vw, 8px);
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .timetable th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .day-header {
+            font-size: clamp(0.85rem, 1.8vw, 1rem);
+        }
+
+        .time-header {
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: 500;
+            width: clamp(70px, 15vw, 120px);
+        }
+
+        .lesson-cell {
+            padding: clamp(6px, 1.5vw, 8px);
+            min-height: clamp(80px, 15vw, 120px);
+            vertical-align: top;
+            width: calc(100% / 5); /* 5 days now */
+        }
+
+        .monday { background-color: var(--monday-color); }
+        .tuesday { background-color: var(--tuesday-color); }
+        .wednesday { background-color: var(--wednesday-color); }
+        .thursday { background-color: var(--thursday-color); }
+        .friday { background-color: var(--friday-color); }
+
+        .lesson-form {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(5px, 1vw, 8px);
+            height: 100%;
+        }
+
+        .time-inputs {
+            display: flex;
+            gap: clamp(3px, 1vw, 5px);
+        }
+
+        .time-inputs input {
+            flex: 1;
+        }
+
+        input {
+            padding: clamp(6px, 1.5vw, 8px);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+            width: 100%;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
+        }
+
+        .subject-input {
+            font-weight: 500;
+        }
+
+        .teacher-input {
+            font-style: italic;
+        }
+
+        .lesson-display {
+            padding: clamp(6px, 1.5vw, 8px);
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.7);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .lesson-time {
+            font-size: clamp(0.7rem, 1.5vw, 0.75rem);
+            color: #666;
+            margin-bottom: clamp(3px, 1vw, 5px);
+        }
+
+        .lesson-subject {
+            font-weight: 500;
+            margin-bottom: clamp(3px, 1vw, 5px);
+            font-size: clamp(0.8rem, 1.8vw, 0.85rem);
+        }
+
+        .lesson-teacher {
+            font-size: clamp(0.7rem, 1.5vw, 0.75rem);
+            color: #777;
+            font-style: italic;
+        }
+
+        .empty-cell {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-style: italic;
+            cursor: pointer;
+            font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+        }
+
+        @media (max-width: 768px) {
+            .timetable {
+                min-width: 500px;
+            }
+            
+            .timetable th, .timetable td {
+                padding: 6px 4px;
+            }
+            
+            input {
+                padding: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timetable {
+                min-width: 400px;
+            }
+            
+            .timetable th, .timetable td {
+                padding: 5px 3px;
+            }
+            
+            .lesson-cell {
+                min-height: 70px;
+            }
+        }
+
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            
+            .controls {
+                display: none;
+            }
+            
+            .timetable-container {
+                box-shadow: none;
+            }
+        }
+
+        /* Back to home button */
+        .float-btn {
+            z-index: 1000;
+            position: fixed;
+            bottom: clamp(7px, 5vw, 14px);
+            right: clamp(7px, 5vw, 14px);
+            background-color: #4CAF50;
+            color: #fff;
+            padding: clamp(6px, 2vw, 12px) clamp(8px, 4vw, 18px);
+            border-radius: 50px;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+            font-size: clamp(9px, 2vw, 14px);
+        }
+
+        .float-btn:hover {
+            background-color: #3e8e41;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 480px) {
+            .float-btn {
+                bottom: 10px;
+                right: 10px;
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Campus School Timetable</h1>
+        
+        <div class="controls">
+            <button id="addLessonBtn">Add Lesson Slot</button>
+            <button id="exportBtn">Export/Print</button>
+            <button id="clearBtn">Clear All Data</button>
+        </div>
+        
+        <div class="timetable-container">
+            <table class="timetable" id="timetable">
+                <thead>
+                    <tr>
+                        <th class="time-header">Time</th>
+                        <th class="day-header">Monday</th>
+                        <th class="day-header">Tuesday</th>
+                        <th class="day-header">Wednesday</th>
+                        <th class="day-header">Thursday</th>
+                        <th class="day-header">Friday</th>
+                    </tr>
+                </thead>
+                <tbody id="timetableBody">
+                    <!-- Timetable rows will be generated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <a href="index.html" class="float-btn">Back to Home</a>
+
+    <script>
+        // Days of the week for reference (Saturday removed)
+        const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+        
+        // Initialize timetable data structure
+        let timetableData = {
+            lessons: 8, // Initial number of lesson slots
+            data: {}
+        };
+
+        // Initialize the timetable when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTimetableData();
+            renderTimetable();
+            setupEventListeners();
+        });
+
+        // Load timetable data from localStorage
+        function loadTimetableData() {
+            const savedData = localStorage.getItem('campusTimetable');
+            if (savedData) {
+                timetableData = JSON.parse(savedData);
+            } else {
+                // Initialize empty data structure
+                initializeEmptyData();
+            }
+        }
+
+        // Initialize empty data structure for all days and lessons
+        function initializeEmptyData() {
+            timetableData.data = {};
+            DAYS.forEach(day => {
+                timetableData.data[day] = {};
+                for (let i = 1; i <= timetableData.lessons; i++) {
+                    timetableData.data[day][i] = {
+                        startTime: '',
+                        endTime: '',
+                        subject: '',
+                        teacher: ''
+                    };
+                }
+            });
+        }
+
+        // Save timetable data to localStorage
+        function saveTimetableData() {
+            localStorage.setItem('campusTimetable', JSON.stringify(timetableData));
+        }
+
+        // Render the timetable based on current data
+        function renderTimetable() {
+            const timetableBody = document.getElementById('timetableBody');
+            timetableBody.innerHTML = '';
+
+            // Create rows for each lesson slot
+            for (let lessonNum = 1; lessonNum <= timetableData.lessons; lessonNum++) {
+                const row = document.createElement('tr');
+                
+                // Add time slot header
+                const timeHeader = document.createElement('td');
+                timeHeader.className = 'time-header';
+                timeHeader.textContent = `Lesson ${lessonNum}`;
+                row.appendChild(timeHeader);
+                
+                // Add cells for each day
+                DAYS.forEach(day => {
+                    const cell = document.createElement('td');
+                    cell.className = `lesson-cell ${day}`;
+                    
+                    const lessonData = timetableData.data[day][lessonNum];
+                    
+                    // Create lesson form/display
+                    if (lessonData && (lessonData.startTime || lessonData.endTime || lessonData.subject || lessonData.teacher)) {
+                        // Display lesson information
+                        const lessonDisplay = document.createElement('div');
+                        lessonDisplay.className = 'lesson-display';
+                        
+                        if (lessonData.startTime || lessonData.endTime) {
+                            const timeDisplay = document.createElement('div');
+                            timeDisplay.className = 'lesson-time';
+                            timeDisplay.textContent = `${formatTime(lessonData.startTime)} - ${formatTime(lessonData.endTime)}`;
+                            lessonDisplay.appendChild(timeDisplay);
+                        }
+                        
+                        if (lessonData.subject) {
+                            const subjectDisplay = document.createElement('div');
+                            subjectDisplay.className = 'lesson-subject';
+                            subjectDisplay.textContent = lessonData.subject;
+                            // Add color based on subject
+                            subjectDisplay.style.backgroundColor = getSubjectColor(lessonData.subject);
+                            subjectDisplay.style.padding = '3px';
+                            subjectDisplay.style.borderRadius = '3px';
+                            lessonDisplay.appendChild(subjectDisplay);
+                        }
+                        
+                        if (lessonData.teacher) {
+                            const teacherDisplay = document.createElement('div');
+                            teacherDisplay.className = 'lesson-teacher';
+                            teacherDisplay.textContent = lessonData.teacher;
+                            lessonDisplay.appendChild(teacherDisplay);
+                        }
+                        
+                        // Add click to edit functionality
+                        lessonDisplay.addEventListener('click', function() {
+                            createLessonForm(cell, day, lessonNum);
+                        });
+                        
+                        cell.appendChild(lessonDisplay);
+                    } else {
+                        // Empty cell with placeholder
+                        const emptyCell = document.createElement('div');
+                        emptyCell.className = 'empty-cell';
+                        emptyCell.textContent = 'Click to add lesson';
+                        emptyCell.addEventListener('click', function() {
+                            createLessonForm(cell, day, lessonNum);
+                        });
+                        cell.appendChild(emptyCell);
+                    }
+                    
+                    row.appendChild(cell);
+                });
+                
+                timetableBody.appendChild(row);
+            }
+        }
+
+        // Create form for editing a lesson
+        function createLessonForm(cell, day, lessonNum) {
+            const lessonData = timetableData.data[day][lessonNum] || {
+                startTime: '',
+                endTime: '',
+                subject: '',
+                teacher: ''
+            };
+            
+            cell.innerHTML = '';
+            
+            const form = document.createElement('form');
+            form.className = 'lesson-form';
+            
+            // Time inputs
+            const timeInputs = document.createElement('div');
+            timeInputs.className = 'time-inputs';
+            
+            const startTimeInput = document.createElement('input');
+            startTimeInput.type = 'time';
+            startTimeInput.value = lessonData.startTime;
+            startTimeInput.placeholder = 'Start time';
+            
+            const endTimeInput = document.createElement('input');
+            endTimeInput.type = 'time';
+            endTimeInput.value = lessonData.endTime;
+            endTimeInput.placeholder = 'End time';
+            
+            timeInputs.appendChild(startTimeInput);
+            timeInputs.appendChild(endTimeInput);
+            form.appendChild(timeInputs);
+            
+            // Subject input
+            const subjectInput = document.createElement('input');
+            subjectInput.type = 'text';
+            subjectInput.className = 'subject-input';
+            subjectInput.value = lessonData.subject;
+            subjectInput.placeholder = 'Subject name';
+            form.appendChild(subjectInput);
+            
+            // Teacher input
+            const teacherInput = document.createElement('input');
+            teacherInput.type = 'text';
+            teacherInput.className = 'teacher-input';
+            teacherInput.value = lessonData.teacher;
+            teacherInput.placeholder = 'Teacher name';
+            form.appendChild(teacherInput);
+            
+            // Save button
+            const saveButton = document.createElement('button');
+            saveButton.type = 'button';
+            saveButton.textContent = 'Save';
+            saveButton.addEventListener('click', function() {
+                saveLesson(day, lessonNum, startTimeInput.value, endTimeInput.value, subjectInput.value, teacherInput.value);
+                renderTimetable();
+            });
+            form.appendChild(saveButton);
+            
+            cell.appendChild(form);
+            
+            // Auto-save on input change (optional)
+            const inputs = form.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    saveLesson(day, lessonNum, startTimeInput.value, endTimeInput.value, subjectInput.value, teacherInput.value);
+                });
+            });
+        }
+
+        // Save lesson data
+        function saveLesson(day, lessonNum, startTime, endTime, subject, teacher) {
+            if (!timetableData.data[day]) {
+                timetableData.data[day] = {};
+            }
+            
+            timetableData.data[day][lessonNum] = {
+                startTime: startTime,
+                endTime: endTime,
+                subject: subject,
+                teacher: teacher
+            };
+            
+            saveTimetableData();
+        }
+
+        // Format time for display (remove seconds if present)
+        function formatTime(timeString) {
+            if (!timeString) return '';
+            return timeString.substring(0, 5); // Remove seconds if present
+        }
+
+        // Generate a color based on subject name
+        function getSubjectColor(subject) {
+            if (!subject) return 'transparent';
+            
+            // Simple hash function to generate consistent colors
+            let hash = 0;
+            for (let i = 0; i < subject.length; i++) {
+                hash = subject.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            
+            // Generate pastel colors
+            const hue = hash % 360;
+            return `hsl(${hue}, 70%, 85%)`;
+        }
+
+        // Add a new lesson slot
+        function addLessonSlot() {
+            timetableData.lessons++;
+            
+            // Initialize empty data for the new lesson slot
+            DAYS.forEach(day => {
+                if (!timetableData.data[day]) {
+                    timetableData.data[day] = {};
+                }
+                timetableData.data[day][timetableData.lessons] = {
+                    startTime: '',
+                    endTime: '',
+                    subject: '',
+                    teacher: ''
+                };
+            });
+            
+            saveTimetableData();
+            renderTimetable();
+        }
+
+        // Export/Print timetable
+        function exportTimetable() {
+            window.print();
+        }
+
+        // Clear all timetable data
+        function clearTimetable() {
+            if (confirm('Are you sure you want to clear all timetable data? This action cannot be undone.')) {
+                timetableData.lessons = 8;
+                initializeEmptyData();
+                saveTimetableData();
+                renderTimetable();
+            }
+        }
+
+        // Set up event listeners for buttons
+        function setupEventListeners() {
+            document.getElementById('addLessonBtn').addEventListener('click', addLessonSlot);
+            document.getElementById('exportBtn').addEventListener('click', exportTimetable);
+            document.getElementById('clearBtn').addEventListener('click', clearTimetable);
+        }
+    </script>
+</body>
+</html>

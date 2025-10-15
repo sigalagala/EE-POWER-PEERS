@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Student Portfolio Section</title>
+    <style>
+      /* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #333;
+    line-height: 1.6;
+    padding: clamp(10px, 3vw, 20px);
+    min-height: 100vh;
+}
+
+.portfolio-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: clamp(20px, 4vw, 30px);
+    color: #2c3e50;
+    font-size: clamp(1.5rem, 6vw, 2.8rem);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 0 clamp(10px, 3vw, 20px);
+}
+
+/* New contact section styles */
+.contact-section {
+    background: white;
+    border-radius: clamp(12px, 3vw, 15px);
+    padding: clamp(20px, 4vw, 30px);
+    margin-bottom: clamp(25px, 4vw, 30px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    text-align: center;
+    width: 100%;
+}
+
+.contact-title {
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    color: #2c3e50;
+    margin-bottom: clamp(12px, 3vw, 15px);
+}
+
+.contact-text {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    color: #5a6c7d;
+    margin-bottom: clamp(20px, 4vw, 25px);
+    line-height: 1.6;
+}
+
+.whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #25D366;
+    color: white;
+    text-decoration: none;
+    padding: clamp(10px, 2.5vw, 12px) clamp(20px, 4vw, 25px);
+    border-radius: clamp(20px, 5vw, 30px);
+    font-weight: 600;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+    margin: 0 auto;
+    max-width: 300px;
+    width: 100%;
+}
+
+.whatsapp-button:hover {
+    background-color: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-icon {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+}
+
+/* Filter bar styles */
+.filter-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: clamp(20px, 4vw, 30px);
+    gap: clamp(10px, 3vw, 15px);
+    flex-wrap: wrap;
+    background: white;
+    padding: clamp(12px, 3vw, 15px);
+    border-radius: clamp(10px, 3vw, 15px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    width: 100%;
+    max-width: 100%;
+}
+
+.search-input, .year-filter {
+    padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 15px);
+    border: 1px solid #ddd;
+    border-radius: clamp(20px, 5vw, 30px);
+    font-size: clamp(0.8rem, 3vw, 1rem);
+    width: min(100%, 300px);
+    min-width: 150px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.search-input:focus, .year-filter:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+/* Featured student card */
+.featured-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: clamp(12px, 3vw, 15px);
+    padding: clamp(20px, 4vw, 25px);
+    margin-bottom: clamp(25px, 4vw, 30px);
+    display: flex;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+    width: 100%;
+}
+
+.featured-card:hover {
+    transform: translateY(-5px);
+}
+
+.featured-badge {
+    position: absolute;
+    top: clamp(12px, 3vw, 15px);
+    right: clamp(12px, 3vw, 15px);
+    background: #e74c3c;
+    color: white;
+    padding: clamp(4px, 1.5vw, 5px) clamp(12px, 3vw, 15px);
+    border-radius: clamp(15px, 4vw, 20px);
+    font-size: clamp(0.65rem, 2.5vw, 0.9rem);
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.featured-image {
+    width: clamp(80px, 25vw, 140px);
+    height: clamp(80px, 25vw, 140px);
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    margin-right: clamp(15px, 3vw, 20px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    flex-shrink: 0;
+}
+
+.featured-content {
+    flex: 1;
+    min-width: 0; /* Prevent flex item from overflowing */
+}
+
+.featured-name {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    margin-bottom: clamp(3px, 1vw, 5px);
+    word-wrap: break-word;
+}
+
+.featured-year {
+    font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+    opacity: 0.9;
+    margin-bottom: clamp(8px, 2vw, 10px);
+}
+
+.featured-description {
+    margin-bottom: clamp(12px, 3vw, 15px);
+    max-width: 600px;
+    font-size: clamp(0.75rem, 2.5vw, 1rem);
+    line-height: 1.5;
+}
+
+.featured-button {
+    background: white;
+    color: #667eea;
+    border: none;
+    padding: clamp(6px, 2vw, 8px) clamp(12px, 4vw, 25px);
+    border-radius: clamp(20px, 5vw, 30px);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    font-size: clamp(0.75rem, 2.5vw, 1rem);
+    white-space: nowrap;
+}
+
+.featured-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Student cards grid - COMMENTED OUT */
+/*
+.students-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: clamp(12px, 3vw, 25px);
+    margin-bottom: clamp(30px, 5vw, 40px);
+    width: 100%;
+}
+
+.student-card {
+    background: white;
+    border-radius: clamp(12px, 3vw, 15px);
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+}
+
+.student-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.student-image {
+    width: 100%;
+    height: clamp(120px, 30vw, 200px);
+    object-fit: cover;
+    transition: transform 0.5s;
+    border-radius: 50%;
+}
+
+.student-card:hover .student-image {
+    transform: scale(1.05);
+}
+
+.student-info {
+    padding: clamp(8px, 2vw, 15px);
+}
+
+.student-name {
+    font-size: clamp(0.9rem, 3vw, 1.3rem);
+    font-weight: 600;
+    margin-bottom: clamp(3px, 1vw, 5px);
+    color: #2c3e50;
+    word-wrap: break-word;
+}
+
+.student-year {
+    color: #7f8c8d;
+    font-size: clamp(0.75rem, 2.5vw, 0.95rem);
+    margin-bottom: clamp(12px, 3vw, 15px);
+}
+
+.view-portfolio {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: clamp(5px, 1.5vw, 6px) clamp(8px, 2.5vw, 15px);
+    border-radius: clamp(15px, 4vw, 20px);
+    width: 100%;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    font-size: clamp(0.75rem, 2.5vw, 0.95rem);
+}
+
+.view-portfolio:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+}
+*/
+
+/* Modal styles - 95% of screen size */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    padding: 2.5%; /* 5% total padding (2.5% on each side) */
+}
+
+.modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: white;
+    border-radius: clamp(12px, 3vw, 15px);
+    width: 95%; /* 95% of screen width */
+    height: 95%; /* 95% of screen height */
+    max-height: 95vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.modal.active .modal-content {
+    transform: scale(1);
+}
+
+.close-modal {
+    position: absolute;
+    top: clamp(12px, 3vw, 15px);
+    right: clamp(12px, 3vw, 15px);
+    background: rgba(0,0,0,0.1);
+    border: none;
+    width: clamp(35px, 8vw, 40px);
+    height: clamp(35px, 8vw, 40px);
+    border-radius: 50%;
+    font-size: clamp(16px, 4vw, 20px);
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.close-modal:hover {
+    background: rgba(0,0,0,0.2);
+    transform: rotate(90deg);
+}
+
+.modal-header {
+    padding: clamp(20px, 4vw, 25px);
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: clamp(12px, 3vw, 15px) clamp(12px, 3vw, 15px) 0 0;
+}
+
+.modal-image {
+    width: clamp(70px, 18vw, 120px);
+    height: clamp(70px, 18vw, 120px);
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: clamp(15px, 3vw, 20px);
+    border: 3px solid white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+
+.modal-student-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.modal-student-info h2 {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    margin-bottom: clamp(3px, 1vw, 5px);
+    color: #2c3e50;
+    word-wrap: break-word;
+}
+
+.modal-student-info p {
+    color: #7f8c8d;
+    font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+}
+
+.modal-body {
+    padding: clamp(12px, 3vw, 25px);
+}
+
+.section-title {
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    margin-bottom: clamp(12px, 3vw, 15px);
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: clamp(3px, 1vw, 5px);
+    display: inline-block;
+}
+
+.journey-text {
+    margin-bottom: clamp(20px, 4vw, 25px);
+    line-height: 1.7;
+    background: #f8f9fa;
+    padding: clamp(12px, 3vw, 15px);
+    border-radius: clamp(8px, 2vw, 10px);
+    border-left: 4px solid #3498db;
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(clamp(100px, 25vw, 180px), 1fr));
+    gap: clamp(8px, 2vw, 15px);
+    margin-bottom: clamp(20px, 4vw, 25px);
+}
+
+.gallery-item {
+    height: clamp(80px, 25vw, 150px);
+    border-radius: clamp(8px, 2vw, 10px);
+    object-fit: cover;
+    width: 100%;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+
+.media-description {
+    font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+    color: #666;
+    margin-top: clamp(3px, 1vw, 5px);
+    text-align: center;
+}
+
+.achievements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(8px, 2vw, 10px);
+    margin-bottom: clamp(20px, 4vw, 25px);
+}
+
+.badge {
+    background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+    color: white;
+    padding: clamp(5px, 1.5vw, 6px) clamp(8px, 2.5vw, 15px);
+    border-radius: clamp(15px, 4vw, 20px);
+    font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+    box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+    white-space: nowrap;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: clamp(20px, 4vw, 25px);
+    flex-wrap: wrap;
+    gap: clamp(12px, 3vw, 15px);
+    padding-top: clamp(15px, 3vw, 20px);
+    border-top: 1px solid #eee;
+}
+
+.reactions {
+    display: flex;
+    gap: clamp(8px, 2vw, 10px);
+    flex-wrap: wrap;
+}
+
+.reaction-btn {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: clamp(15px, 4vw, 20px);
+    padding: clamp(5px, 1.5vw, 6px) clamp(8px, 2.5vw, 15px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: clamp(3px, 1vw, 5px);
+    transition: all 0.2s;
+    font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+    white-space: nowrap;
+}
+
+.reaction-btn:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+}
+
+.reaction-btn.active {
+    background: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.action-buttons {
+    display: flex;
+    gap: clamp(8px, 2vw, 10px);
+    flex-wrap: wrap;
+}
+
+.connect-btn {
+    background: #2ecc71;
+    color: white;
+    border: none;
+    padding: clamp(6px, 2vw, 8px) clamp(12px, 4vw, 25px);
+    border-radius: clamp(20px, 5vw, 30px);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 3px 10px rgba(46, 204, 113, 0.3);
+    font-size: clamp(0.75rem, 2.5vw, 1rem);
+    white-space: nowrap;
+}
+
+.connect-btn:hover {
+    background: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+}
+
+.share-btn {
+    background: #9b59b6;
+    color: white;
+    border: none;
+    padding: clamp(6px, 2vw, 8px) clamp(12px, 4vw, 20px);
+    border-radius: clamp(20px, 5vw, 30px);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 3px 10px rgba(155, 89, 182, 0.3);
+    font-size: clamp(0.75rem, 2.5vw, 1rem);
+    white-space: nowrap;
+}
+
+.share-btn:hover {
+    background: #8e44ad;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
+}
+
+/* Media modal for enlarged view */
+.media-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    padding: 2.5%;
+}
+
+.media-modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+.media-modal-content {
+    width: 95%;
+    height: 95%;
+    max-height: 95vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.media-modal-content img,
+.media-modal-content video {
+    max-width: 100%;
+    max-height: 80%;
+    border-radius: clamp(8px, 2vw, 10px);
+    object-fit: contain;
+}
+
+.media-modal-close {
+    position: absolute;
+    top: clamp(-35px, -5vw, -40px);
+    right: 0;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: none;
+    width: clamp(25px, 6vw, 30px);
+    height: clamp(25px, 6vw, 30px);
+    border-radius: 50%;
+    font-size: clamp(14px, 3.5vw, 18px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.media-description-large {
+    color: white;
+    text-align: center;
+    margin-top: clamp(12px, 3vw, 15px);
+    font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+    padding: 0 clamp(10px, 3vw, 20px);
+}
+
+/* Notification for share */
+.notification {
+    position: fixed;
+    bottom: clamp(15px, 3vw, 20px);
+    right: clamp(15px, 3vw, 20px);
+    background: #2ecc71;
+    color: white;
+    padding: clamp(12px, 3vw, 15px) clamp(20px, 4vw, 25px);
+    border-radius: clamp(8px, 2vw, 10px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 1001;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s;
+    font-size: clamp(0.75rem, 2.5vw, 1rem);
+    max-width: min(90%, 400px);
+}
+
+.notification.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Enhanced Responsive styles */
+@media (max-width: 768px) {
+    /*
+    .students-grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+        gap: clamp(10px, 2.5vw, 15px);
+    }
+    */
+    
+    .featured-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .featured-image {
+        margin-right: 0;
+        margin-bottom: clamp(12px, 3vw, 15px);
+    }
+
+    .modal-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .modal-image {
+        margin-right: 0;
+        margin-bottom: clamp(12px, 3vw, 15px);
+    }
+
+    .modal-actions {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .reactions {
+        justify-content: center;
+    }
+    
+    .action-buttons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    /*
+    .students-grid {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+        gap: clamp(8px, 2vw, 12px);
+    }
+    */
+    
+    .filter-bar {
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(8px, 2vw, 12px);
+    }
+    
+    .search-input, .year-filter {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .action-buttons {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .connect-btn, .share-btn {
+        flex: 1;
+        text-align: center;
+        min-width: 120px;
+    }
+    
+    .reactions {
+        justify-content: center;
+        width: 100%;
+        margin-bottom: clamp(8px, 2vw, 10px);
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+        gap: clamp(10px, 2.5vw, 15px);
+    }
+    
+    body {
+        padding: clamp(5px, 2vw, 10px);
+    }
+    
+    .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(clamp(80px, 20vw, 120px), 1fr));
+    }
+}
+
+@media (max-width: 400px) {
+    /*
+    .students-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: clamp(6px, 1.5vw, 10px);
+    }
+    
+    .student-card {
+        margin: 0;
+    }
+    
+    .student-info {
+        padding: clamp(6px, 1.5vw, 10px);
+    }
+    
+    .student-name {
+        font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    }
+    
+    .student-year {
+        font-size: clamp(0.7rem, 2vw, 0.75rem);
+    }
+    
+    .view-portfolio {
+        font-size: clamp(0.7rem, 2vw, 0.75rem);
+        padding: clamp(4px, 1vw, 5px) clamp(6px, 1.5vw, 10px);
+    }
+    */
+    
+    .featured-card {
+        padding: clamp(15px, 3vw, 20px);
+    }
+    
+    .modal-content {
+        width: 98%;
+        height: 98%;
+    }
+    
+    .media-modal-content {
+        width: 98%;
+        height: 98%;
+    }
+}
+
+@media (max-width: 320px) {
+    /*
+    .students-grid {
+        grid-template-columns: 1fr;
+        gap: clamp(8px, 2vw, 12px);
+    }
+    */
+    
+    .filter-bar {
+        padding: clamp(8px, 2vw, 12px);
+    }
+    
+    .search-input, .year-filter {
+        min-width: unset;
+        width: 100%;
+    }
+    
+    .featured-content {
+        text-align: center;
+    }
+    
+    .modal-body {
+        padding: clamp(8px, 2vw, 12px);
+    }
+    
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Extra small devices - portrait phones */
+@media (max-width: 280px) {
+    body {
+        padding: 5px;
+    }
+    
+    .portfolio-section {
+        padding: 0 5px;
+    }
+    
+    .modal-content {
+        width: 99%;
+        height: 99%;
+    }
+    
+    /*
+    .students-grid {
+        grid-template-columns: 1fr;
+    }
+    */
+    
+    .featured-card {
+        margin: 0 0 20px 0;
+        width: 100%;
+    }
+    
+    .filter-bar {
+        margin: 0 0 20px 0;
+        width: 100%;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    /*
+    .student-card:hover {
+        transform: none;
+    }
+    */
+    
+    .featured-card:hover {
+        transform: none;
+    }
+    
+    .gallery-item:hover {
+        transform: none;
+    }
+    
+    .reaction-btn:hover,
+    .connect-btn:hover,
+    .share-btn:hover,
+    /*
+    .view-portfolio:hover,
+    */
+    .featured-button:hover {
+        transform: none;
+    }
+    
+    /* Add active states for touch feedback */
+    /*
+    .student-card:active {
+        transform: scale(0.98);
+    }
+    */
+    
+    .reaction-btn:active,
+    .connect-btn:active,
+    .share-btn:active,
+    /*
+    .view-portfolio:active,
+    */
+    .featured-button:active {
+        transform: scale(0.95);
+    }
+}
+
+/* High DPI screen optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .featured-badge,
+    .badge {
+        font-weight: 600;
+    }
+    
+    .student-name,
+    .featured-name,
+    .modal-student-info h2 {
+        font-weight: 600;
+    }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .featured-badge {
+        animation: none;
+    }
+}
+
+
+        /*back to home button*/
+ .float-btn {
+    z-index: 1000;
+      position: fixed;
+      bottom: clamp(7px, 5vw, 14px);
+      right: clamp(7px, 5vw, 14px);
+      background-color: #4CAF50;
+      color: #fff;
+      padding: clamp(6px, 2vw, 16px) clamp(8px, 4vw, 20px);
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background-color 0.3s ease-in-out;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+      font-size: clamp(9px, 2vw, 15px);
+    }
+
+    .float-btn:hover {
+      background-color: #3e8e41;
+      box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 768px) {
+      .float-btn {
+        border-radius: 30px;
+        padding: clamp(6px, 2vw, 12px) clamp(12px, 4vw, 18px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .float-btn {
+        bottom: 10px;
+        right: 10px;
+        padding: 2px 12px;
+        font-size: 10px;
+      }
+    }
+       
+    </style>
+</head>
+<body>
+    <section class="portfolio-section">
+        <h1>Student Portfolios</h1>
+          <a href="index.html" class="float-btn">Back to Home</a>
+        <!-- Filter bar -->
+        <div class="filter-bar">
+            <input type="text" class="search-input" placeholder="Search by name..." id="searchInput">
+            <select class="year-filter" id="yearFilter">
+                <option value="">All Years</option>
+                <option value="1">First Year</option>
+                <option value="2">Second Year</option>
+                <option value="3">Third Year</option>
+                <option value="4">Fourth Year</option>
+            </select>
+        </div>
+        
+        <!-- New Contact Section -->
+        <div class="contact-section">
+            <h2 class="contact-title">Want to Add Your Portfolio?</h2>
+            <p class="contact-text">If you want to add your portfolio, skills, and achievements to our showcase, kindly contact the admin via WhatsApp.</p>
+            <a href="https://wa.me/0769882553?text=Hello%20Admin,%20I%20want%20to%20add%20my%20portfolio%20to%20the%20website" class="whatsapp-button" target="_blank">
+                <svg class="whatsapp-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893.001-3.189-1.248-6.189-3.515-8.452"/>
+                </svg>
+                Message Admin
+            </a>
+        </div>
+        
+        <!-- Featured student card -->
+        <div class="featured-card">
+            <span class="featured-badge">Featured Student</span>
+            <img src="user1.webp" alt="Featured Student" class="featured-image">
+            <div class="featured-content">
+                <h2 class="featured-name">James Kiladi</h2>
+                <p class="featured-year">First Year Electrical Engineering</p>
+                <p class="featured-description">James is the creative mind behind the EE Power Peers website — a platform he built to help fellow students learn and grow together. He is highly skilled in conduit, trunking, and PVC installations, earning recognition for his precision and dedication in practical electrical work.</p>
+                <button class="featured-button" data-id="featured">View Portfolio</button>
+            </div>
+        </div>
+        
+        <!-- Student cards grid - COMMENTED OUT -->
+        <!--
+        <div class="students-grid" id="studentsGrid">
+            <!-- Student cards will be generated by JavaScript -->
+        </div>
+        -->
+    </section>
+    
+    <!-- Modals will be generated by JavaScript with unique IDs -->
+    
+    <!-- Media modal for enlarged view -->
+    <div class="media-modal" id="mediaModal">
+        <div class="media-modal-content">
+            <button class="media-modal-close" id="closeMediaModal">&times;</button>
+            <img id="enlargedMedia" src="" alt="Enlarged media">
+            <p class="media-description-large" id="mediaDescriptionLarge"></p>
+        </div>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification">Link copied to clipboard!</div>
+
+    <script>
+        // Student data array with fake reactions and media placeholders
+        // COMMENTED OUT: All student data except featured student
+        /*
+        const studentsData = [
+            {
+                id: "EE2023001",
+                name: "Sarah Chen",
+                year: "Fourth Year",
+                image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80",
+                journey: "Sarah has focused on power systems and renewable energy. She completed an internship at National Grid and published a paper on smart grid optimization. Her senior project involves designing a microgrid for rural communities.",
+                achievements: ["IEEE Scholarship 2022", "Senior Design Award", "Renewable Energy Research Grant", "Power Systems Excellence"],
+                isFeatured: false,
+                fakeReactions: { like: 12, love: 8, star: 15, laugh: 3 },
+                media: [
+                    { type: "image", url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "Circuit design project for renewable energy systems" },
+                    { type: "image", url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "Smart grid optimization research setup" },
+                    { type: "image", url: null, description: "Future project: Microgrid implementation" },
+                    { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Project demonstration video" }
+                ]
+            },
+            {
+                id: "EE2023002",
+                name: "Marcus Rodriguez",
+                year: "Second Year",
+                image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80",
+                journey: "Marcus is passionate about embedded systems and IoT. He's currently working on a smart home automation project using Arduino and Raspberry Pi. He plans to specialize in IoT security for his graduate studies.",
+                achievements: ["Embedded Systems Competition Winner", "Dean's List", "IoT Club President", "Microcontroller Programming"],
+                isFeatured: false,
+                fakeReactions: { like: 7, love: 5, star: 9, laugh: 2 },
+                media: [
+                    { type: "image", url: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "IoT home automation system prototype" },
+                    { type: "image", url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "Arduino-based sensor network" },
+                    { type: "image", url: null, description: "Future project: IoT security framework" },
+                    { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Smart home demonstration" }
+                ]
+            },
+            {
+                id: "EE2023003",
+                name: "Jennifer Lee",
+                year: "Third Year",
+                image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80",
+                journey: "Jennifer specializes in signal processing and communications. She's developing algorithms for 5G network optimization as part of her research project. She has presented her work at two international conferences.",
+                achievements: ["Women in Engineering Scholarship", "Research Assistant", "Signal Processing Competition Finalist", "5G Research Grant"],
+                isFeatured: false,
+                fakeReactions: { like: 15, love: 12, star: 18, laugh: 4 },
+                media: [
+                    { type: "image", url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "Signal processing lab setup" },
+                    { type: "image", url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "5G antenna design project" },
+                    { type: "image", url: null, description: "Future project: 6G research" },
+                    { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Conference presentation" }
+                ]
+            },
+            {
+                id: "EE2023004",
+                name: "David Kim",
+                year: "First Year",
+                image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80",
+                journey: "David is exploring various EE disciplines but shows particular interest in robotics and control systems. He's building a line-following robot for his intro project and plans to join the robotics competition team next semester.",
+                achievements: ["Freshman Excellence Award", "Robotics Club Member", "Circuit Design Beginner"],
+                isFeatured: false,
+                fakeReactions: { like: 5, love: 3, star: 7, laugh: 1 },
+                media: [
+                    { type: "image", url: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "Line-following robot prototype" },
+                    { type: "image", url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "Circuit design for robotics project" },
+                    { type: "image", url: null, description: "Future project: Autonomous navigation" },
+                    { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Robot demonstration" }
+                ]
+            },
+            {
+                id: "EE2023005",
+                name: "Emily Watson",
+                year: "Fourth Year",
+                image: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80",
+                journey: "Emily has focused on electronics and circuit design. She interned at Texas Instruments and designed a low-power sensor node for environmental monitoring. Her senior design project is a wearable health monitoring device.",
+                achievements: ["Circuit Design Competition Winner", "TI Internship", "Senior Design Excellence Award", "Analog Electronics Specialist"],
+                isFeatured: false,
+                fakeReactions: { like: 20, love: 15, star: 22, laugh: 6 },
+                media: [
+                    { type: "image", url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "Low-power sensor node design" },
+                    { type: "image", url: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "Wearable health monitoring prototype" },
+                    { type: "image", url: null, description: "Future project: Advanced biosensors" },
+                    { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Sensor node demonstration" }
+                ]
+            },
+            {
+                id: "EE2023006",
+                name: "Ryan Patel",
+                year: "Third Year",
+                image: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80",
+                journey: "Ryan is specializing in power electronics and electric vehicles. He's part of the university's EV racing team and working on battery management systems. His goal is to work in the EV industry after graduation.",
+                achievements: ["EV Racing Team Captain", "Power Electronics Research Grant", "IEEE Student Branch Officer", "Battery Technology"],
+                isFeatured: false,
+                fakeReactions: { like: 18, love: 10, star: 16, laugh: 5 },
+                media: [
+                    { type: "image", url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "EV battery management system" },
+                    { type: "image", url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "Power electronics lab setup" },
+                    { type: "image", url: null, description: "Future project: Fast charging technology" },
+                    { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "EV racing team presentation" }
+                ]
+            },
+            {
+                id: "EE2023007",
+                name: "Olivia Martinez",
+                year: "Second Year",
+                image: "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80",
+                journey: "Olivia is exploring digital systems and FPGA programming. She recently completed a summer program at Xilinx and is working on a digital signal processing project. She's particularly interested in image processing applications.",
+                achievements: ["Xilinx Summer Program", "Digital Design Competition", "Dean's List", "FPGA Programming"],
+                isFeatured: false,
+                fakeReactions: { like: 9, love: 6, star: 11, laugh: 2 },
+                media: [
+                    { type: "image", url: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "FPGA development board" },
+                    { type: "image", url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "Digital signal processing project" },
+                    { type: "image", url: null, description: "Future project: Real-time image processing" },
+                    { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "FPGA programming tutorial" }
+                ]
+            },
+            {
+                id: "EE2023008",
+                name: "Daniel Brown",
+                year: "Fourth Year",
+                image: "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80",
+                journey: "Daniel has focused on control systems and automation. He completed a co-op at Siemens and is developing an automated testing system for his capstone project. He has accepted a job offer as a controls engineer.",
+                achievements: ["Siemens Co-op", "Control Systems Award", "Automation Research Grant", "PLC Programming Expert"],
+                isFeatured: false,
+                fakeReactions: { like: 14, love: 9, star: 13, laugh: 4 },
+                media: [
+                    { type: "image", url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "Automated testing system" },
+                    { type: "image", url: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "Control systems lab" },
+                    { type: "image", url: null, description: "Future project: Industrial automation" },
+                    { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Control system demonstration" }
+                ]
+            },
+            {
+                id: "EE2023009",
+                name: "Sophia Garcia",
+                year: "First Year",
+                image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80",
+                journey: "Sophia is new to electrical engineering but shows great promise in analog electronics. She's building an audio amplifier circuit for her first-year project and has already started learning PCB design software.",
+                achievements: ["First-Year Scholarship", "Electronics Club Member", "Analog Circuits Beginner"],
+                isFeatured: false,
+                fakeReactions: { like: 4, love: 2, star: 5, laugh: 1 },
+                media: [
+                    { type: "image", url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "Audio amplifier circuit" },
+                    { type: "image", url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "PCB design software interface" },
+                    { type: "image", url: null, description: "Future project: Advanced amplifier design" },
+                    { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Circuit building tutorial" }
+                ]
+            },
+            {
+                id: "DEEL21493/25M",
+                name: "Michael Thompson",
+                year: "First Year",
+                image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80",
+                journey: "Michael is specializing in telecommunications and wireless systems. He's researching MIMO antenna systems for his honors thesis and has developed a novel antenna design that improves signal strength in urban environments.",
+                achievements: ["Telecom Research Grant", "Honors Program", "Wireless Systems Competition", "Antenna Design"],
+                isFeatured: false,
+                fakeReactions: { like: 11, love: 7, star: 14, laugh: 3 },
+                media: [
+                    { type: "image", url: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "MIMO antenna prototype" },
+                    { type: "image", url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", description: "Wireless communication lab" },
+                    { type: "image", url: null, description: "Future project: 5G antenna optimization" },
+                    { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Antenna testing demonstration" }
+                ]
+            }
+        ];
+        */
+
+        // Create empty studentsData array to prevent errors
+        const studentsData = [];
+
+        // Featured student data
+        const featuredStudent = {
+            id: "EE2023FS",
+            name: "James Kiladi",
+            year: "First Year Electrical Engineering student",
+            image: "user1.webp",
+            journey: "James is the creative mind behind the EE Power Peers website — a platform he developed to help fellow electrical engineering students learn, share knowledge, and strengthen their practical skills. His passion for innovation and collaboration shines through every project he takes on. James is also highly skilled in conduit, trunking, and PVC installations, known for his precision, creativity, and dedication to quality electrical work.",
+            achievements: ["IEEE Project Competition Winner", "Renewable Energy Research Grant", "Semiconductor Internship", "Dean's List All Semesters", "Circuit Design Excellence"],
+            isFeatured: true,
+            fakeReactions: { like: 25, love: 18, star: 30, laugh: 8 },
+            media: [
+                { type: "image", url: "https://ik.imagekit.io/eepowerpeers/IMG_20250605_120209.jpg", description: "*****" },
+                { type: "image", url: "https://ik.imagekit.io/eepowerpeers/IMG_20250605_120109.jpg", description: "*****" },
+                { type: "image", url: null, description: "Future project: Advanced power systems" },
+                { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "IEEE competition presentation" }
+            ]
+        };
+
+        // DOM elements
+        const studentsGrid = document.getElementById('studentsGrid');
+        const searchInput = document.getElementById('searchInput');
+        const yearFilter = document.getElementById('yearFilter');
+        const notification = document.getElementById('notification');
+        const mediaModal = document.getElementById('mediaModal');
+        const closeMediaModal = document.getElementById('closeMediaModal');
+        const enlargedMedia = document.getElementById('enlargedMedia');
+        const mediaDescriptionLarge = document.getElementById('mediaDescriptionLarge');
+
+        // Initialize the portfolio section
+        function initPortfolio() {
+            // COMMENTED OUT: renderStudentCards();
+            createModals();
+            setupEventListeners();
+            loadReactionCounts();
+            
+            // Check if there's a student ID in the URL and open that modal
+            const urlParams = new URLSearchParams(window.location.search);
+            const studentId = urlParams.get('id');
+            if (studentId) {
+                openModalById(studentId);
+            }
+        }
+
+        // Render student cards in the grid - COMMENTED OUT
+        /*
+        function renderStudentCards(filteredStudents = studentsData) {
+            studentsGrid.innerHTML = '';
+            
+            filteredStudents.forEach(student => {
+                const card = document.createElement('div');
+                card.className = 'student-card';
+                card.setAttribute('data-id', student.id);
+                
+                card.innerHTML = `
+                    <img src="${student.image}" alt="${student.name}" class="student-image" loading="lazy">
+                    <div class="student-info">
+                        <h3 class="student-name">${student.name}</h3>
+                        <p class="student-year">${student.year}</p>
+                        <button class="view-portfolio">View Portfolio</button>
+                    </div>
+                `;
+                
+                studentsGrid.appendChild(card);
+            });
+        }
+        */
+
+        // Create unique modals for each student
+        function createModals() {
+            // Create modal for featured student
+            createStudentModal(featuredStudent);
+            
+            // COMMENTED OUT: Create modals for regular students
+            /*
+            studentsData.forEach(student => {
+                createStudentModal(student);
+            });
+            */
+        }
+
+        // Create a modal for a specific student
+        function createStudentModal(student) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.id = `modal-${student.id}`;
+            
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="close-modal">&times;</button>
+                    <div class="modal-header">
+                        <img src="${student.image}" alt="${student.name}" class="modal-image">
+                        <div class="modal-student-info">
+                            <h2>${student.name}</h2>
+                            <p>${student.year} | Student ID: ${student.id}</p>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="section-title">My Journey</h3>
+                        <p class="journey-text">${student.journey}</p>
+                        
+                        <h3 class="section-title">Project Gallery</h3>
+                        <div class="gallery" id="gallery-${student.id}">
+                            <!-- Gallery items will be populated by JavaScript -->
+                        </div>
+                        
+                        <h3 class="section-title">Achievements & Badges</h3>
+                        <div class="achievements" id="achievements-${student.id}">
+                            <!-- Achievements will be populated by JavaScript -->
+                        </div>
+                        
+                        <div class="modal-actions">
+                            <div class="reactions">
+                                <button class="reaction-btn" data-reaction="like">👍 <span id="likeCount-${student.id}">0</span></button>
+                                <button class="reaction-btn" data-reaction="love">❤️ <span id="loveCount-${student.id}">0</span></button>
+                                <button class="reaction-btn" data-reaction="star">⭐ <span id="starCount-${student.id}">0</span></button>
+                                <button class="reaction-btn" data-reaction="laugh">😂 <span id="laughCount-${student.id}">0</span></button>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="share-btn" data-id="${student.id}">Share Portfolio</button>
+                                <button class="connect-btn">Connect</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Set gallery items
+            const gallery = document.getElementById(`gallery-${student.id}`);
+            student.media.forEach((mediaItem, index) => {
+                if (mediaItem.url) {
+                    const galleryItemContainer = document.createElement('div');
+                    galleryItemContainer.className = 'gallery-item-container';
+                    
+                    if (mediaItem.type === 'image') {
+                        const galleryItem = document.createElement('img');
+                        galleryItem.className = 'gallery-item';
+                        galleryItem.src = mediaItem.url;
+                        galleryItem.alt = `Project ${index+1}`;
+                        galleryItem.loading = 'lazy';
+                        galleryItem.setAttribute('data-description', mediaItem.description);
+                        galleryItemContainer.appendChild(galleryItem);
+                    } else if (mediaItem.type === 'video') {
+                        const galleryItem = document.createElement('iframe');
+                        galleryItem.className = 'gallery-item';
+                        galleryItem.src = mediaItem.url;
+                        galleryItem.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                        galleryItem.allowFullscreen = true;
+                        galleryItem.setAttribute('data-description', mediaItem.description);
+                        galleryItemContainer.appendChild(galleryItem);
+                    }
+                    
+                    const description = document.createElement('p');
+                    description.className = 'media-description';
+                    description.textContent = mediaItem.description;
+                    galleryItemContainer.appendChild(description);
+                    
+                    gallery.appendChild(galleryItemContainer);
+                } else {
+                    // Placeholder for future media
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'gallery-item-container';
+                    placeholder.innerHTML = `
+                        <div class="gallery-item" style="background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #999;">
+                            <span>Media Coming Soon</span>
+                        </div>
+                        <p class="media-description">${mediaItem.description}</p>
+                    `;
+                    gallery.appendChild(placeholder);
+                }
+            });
+            
+            // Set achievements
+            const achievements = document.getElementById(`achievements-${student.id}`);
+            student.achievements.forEach(achievement => {
+                const badge = document.createElement('span');
+                badge.className = 'badge';
+                badge.textContent = achievement;
+                achievements.appendChild(badge);
+            });
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Student card clicks - COMMENTED OUT
+            /*
+            studentsGrid.addEventListener('click', (e) => {
+                const card = e.target.closest('.student-card');
+                if (card) {
+                    const studentId = card.getAttribute('data-id');
+                    openModalById(studentId);
+                }
+                
+                if (e.target.classList.contains('view-portfolio')) {
+                    const card = e.target.closest('.student-card');
+                    const studentId = card.getAttribute('data-id');
+                    openModalById(studentId);
+                }
+            });
+            */
+            
+            // Featured student card click
+            document.querySelector('.featured-button').addEventListener('click', () => {
+                openModalById(featuredStudent.id);
+            });
+            
+            // Modal close events (delegated)
+            document.body.addEventListener('click', (e) => {
+                if (e.target.classList.contains('close-modal')) {
+                    const modal = e.target.closest('.modal');
+                    closeModal(modal);
+                }
+                
+                if (e.target.classList.contains('modal')) {
+                    closeModal(e.target);
+                }
+            });
+            
+            // Filter events - COMMENTED OUT
+            /*
+            searchInput.addEventListener('input', filterStudents);
+            yearFilter.addEventListener('change', filterStudents);
+            */
+            
+            // Reaction buttons (delegated)
+            document.body.addEventListener('click', (e) => {
+                if (e.target.classList.contains('reaction-btn') || e.target.parentElement.classList.contains('reaction-btn')) {
+                    const reactionBtn = e.target.classList.contains('reaction-btn') ? e.target : e.target.parentElement;
+                    const modal = reactionBtn.closest('.modal');
+                    const studentId = modal.id.replace('modal-', '');
+                    const reaction = reactionBtn.getAttribute('data-reaction');
+                    handleReaction(studentId, reaction, reactionBtn);
+                }
+            });
+            
+            // Share buttons (delegated)
+            document.body.addEventListener('click', (e) => {
+                if (e.target.classList.contains('share-btn')) {
+                    const studentId = e.target.getAttribute('data-id');
+                    sharePortfolio(studentId);
+                }
+            });
+            
+            // Connect buttons (delegated)
+            document.body.addEventListener('click', (e) => {
+                if (e.target.classList.contains('connect-btn')) {
+                    const modal = e.target.closest('.modal');
+                    const studentId = modal.id.replace('modal-', '');
+                    alert(`Connection request sent to ${getStudentNameById(studentId)}!`);
+                }
+            });
+            
+            // Gallery item clicks for enlargement
+            document.body.addEventListener('click', (e) => {
+                if (e.target.classList.contains('gallery-item') || e.target.parentElement.classList.contains('gallery-item')) {
+                    const galleryItem = e.target.classList.contains('gallery-item') ? e.target : e.target.parentElement;
+                    const description = galleryItem.getAttribute('data-description');
+                    
+                    if (galleryItem.tagName === 'IMG') {
+                        enlargedMedia.src = galleryItem.src;
+                        enlargedMedia.style.display = 'block';
+                    } else if (galleryItem.tagName === 'IFRAME') {
+                        enlargedMedia.src = galleryItem.src;
+                        enlargedMedia.style.display = 'block';
+                    }
+                    
+                    mediaDescriptionLarge.textContent = description;
+                    mediaModal.classList.add('active');
+                }
+            });
+            
+            // Media modal close
+            closeMediaModal.addEventListener('click', () => {
+                mediaModal.classList.remove('active');
+                enlargedMedia.src = '';
+            });
+            
+            mediaModal.addEventListener('click', (e) => {
+                if (e.target === mediaModal) {
+                    mediaModal.classList.remove('active');
+                    enlargedMedia.src = '';
+                }
+            });
+        }
+
+        // Open modal by student ID
+        function openModalById(studentId) {
+            // Close any open modals first
+            document.querySelectorAll('.modal.active').forEach(modal => {
+                closeModal(modal);
+            });
+            
+            const modal = document.getElementById(`modal-${studentId}`);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Load reaction counts for this student
+                loadReactionCountsForStudent(studentId);
+                
+                // Update URL without page reload
+                const newUrl = new URL(window.location);
+                newUrl.searchParams.set('id', studentId);
+                window.history.pushState({}, '', newUrl);
+            }
+        }
+
+        // Close modal
+        function closeModal(modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Remove student ID from URL
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.delete('id');
+            window.history.replaceState({}, '', newUrl);
+        }
+
+        // Filter students based on search and year filter - COMMENTED OUT
+        /*
+        function filterStudents() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const yearValue = yearFilter.value;
+            
+            const filtered = studentsData.filter(student => {
+                const matchesSearch = student.name.toLowerCase().includes(searchTerm);
+                const matchesYear = !yearValue || student.year.includes(yearValue);
+                return matchesSearch && matchesYear;
+            });
+            
+            renderStudentCards(filtered);
+        }
+        */
+
+        // Handle reaction clicks
+        function handleReaction(studentId, reaction, reactionBtn) {
+            // Get current counts from localStorage
+            const storageKey = `reactions_${studentId}`;
+            let reactions = JSON.parse(localStorage.getItem(storageKey)) || getStudentById(studentId).fakeReactions;
+            
+            // Check if user already reacted with this type
+            const userReactionsKey = `user_reactions_${studentId}`;
+            let userReactions = JSON.parse(localStorage.getItem(userReactionsKey)) || {};
+            
+            if (userReactions[reaction]) {
+                // User is removing their reaction
+                reactions[reaction]--;
+                userReactions[reaction] = false;
+                reactionBtn.classList.remove('active');
+            } else {
+                // User is adding a reaction
+                reactions[reaction]++;
+                userReactions[reaction] = true;
+                reactionBtn.classList.add('active');
+                
+                // Remove any other reactions from this user
+                Object.keys(userReactions).forEach(key => {
+                    if (key !== reaction && userReactions[key]) {
+                        reactions[key]--;
+                        userReactions[key] = false;
+                        document.querySelector(`#modal-${studentId} .reaction-btn[data-reaction="${key}"]`).classList.remove('active');
+                    }
+                });
+            }
+            
+            // Save back to localStorage
+            localStorage.setItem(storageKey, JSON.stringify(reactions));
+            localStorage.setItem(userReactionsKey, JSON.stringify(userReactions));
+            
+            // Update the UI
+            document.getElementById(`${reaction}Count-${studentId}`).textContent = reactions[reaction];
+        }
+
+        // Get student by ID
+        function getStudentById(studentId) {
+            if (studentId === featuredStudent.id) return featuredStudent;
+            return studentsData.find(s => s.id === studentId) || featuredStudent;
+        }
+
+        // Load reaction counts for all students (initialize if not exists)
+        function loadReactionCounts() {
+            // COMMENTED OUT: Load reaction counts for regular students
+            /*
+            studentsData.forEach(student => {
+                const storageKey = `reactions_${student.id}`;
+                if (!localStorage.getItem(storageKey)) {
+                    localStorage.setItem(storageKey, JSON.stringify(student.fakeReactions));
+                }
+                
+                const userReactionsKey = `user_reactions_${student.id}`;
+                if (!localStorage.getItem(userReactionsKey)) {
+                    localStorage.setItem(userReactionsKey, JSON.stringify({}));
+                }
+            });
+            */
+            
+            // Also initialize for featured student
+            const featuredStorageKey = `reactions_${featuredStudent.id}`;
+            if (!localStorage.getItem(featuredStorageKey)) {
+                localStorage.setItem(featuredStorageKey, JSON.stringify(featuredStudent.fakeReactions));
+            }
+            
+            const featuredUserReactionsKey = `user_reactions_${featuredStudent.id}`;
+            if (!localStorage.getItem(featuredUserReactionsKey)) {
+                localStorage.setItem(featuredUserReactionsKey, JSON.stringify({}));
+            }
+        }
+
+        // Load reaction counts for a specific student
+        function loadReactionCountsForStudent(studentId) {
+            const storageKey = `reactions_${studentId}`;
+            const reactions = JSON.parse(localStorage.getItem(storageKey)) || getStudentById(studentId).fakeReactions;
+            
+            const userReactions = JSON.parse(localStorage.getItem(`user_reactions_${studentId}`)) || {};
+            
+            // Update the UI with current counts
+            document.getElementById(`likeCount-${studentId}`).textContent = reactions.like;
+            document.getElementById(`loveCount-${studentId}`).textContent = reactions.love;
+            document.getElementById(`starCount-${studentId}`).textContent = reactions.star;
+            document.getElementById(`laughCount-${studentId}`).textContent = reactions.laugh;
+            
+            // Update active state of reaction buttons
+            Object.keys(userReactions).forEach(reaction => {
+                if (userReactions[reaction]) {
+                    document.querySelector(`#modal-${studentId} .reaction-btn[data-reaction="${reaction}"]`).classList.add('active');
+                }
+            });
+        }
+
+        // Get student name by ID
+        function getStudentNameById(studentId) {
+            return getStudentById(studentId).name;
+        }
+
+        // Share portfolio using Web Share API or fallback
+        function sharePortfolio(studentId) {
+            const student = getStudentById(studentId);
+            
+            // Create a shareable URL with the student ID
+            const shareUrl = `${window.location.origin}${window.location.pathname}?id=${studentId}`;
+            
+            const shareData = {
+                title: `${student.name}'s Electrical Engineering Portfolio`,
+                text: `Check out ${student.name}'s portfolio! ${student.journey.substring(0, 100)}...`,
+                url: shareUrl
+            };
+            
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .then(() => console.log('Successful share'))
+                    .catch(error => console.log('Error sharing:', error));
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(shareUrl)
+                    .then(() => {
+                        showNotification('Portfolio link copied to clipboard!');
+                    })
+                    .catch(() => {
+                        // Final fallback: show URL in alert
+                        alert(`Share this link: ${shareUrl}`);
+                    });
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize the portfolio when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initPortfolio);
+        
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const studentId = urlParams.get('id');
+            
+            // Close any open modals
+            document.querySelectorAll('.modal.active').forEach(modal => {
+                closeModal(modal);
+            });
+            
+            // Open modal if ID is in URL
+            if (studentId) {
+                openModalById(studentId);
+            }
+        });
+    </script>
+</body>
+</html>

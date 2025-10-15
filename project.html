@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EE Power Peers - Project Showcase</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6b8cbc;
+            --accent-color: #ff6b6b;
+            --success-color: #4CAF50;
+            --light-color: #f5f7fa;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .showcase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-text h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .header-text p {
+            color: var(--secondary-color);
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+            background-color: #45a049;
+        }
+
+        /* Project Cards Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .project-card {
+            width: 160px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            transition: var(--transition);
+            justify-self: center;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-thumbnail {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+        }
+
+        .card-content {
+            padding: 12px;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-maker {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background-color: white;
+            width: 95%;
+            max-width: 1000px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-color);
+            z-index: 10;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .modal-close:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .modal-media {
+            width: 100%;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-media img,
+        .modal-media video {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: var(--border-radius);
+        }
+
+        .modal-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .maker-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+
+        .modal-maker {
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        .modal-description {
+            line-height: 1.6;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .reaction-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: none;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .reaction-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .reaction-btn.active {
+            background-color: #e6f7ff;
+            border-color: var(--primary-color);
+        }
+
+        .support-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .support-btn:hover {
+            background-color: #ff5252;
+        }
+
+        /* Navigation Buttons (Fixed Position) */
+        .modal-nav {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--box-shadow);
+            pointer-events: auto;
+        }
+
+        .nav-btn:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        /* Support Popup */
+        .support-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1100;
+            max-width: 400px;
+            width: 90%;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .support-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .support-popup h3 {
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .support-popup p {
+            margin-bottom: 15px;
+        }
+
+        .mpesa-number {
+            background-color: #f0f0f0;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            font-family: monospace;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dark-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            z-index: 1200;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .toast.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Registration Modal */
+        .registration-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            width: 95%;
+            max-width: 500px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            padding: 30px;
+        }
+
+        .registration-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .registration-modal h2 {
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            text-align: center;
+        }
+
+        .payment-info {
+            background-color: #f0f7ff;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .payment-info h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .payment-info p {
+            margin-bottom: 15px;
+        }
+
+        .registration-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .modal-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+
+            .project-card {
+                width: 140px;
+            }
+
+            .modal-nav {
+                padding: 0 10px;
+            }
+
+            .nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .project-card {
+                width: 100%;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .registration-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Project Showcase Section -->
+    <section class="project-showcase">
+        <div class="showcase-header">
+            <div class="header-text">
+                <h1>Project Showcase – Student Innovation</h1>
+                <p>Discover amazing, innovative projects created by talented and passionate students, showcasing their creativity, technical skills, and dedication to solving real-world problems through hands-on learning and teamwork.
+</p>
+            </div>
+            <button class="btn register-btn">
+                <i class="fas fa-plus-circle"></i> Register Project
+            </button>
+        </div>
+
+        <!--
+        <div class="projects-grid" id="projectsGrid">
+            
+        </div>
+        -->
+    </section>
+
+    <!--
+    <div class="modal-overlay" id="mainModal">
+        <div class="modal">
+            <button class="modal-close" id="closeMainModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-nav">
+                <button class="nav-btn" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="nav-btn" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="modal-media">
+                    <div class="card-thumbnail" id="modalMediaPlaceholder">
+                        <i class="fas fa-image fa-2x"></i>
+                    </div>
+                    <img id="modalMedia" src="" alt="Project Media" loading="lazy" style="display: none;">
+                </div>
+                <div class="modal-info">
+                    <div class="modal-header">
+                        <img id="modalAvatar" src="" alt="Maker Avatar" class="maker-avatar">
+                        <div>
+                            <h2 class="modal-title" id="modalTitle"></h2>
+                            <p class="modal-maker" id="modalMaker"></p>
+                        </div>
+                    </div>
+                    <p class="modal-description" id="modalDescription"></p>
+                    <div class="modal-actions">
+                        <button class="reaction-btn" id="likeBtn">
+                            <i class="fas fa-thumbs-up"></i> <span id="likeCount">0</span>
+                        </button>
+                        <button class="reaction-btn" id="dislikeBtn">
+                            <i class="fas fa-thumbs-down"></i> <span id="dislikeCount">0</span>
+                        </button>
+                        <button class="support-btn" id="supportBtn">
+                            <i class="fas fa-hand-holding-heart"></i> Support Project
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+
+    
+    <div class="support-popup" id="supportPopup">
+        <h3>Support this Project</h3>
+        <p>Support this project with any small amount.</p>
+        <div class="mpesa-number">
+            <span>0769882553</span>
+            <button class="copy-btn" id="copyMpesaBtn">
+                <i class="far fa-copy"></i> Copy
+            </button>
+        </div>
+        <button class="btn" id="closeSupportPopup">Close</button>
+    </div>
+
+    <div class="toast" id="toast">Copied to clipboard!</div>
+    -->
+
+    <!-- Registration Modal -->
+    <div class="registration-modal" id="registrationModal">
+        <h2>Register Your Project</h2>
+        <div class="payment-info">
+            <h3>Registration Fee: KES 50</h3>
+            <p>Please pay the registration fee using the M-PESA details below:</p>
+            <div class="mpesa-number">
+                <span>0769882553</span>
+                <button class="copy-btn" id="copyRegMpesaBtn">
+                    <i class="far fa-copy"></i> Copy
+                </button>
+            </div>
+            <p>After payment, contact the admin for further instructions.</p>
+        </div>
+        <div class="registration-actions">
+            <button class="btn btn-success" id="contactAdminBtn">
+                <i class="fab fa-whatsapp"></i> Contact Admin via WhatsApp
+            </button>
+            <button class="btn" id="closeRegistrationModal">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample JSON data - in a real implementation, this would be fetched from a JSON file
+        const projectsData = [
+            {
+                "id": 1,
+                "title": "Miniature Biogas Plant",
+                "maker": "Luis Waimo",
+                "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fHww&auto=format&fit=crop&w=100&q=80",
+                "description": "A small-scale biogas plant built using locally available materials. This innovative project converts organic waste into usable biogas for cooking and lighting, providing a sustainable energy solution for rural communities.",
+                "media": "https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmlvZ2FzfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+                "type": "image",
+                "likes": 15,
+                "dislikes": 2
+            },
+            {
+                "id": 2,
+                "title": "Solar Powered Water Purifier",
+                "maker": "Sarah Johnson",
+                "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww&auto=format&fit=crop&w=100&q=80",
+                "description": "An eco-friendly water purification system that uses solar energy to provide clean drinking water. The device is portable, cost-effective, and ideal for remote areas without access to electricity.",
+                "media": "https://images.unsplash.com/photo-1569336415961-10d6b98a1d30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c29sYXIlMjB3YXRlciUyMHB1cmlmaWVyfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+                "type": "image",
+                "likes": 22,
+                "dislikes": 1
+            },
+            {
+                "id": 3,
+                "title": "Smart Irrigation System",
+                "maker": "Michael Chen",
+                "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=100&q=80",
+                "description": "An IoT-based irrigation system that monitors soil moisture and automatically waters plants when needed. This helps conserve water while ensuring optimal plant growth.",
+                "media": "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aXJyaWdhdGlvbiUyMHN5c3RlbXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=60",
+                "type": "image",
+                "likes": 18,
+                "dislikes": 3
+            },
+            {
+                "id": 4,
+                "title": "Portable Wind Turbine",
+                "maker": "Emma Rodriguez",
+                "avatar": "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=100&q=80",
+                "description": "A compact, portable wind turbine designed for camping and outdoor activities. It can generate enough electricity to charge small devices like phones and power banks.",
+                "media": "https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2luZCUyMHR1cmJpbmV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=600&q=60",
+                "type": "image",
+                "likes": 12,
+                "dislikes": 0
+            },
+            {
+                "id": 5,
+                "title": "Automated Home Security",
+                "maker": "David Kim",
+                "avatar": "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=100&q=80",
+                "description": "A smart home security system that uses facial recognition and motion sensors to detect intruders. It sends real-time alerts to homeowners' smartphones.",
+                "media": "https://images.unsplash.com/photo-1558618666-fcd25856cd63?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2VjdXJpdHklMjBzeXN0ZW18ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=600&q=60",
+                "type": "image",
+                "likes": 25,
+                "dislikes": 2
+            },
+            {
+                "id": 6,
+                "title": "Eco-Friendly Packaging",
+                "maker": "Lisa Wang",
+                "avatar": "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=100&q=80",
+                "description": "Biodegradable packaging material made from agricultural waste. This sustainable alternative to plastic packaging decomposes naturally without harming the environment.",
+                "media": "https://images.unsplash.com/photo-1587334984665-04f1b2b6d97f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZWNvJTIwcGFja2FnaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+                "type": "image",
+                "likes": 14,
+                "dislikes": 1
+            }
+        ];
+
+        // DOM Elements
+        const projectsGrid = document.getElementById('projectsGrid');
+        const mainModal = document.getElementById('mainModal');
+        const closeMainModal = document.getElementById('closeMainModal');
+        const modalMedia = document.getElementById('modalMedia');
+        const modalMediaPlaceholder = document.getElementById('modalMediaPlaceholder');
+        const modalAvatar = document.getElementById('modalAvatar');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMaker = document.getElementById('modalMaker');
+        const modalDescription = document.getElementById('modalDescription');
+        const likeBtn = document.getElementById('likeBtn');
+        const dislikeBtn = document.getElementById('dislikeBtn');
+        const likeCount = document.getElementById('likeCount');
+        const dislikeCount = document.getElementById('dislikeCount');
+        const supportBtn = document.getElementById('supportBtn');
+        const supportPopup = document.getElementById('supportPopup');
+        const closeSupportPopup = document.getElementById('closeSupportPopup');
+        const copyMpesaBtn = document.getElementById('copyMpesaBtn');
+        const copyRegMpesaBtn = document.getElementById('copyRegMpesaBtn');
+        const toast = document.getElementById('toast');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const registerBtn = document.querySelector('.register-btn');
+        const registrationModal = document.getElementById('registrationModal');
+        const closeRegistrationModal = document.getElementById('closeRegistrationModal');
+        const contactAdminBtn = document.getElementById('contactAdminBtn');
+
+        // State variables
+        let currentProjectIndex = 0;
+        let projects = [];
+
+        // Initialize the application
+        function init() {
+            projects = projectsData;
+            // Commented out the rendering of project cards
+            // renderProjectCards();
+            attachEventListeners();
+            loadReactionsFromStorage();
+        }
+
+        // Render project cards in the grid
+        function renderProjectCards() {
+            projectsGrid.innerHTML = '';
+            
+            projects.forEach((project, index) => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.dataset.index = index;
+                
+                card.innerHTML = `
+                    <div class="card-thumbnail">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">${project.title}</h3>
+                        <p class="card-maker">${project.maker}</p>
+                    </div>
+                `;
+                
+                // Lazy load the thumbnail
+                const thumbnail = card.querySelector('.card-thumbnail');
+                const img = new Image();
+                img.src = project.media;
+                img.onload = function() {
+                    thumbnail.innerHTML = '';
+                    thumbnail.appendChild(img);
+                    img.className = 'card-thumbnail';
+                    img.style.objectFit = 'cover';
+                };
+                
+                projectsGrid.appendChild(card);
+            });
+        }
+
+        // Attach event listeners
+        function attachEventListeners() {
+            // Project card clicks - commented out
+            /*
+            projectsGrid.addEventListener('click', (e) => {
+                const card = e.target.closest('.project-card');
+                if (card) {
+                    const index = parseInt(card.dataset.index);
+                    openProjectModal(index);
+                }
+            });
+            */
+
+            // Modal close buttons
+            if (closeMainModal) {
+                closeMainModal.addEventListener('click', closeMainModalHandler);
+            }
+            
+            if (closeSupportPopup) {
+                closeSupportPopup.addEventListener('click', closeSupportPopupHandler);
+            }
+            
+            closeRegistrationModal.addEventListener('click', closeRegistrationModalHandler);
+
+            // Reaction buttons - commented out
+            /*
+            likeBtn.addEventListener('click', () => handleReaction('like'));
+            dislikeBtn.addEventListener('click', () => handleReaction('dislike'));
+            */
+
+            // Support button - commented out
+            /*
+            supportBtn.addEventListener('click', openSupportPopup);
+            */
+
+            // Copy buttons
+            if (copyMpesaBtn) {
+                copyMpesaBtn.addEventListener('click', () => copyToClipboard('0769882553'));
+            }
+            
+            copyRegMpesaBtn.addEventListener('click', () => copyToClipboard('0769882553'));
+
+            // Navigation buttons - commented out
+            /*
+            prevBtn.addEventListener('click', showPreviousProject);
+            nextBtn.addEventListener('click', showNextProject);
+            */
+
+            // Registration button
+            registerBtn.addEventListener('click', openRegistrationModal);
+
+            // Contact admin button
+            contactAdminBtn.addEventListener('click', contactAdmin);
+
+            // Keyboard events
+            document.addEventListener('keydown', handleKeyboardEvents);
+        }
+
+        // Open project modal
+        function openProjectModal(index) {
+            currentProjectIndex = index;
+            const project = projects[index];
+            
+            // Show placeholder initially
+            modalMedia.style.display = 'none';
+            modalMediaPlaceholder.style.display = 'flex';
+            
+            // Load media
+            const img = new Image();
+            img.src = project.media;
+            img.onload = function() {
+                modalMedia.src = project.media;
+                modalMedia.alt = project.title;
+                modalMedia.style.display = 'block';
+                modalMediaPlaceholder.style.display = 'none';
+            };
+            
+            modalAvatar.src = project.avatar;
+            modalAvatar.alt = `${project.maker} avatar`;
+            modalTitle.textContent = project.title;
+            modalMaker.textContent = project.maker;
+            modalDescription.textContent = project.description;
+            
+            // Load reaction counts
+            const reactions = getReactionsForProject(project.id);
+            likeCount.textContent = reactions.likes;
+            dislikeCount.textContent = reactions.dislikes;
+            
+            // Update active state for reaction buttons
+            updateReactionButtons(project.id);
+            
+            mainModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close main modal
+        function closeMainModalHandler() {
+            mainModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close registration modal
+        function closeRegistrationModalHandler() {
+            registrationModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Handle reactions
+        function handleReaction(type) {
+            const projectId = projects[currentProjectIndex].id;
+            const reactions = getReactionsForProject(projectId);
+            const userReactions = JSON.parse(sessionStorage.getItem('userReactions') || '{}');
+            
+            // Check if user already reacted
+            if (userReactions[projectId]) {
+                const previousReaction = userReactions[projectId];
+                
+                // If clicking the same reaction, remove it
+                if (previousReaction === type) {
+                    reactions[type]--;
+                    delete userReactions[projectId];
+                } else {
+                    // If clicking a different reaction, switch
+                    reactions[previousReaction]--;
+                    reactions[type]++;
+                    userReactions[projectId] = type;
+                }
+            } else {
+                // New reaction
+                reactions[type]++;
+                userReactions[projectId] = type;
+            }
+            
+            // Update storage
+            sessionStorage.setItem(`project_${projectId}_reactions`, JSON.stringify(reactions));
+            sessionStorage.setItem('userReactions', JSON.stringify(userReactions));
+            
+            // Update UI
+            likeCount.textContent = reactions.likes;
+            dislikeCount.textContent = reactions.dislikes;
+            updateReactionButtons(projectId);
+        }
+
+        // Get reactions for a project
+        function getReactionsForProject(projectId) {
+            const stored = sessionStorage.getItem(`project_${projectId}_reactions`);
+            if (stored) {
+                return JSON.parse(stored);
+            }
+            
+            // Return initial reactions if not stored
+            const project = projects.find(p => p.id === projectId);
+            return {
+                likes: project.likes,
+                dislikes: project.dislikes
+            };
+        }
+
+        // Update reaction buttons active state
+        function updateReactionButtons(projectId) {
+            const userReactions = JSON.parse(sessionStorage.getItem('userReactions') || '{}');
+            const userReaction = userReactions[projectId];
+            
+            likeBtn.classList.toggle('active', userReaction === 'like');
+            dislikeBtn.classList.toggle('active', userReaction === 'dislike');
+        }
+
+        // Load reactions from storage on page load
+        function loadReactionsFromStorage() {
+            // This ensures that when the page loads, we show the correct reaction counts
+            // In a real implementation, we might fetch this from a server
+        }
+
+        // Open support popup
+        function openSupportPopup() {
+            supportPopup.classList.add('active');
+        }
+
+        // Close support popup
+        function closeSupportPopupHandler() {
+            supportPopup.classList.remove('active');
+        }
+
+        // Copy to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    showToast();
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = text;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showToast();
+                });
+        }
+
+        // Show toast message
+        function showToast() {
+            toast.classList.add('active');
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 2000);
+        }
+
+        // Show previous project
+        function showPreviousProject() {
+            currentProjectIndex = (currentProjectIndex - 1 + projects.length) % projects.length;
+            openProjectModal(currentProjectIndex);
+        }
+
+        // Show next project
+        function showNextProject() {
+            currentProjectIndex = (currentProjectIndex + 1) % projects.length;
+            openProjectModal(currentProjectIndex);
+        }
+
+        // Open registration modal
+        function openRegistrationModal() {
+            registrationModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Contact admin via WhatsApp
+        function contactAdmin() {
+            const phoneNumber = '0769882553';
+            const message = 'Hello, I would like to register my project for the EE Power Peers showcase.';
+            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        // Handle keyboard events
+        function handleKeyboardEvents(e) {
+            // Close modals with Escape key
+            if (e.key === 'Escape') {
+                if (mainModal && mainModal.classList.contains('active')) {
+                    closeMainModalHandler();
+                }
+                if (registrationModal.classList.contains('active')) {
+                    closeRegistrationModalHandler();
+                }
+                if (supportPopup && supportPopup.classList.contains('active')) {
+                    closeSupportPopupHandler();
+                }
+            }
+            
+            // Navigate projects with arrow keys
+            if (mainModal && mainModal.classList.contains('active')) {
+                if (e.key === 'ArrowLeft') {
+                    showPreviousProject();
+                } else if (e.key === 'ArrowRight') {
+                    showNextProject();
+                }
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

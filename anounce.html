@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements</title>
+    <style>
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-bg: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
+            --container-bg: rgba(255, 255, 255, 0.08);
+            --text-primary: #f1f1f1;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-color: #00b4d8;
+            --border-color: rgba(255, 255, 255, 0.3);
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 2.5rem;
+            --border-radius: 20px;
+            --border-radius-sm: 15px;
+            --max-width: 420px;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: var(--spacing-sm);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* ===== CONTAINER ===== */
+        .announcement-container {
+            background: var(--container-bg);
+            backdrop-filter: blur(8px);
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            padding: var(--spacing-lg) var(--spacing-md);
+            max-width: var(--max-width);
+            width: 100%;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        /* ===== HEADER ===== */
+        .announcement-header {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .announcement-header h1 {
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+        }
+
+        .announcement-header p {
+            font-size: clamp(0.85rem, 3vw, 1rem);
+            color: var(--text-secondary);
+        }
+
+        /* ===== MESSAGE BOX ===== */
+        .announcement-box {
+            padding: var(--spacing-md);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--border-radius-sm);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            font-size: clamp(0.9rem, 3.5vw, 1.05rem);
+            transition: all 0.3s ease;
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* ===== FOOTER TEXT ===== */
+        .footer {
+            font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+            color: var(--text-muted);
+        }
+
+        /* ===== ANIMATION ===== */
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(15px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        /* ===== RESPONSIVE ENHANCEMENTS ===== */
+        
+        /* Medium devices (tablets, 768px and down) */
+        @media (max-width: 768px) {
+            :root {
+                --spacing-md: 1.25rem;
+                --spacing-lg: 1.75rem;
+            }
+            
+            .announcement-container {
+                padding: var(--spacing-md) var(--spacing-sm);
+            }
+        }
+
+        /* Small devices (phones, 480px and down) */
+        @media (max-width: 480px) {
+            :root {
+                --spacing-xs: 0.4rem;
+                --spacing-sm: 0.75rem;
+                --spacing-md: 1rem;
+                --spacing-lg: 1.5rem;
+                --border-radius: 16px;
+                --border-radius-sm: 12px;
+            }
+            
+            .announcement-container {
+                padding: var(--spacing-lg) var(--spacing-sm);
+            }
+            
+            .announcement-box {
+                padding: var(--spacing-sm);
+            }
+        }
+
+        /* Extra small devices (phones, 360px and down) */
+        @media (max-width: 360px) {
+            :root {
+                --spacing-xs: 0.3rem;
+                --spacing-sm: 0.6rem;
+                --spacing-md: 0.9rem;
+                --spacing-lg: 1.25rem;
+            }
+            
+            body {
+                padding: var(--spacing-xs);
+            }
+        }
+
+        /* ===== INTERACTIVE STATES ===== */
+        /* Hover effects only for devices that support hover */
+        @media (hover: hover) {
+            .announcement-box:hover {
+                border-color: var(--accent-color);
+                box-shadow: 0 0 15px rgba(0, 180, 216, 0.3);
+                transform: translateY(-2px);
+            }
+        }
+
+        /* Focus states for accessibility */
+        .announcement-box:focus {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+
+        /* Active state for touch devices */
+        .announcement-box:active {
+            transform: scale(0.98);
+        }
+
+
+          /*back to home button*/
+ .float-btn {
+    z-index: 1000;
+      position: fixed;
+      bottom: clamp(7px, 5vw, 14px);
+      right: clamp(7px, 5vw, 14px);
+      background-color: #4CAF50;
+      color: #fff;
+      padding: clamp(6px, 2vw, 16px) clamp(8px, 4vw, 20px);
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background-color 0.3s ease-in-out;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+      font-size: clamp(9px, 2vw, 15px);
+    }
+
+    .float-btn:hover {
+      background-color: #3e8e41;
+      box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 768px) {
+      .float-btn {
+        border-radius: 30px;
+        padding: clamp(6px, 2vw, 12px) clamp(12px, 4vw, 18px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .float-btn {
+        bottom: 10px;
+        right: 10px;
+        padding: 2px 12px;
+        font-size: 10px;
+      }
+    }
+       
+    </style>
+</head>
+<body>
+    <a href="index.html" class="float-btn">Back to Home</a>
+    <div class="announcement-container">
+        <div class="announcement-header">
+            <h1>📢 Announcements</h1>
+            <p>Stay tuned for the latest updates and news</p>
+        </div>
+        <div class="announcement-box" id="announcementMessage" tabindex="0">
+            There are no announcements at the moment. Please check back soon for updates — we'll notify you once new information is available.
+        </div>
+        <div class="footer">
+            © 2025 | EE Power Peers
+        </div>
+    </div>
+
+    <script>
+        // Future expansion: You can load announcements dynamically here
+        // Example: Fetch from JSON or server later
+        const message = document.getElementById('announcementMessage');
+        // You could later replace the text with fetched announcements
+        
+        // Add click/tap interaction for touch devices
+        message.addEventListener('click', function() {
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+    </script>
+</body>
+</html>

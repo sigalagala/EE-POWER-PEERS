@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Media Gallery</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --whatsapp-color: #25D366;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        #media-gallery {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+
+        .gallery-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .gallery-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .gallery-item {
+            cursor: pointer;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-item img,
+        .gallery-item video {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Modal Styles */
+        #gallery-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        #gallery-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        #gallery-modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .media-container {
+            position: relative;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+            max-height: 70vh;
+        }
+
+        #modal-image,
+        #modal-video {
+            max-width: 100%;
+            max-height: 70vh;
+            display: block;
+            margin: 0 auto;
+        }
+
+        #modal-image.hidden,
+        #modal-video.hidden {
+            display: none;
+        }
+
+        #modal-caption {
+            padding: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+            background-color: white;
+            color: var(--dark-color);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 2rem;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: rotate(90deg);
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .nav-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .nav-btn.prev {
+            left: 20px;
+        }
+
+        .nav-btn.next {
+            right: 20px;
+        }
+
+        .load-more-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        #load-more {
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        #load-more:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* Loading spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* WhatsApp Submission Section */
+        .whatsapp-submission {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-top: 4px solid var(--whatsapp-color);
+        }
+
+        .whatsapp-submission h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .whatsapp-submission p {
+            margin-bottom: 20px;
+            color: #666;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background-color: var(--whatsapp-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        /*back to home button*/
+        .float-btn {
+            z-index: 1000;
+            position: fixed;
+            bottom: clamp(7px, 5vw, 14px);
+            right: clamp(7px, 5vw, 14px);
+            background-color: #4CAF50;
+            color: #fff;
+            padding: clamp(6px, 2vw, 16px) clamp(8px, 4vw, 20px);
+            border-radius: 50px;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+            font-size: clamp(9px, 2vw, 15px);
+        }
+
+        .float-btn:hover {
+            background-color: #3e8e41;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .float-btn {
+                border-radius: 30px;
+                padding: clamp(6px, 2vw, 12px) clamp(12px, 4vw, 18px);
+            }
+            
+            .whatsapp-submission {
+                padding: 20px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .float-btn {
+                bottom: 10px;
+                right: 10px;
+                padding: 2px 12px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="float-btn">Back to Home</a>
+    <section id="media-gallery">
+        <h2 class="gallery-title">Media Gallery</h2>
+        <p class="gallery-subtitle">Explore our moments in photos and short clips</p>
+
+        <div class="gallery-grid" id="gallery-container">
+            <!-- Media items will be dynamically generated here -->
+        </div>
+
+        <div class="load-more-container">
+            <button id="load-more">Load More</button>
+        </div>
+
+        <!-- WhatsApp Submission Section -->
+        <div class="whatsapp-submission">
+            <h3>Want to be Featured in Our Gallery?</h3>
+            <p>Send us your photos via WhatsApp and we'll add them to the EE Power Peers gallery!</p>
+            <a href="https://wa.me/0769882553?text=Hi!%20I'd%20like%20to%20submit%20my%20photo%20for%20the%20EE%20Power%20Peers%20gallery" class="whatsapp-btn" target="_blank">
+                <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893-.001-3.189-1.262-6.187-3.55-8.436"/>
+                </svg>
+                Send Image via WhatsApp
+            </a>
+        </div>
+
+        <!-- Single Shared Modal -->
+        <div id="gallery-modal" class="hidden">
+            <span class="close-btn">&times;</span>
+            <button class="nav-btn prev">←</button>
+            <button class="nav-btn next">→</button>
+            <div class="modal-content">
+                <div class="media-container">
+                    <div class="spinner" id="modal-spinner"></div>
+                    <img id="modal-image" src="" alt="" class="hidden">
+                    <video id="modal-video" controls class="hidden"></video>
+                </div>
+                <p id="modal-caption"></p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Sample media data - in a real implementation, this might come from an API
+        const mediaData = [
+            { id: 1, type: 'image', thumb: 'https://ik.imagekit.io/eepowerpeers/gal4.jpg?updatedAt=1760550298270', full: 'https://ik.imagekit.io/eepowerpeers/gal4.jpg?updatedAt=1760550298270', caption: 'james kiladi' },
+            { id: 2, type: 'video', thumb: 'https://picsum.photos/90/90?random=2', full: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', caption: 'Big Buck Bunny animation' },
+            { id: 3, type: 'image', thumb: 'https://ik.imagekit.io/eepowerpeers/gal3.jpg?updatedAt=1760550297667', full: 'https://ik.imagekit.io/eepowerpeers/gal3.jpg?updatedAt=1760550297667', caption: 'james kiladi' },
+            { id: 4, type: 'image', thumb: 'https://ik.imagekit.io/eepowerpeers/gal8.jpg?updatedAt=1760550297729', full: 'https://ik.imagekit.io/eepowerpeers/gal8.jpg?updatedAt=1760550297729', caption: 'James kiladi' },
+            { id: 5, type: 'video', thumb: 'https://picsum.photos/90/90?random=5', full: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', caption: 'Elephants Dream short film' },
+            { id: 6, type: 'image', thumb: 'https://ik.imagekit.io/eepowerpeers/gal2.jpg?updatedAt=1760550294246', full: 'https://ik.imagekit.io/eepowerpeers/gal2.jpg?updatedAt=1760550294246', caption: 'james kiladi' },
+            { id: 7, type: 'image', thumb: 'https://ik.imagekit.io/eepowerpeers/gal10.jpeg?updatedAt=1760550250080', full: 'https://ik.imagekit.io/eepowerpeers/gal10.jpeg?updatedAt=1760550250080', caption: 'james kiladi' },
+            { id: 8, type: 'video', thumb: 'https://picsum.photos/90/90?random=8', full: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', caption: 'For Bigger Blazes video' },
+            { id: 9, type: 'image', thumb: 'https://ik.imagekit.io/eepowerpeers/gall11.jpeg?updatedAt=1760550250066', full: 'https://ik.imagekit.io/eepowerpeers/gall11.jpeg?updatedAt=1760550250066', caption: 'james kiladi' },
+            { id: 10, type: 'image', thumb: 'https://ik.imagekit.io/eepowerpeers/gal9.jpg?updatedAt=1760550248815', full: 'https://ik.imagekit.io/eepowerpeers/gal9.jpg?updatedAt=1760550248815', caption: 'james kiladi' },
+            { id: 11, type: 'video', thumb: 'https://picsum.photos/90/90?random=11', full: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', caption: 'For Bigger Escapes video' },
+            { id: 12, type: 'image', thumb: 'https://picsum.photos/90/90?random=12', full: 'https://picsum.photos/600/400?random=12', caption: 'Northern lights in the sky' }
+        ];
+
+        // DOM Elements
+        const galleryContainer = document.getElementById('gallery-container');
+        const modal = document.getElementById('gallery-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalVideo = document.getElementById('modal-video');
+        const modalCaption = document.getElementById('modal-caption');
+        const modalSpinner = document.getElementById('modal-spinner');
+        const closeBtn = document.querySelector('.close-btn');
+        const prevBtn = document.querySelector('.nav-btn.prev');
+        const nextBtn = document.querySelector('.nav-btn.next');
+        const loadMoreBtn = document.getElementById('load-more');
+
+        // State variables
+        let currentMediaIndex = 0;
+        let displayedItems = 8; // Initial number of items to display
+        const itemsPerLoad = 4; // Number of items to load with each "Load More" click
+
+        // Initialize the gallery
+        function initGallery() {
+            renderGalleryItems();
+            setupEventListeners();
+        }
+
+        // Render gallery items based on current display count
+        function renderGalleryItems() {
+            galleryContainer.innerHTML = '';
+            
+            const itemsToShow = mediaData.slice(0, displayedItems);
+            
+            itemsToShow.forEach((media, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.setAttribute('data-id', media.id);
+                galleryItem.setAttribute('data-type', media.type);
+                galleryItem.setAttribute('data-full', media.full);
+                galleryItem.setAttribute('data-caption', media.caption);
+                
+                if (media.type === 'image') {
+                    galleryItem.innerHTML = `
+                        <img src="${media.thumb}" alt="${media.caption}" width="90" height="90" loading="lazy">
+                    `;
+                } else if (media.type === 'video') {
+                    galleryItem.innerHTML = `
+                        <video preload="metadata" poster="${media.thumb}" muted width="90" height="90">
+                            <source src="${media.full}" type="video/mp4">
+                        </video>
+                    `;
+                }
+                
+                galleryContainer.appendChild(galleryItem);
+            });
+
+            // Hide or show the load more button
+            if (displayedItems >= mediaData.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'block';
+            }
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Gallery item click
+            galleryContainer.addEventListener('click', (e) => {
+                const galleryItem = e.target.closest('.gallery-item');
+                if (galleryItem) {
+                    openModal(galleryItem);
+                }
+            });
+
+            // Modal controls
+            closeBtn.addEventListener('click', closeModal);
+            prevBtn.addEventListener('click', showPreviousMedia);
+            nextBtn.addEventListener('click', showNextMedia);
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (modal.classList.contains('active')) {
+                    if (e.key === 'Escape') closeModal();
+                    if (e.key === 'ArrowLeft') showPreviousMedia();
+                    if (e.key === 'ArrowRight') showNextMedia();
+                }
+            });
+
+            // Load more button
+            loadMoreBtn.addEventListener('click', loadMoreItems);
+
+            // Close modal when clicking outside the content
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        }
+
+        // Open modal with selected media
+        function openModal(galleryItem) {
+            const id = galleryItem.getAttribute('data-id');
+            const type = galleryItem.getAttribute('data-type');
+            const fullSrc = galleryItem.getAttribute('data-full');
+            const caption = galleryItem.getAttribute('data-caption');
+            
+            // Find the index of the current media
+            currentMediaIndex = mediaData.findIndex(media => media.id == id);
+            
+            // Show loading spinner
+            modalSpinner.style.display = 'block';
+            modalImage.classList.add('hidden');
+            modalVideo.classList.add('hidden');
+            
+            // Set modal content
+            if (type === 'image') {
+                modalImage.src = fullSrc;
+                modalImage.alt = caption;
+                modalImage.onload = () => {
+                    modalSpinner.style.display = 'none';
+                    modalImage.classList.remove('hidden');
+                };
+            } else if (type === 'video') {
+                modalVideo.src = fullSrc;
+                modalVideo.onloadeddata = () => {
+                    modalSpinner.style.display = 'none';
+                    modalVideo.classList.remove('hidden');
+                };
+            }
+            
+            modalCaption.textContent = caption;
+            
+            // Show modal with animation
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+
+        // Close modal
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+            
+            // Pause video when closing modal
+            if (!modalVideo.classList.contains('hidden')) {
+                modalVideo.pause();
+            }
+        }
+
+        // Show previous media in modal
+        function showPreviousMedia() {
+            currentMediaIndex = (currentMediaIndex - 1 + mediaData.length) % mediaData.length;
+            updateModalContent();
+        }
+
+        // Show next media in modal
+        function showNextMedia() {
+            currentMediaIndex = (currentMediaIndex + 1) % mediaData.length;
+            updateModalContent();
+        }
+
+        // Update modal content based on current index
+        function updateModalContent() {
+            const media = mediaData[currentMediaIndex];
+            
+            // Show loading spinner
+            modalSpinner.style.display = 'block';
+            modalImage.classList.add('hidden');
+            modalVideo.classList.add('hidden');
+            
+            // Set modal content
+            if (media.type === 'image') {
+                modalImage.src = media.full;
+                modalImage.alt = media.caption;
+                modalImage.onload = () => {
+                    modalSpinner.style.display = 'none';
+                    modalImage.classList.remove('hidden');
+                };
+            } else if (media.type === 'video') {
+                modalVideo.src = media.full;
+                modalVideo.onloadeddata = () => {
+                    modalSpinner.style.display = 'none';
+                    modalVideo.classList.remove('hidden');
+                };
+            }
+            
+            modalCaption.textContent = media.caption;
+        }
+
+        // Load more items when button is clicked
+        function loadMoreItems() {
+            displayedItems = Math.min(displayedItems + itemsPerLoad, mediaData.length);
+            renderGalleryItems();
+        }
+
+        // Initialize the gallery when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initGallery);
+    </script>
+</body>
+</html>

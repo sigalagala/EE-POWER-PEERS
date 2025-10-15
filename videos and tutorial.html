@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EE Power Peers - Video Lessons & Tutorials</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            line-height: 1.4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: clamp(8px, 2vw, 15px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: clamp(15px, 3vw, 25px);
+            padding: clamp(8px, 2vw, 15px) 0;
+            border-bottom: 1px solid #e1e8ed;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            margin-bottom: clamp(4px, 1vw, 8px);
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+        }
+
+        /* Search Bar */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: clamp(15px, 3vw, 25px);
+        }
+
+        .search-box {
+            display: flex;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: clamp(10px, 2vw, 14px) clamp(12px, 3vw, 20px);
+            border: none;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+            outline: none;
+        }
+
+        .search-button {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 0 clamp(15px, 3vw, 20px);
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .search-button:hover {
+            background: #3498db;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: clamp(6px, 1.5vw, 10px);
+            margin-bottom: clamp(15px, 3vw, 25px);
+        }
+
+        .tab {
+            padding: clamp(6px, 1.5vw, 10px) clamp(12px, 3vw, 20px);
+            background-color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: clamp(0.75rem, 2vw, 0.85rem);
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab:hover {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .tab.active {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        /* Video Grid - Strict 2x2 layout */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(10px, 2vw, 15px);
+            margin-bottom: 30px;
+        }
+
+        /* Video Card */
+        .video-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .video-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .thumbnail-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            overflow: hidden;
+        }
+
+        .thumbnail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            width: clamp(35px, 8vw, 45px);
+            height: clamp(35px, 8vw, 45px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: clamp(14px, 3vw, 18px);
+            transition: all 0.2s ease;
+        }
+
+        .video-card:hover .play-button {
+            background-color: #e74c3c;
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        .video-info {
+            padding: clamp(10px, 2vw, 14px);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-title {
+            font-size: clamp(0.85rem, 2.5vw, 1rem);
+            font-weight: 600;
+            margin-bottom: clamp(4px, 1vw, 8px);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.3;
+        }
+
+        .video-description {
+            color: #7f8c8d;
+            font-size: clamp(0.7rem, 2vw, 0.8rem);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: clamp(8px, 2vw, 12px);
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .video-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #95a5a6;
+            font-size: clamp(0.65rem, 1.8vw, 0.75rem);
+        }
+
+        .category-tag {
+            background: #ecf0f1;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: clamp(0.6rem, 1.5vw, 0.7rem);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            padding: clamp(10px, 3vw, 20px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background-color: white;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: all 0.2s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: clamp(10px, 2vw, 15px);
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-title {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            font-weight: 600;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            cursor: pointer;
+            color: #7f8c8d;
+            transition: all 0.2s ease;
+        }
+
+        .close-button:hover {
+            color: #e74c3c;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+
+        .video-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .modal-footer {
+            padding: clamp(10px, 2vw, 15px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .reactions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .reaction-btn {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            font-size: clamp(0.75rem, 2vw, 0.85rem);
+        }
+
+        .reaction-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        .reaction-btn.liked {
+            color: #3498db;
+        }
+
+        .reaction-btn.disliked {
+            color: #e74c3c;
+        }
+
+        .share-btn {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2vw, 15px);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            font-size: clamp(0.75rem, 2vw, 0.85rem);
+        }
+
+        .share-btn:hover {
+            background-color: #3498db;
+        }
+
+        .view-count {
+            color: #7f8c8d;
+            font-size: clamp(0.75rem, 2vw, 0.85rem);
+        }
+
+        /* No results message */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 30px;
+            color: #7f8c8d;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .video-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .modal-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .reactions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .view-count {
+                order: 3;
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+        
+        /*back to home button*/
+        .float-btn {
+            z-index: 100;
+            position: fixed;
+            bottom: clamp(7px, 5vw, 14px);
+            right: clamp(7px, 5vw, 14px);
+            background-color: #4CAF50;
+            color: #fff;
+            padding: clamp(6px, 2vw, 16px) clamp(8px, 4vw, 20px);
+            border-radius: 50px;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+            font-size: clamp(9px, 2vw, 15px);
+        }
+
+        .float-btn:hover {
+            background-color: #3e8e41;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .float-btn {
+                border-radius: 30px;
+                padding: clamp(6px, 2vw, 12px) clamp(12px, 4vw, 18px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .float-btn {
+                bottom: 10px;
+                right: 10px;
+                padding: 2px 12px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>EE Power Peers</h1>
+            <p class="subtitle">Video Lessons & Tutorials</p>
+        </header>
+
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search videos...">
+                <button class="search-button" id="searchButton">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-category="all">All Videos</button>
+            <button class="tab" data-category="Lectures">Lectures</button>
+            <button class="tab" data-category="Practical Demonstrations">Practical</button>
+            <button class="tab" data-category="Tutorial Series">Tutorials</button>
+            <button class="tab" data-category="Student Submissions">Student Work</button>
+        </div>
+
+        <!-- Video cards embedded directly in HTML -->
+        <div class="video-grid" id="videoGrid">
+            <!-- Video 1 -->
+            <div class="video-card" data-id="1" data-category="Lectures">
+                <div class="thumbnail-container">
+                    <img src="https://ik.imagekit.io/eepowerpeers/conduit%20thumb.jpeg?updatedAt=1760521084117" alt="conduit instalation" class="thumbnail">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">How to install pvc Conduits</h3>
+                    <p class="video-description">Learn the step-by-step process of installing PVC conduits safely and neatly for electrical wiring. This short tutorial covers tools, techniques, and practical tips every electrical student or technician should know. 💡⚡</p>
+                    <div class="video-stats">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">320</span> views</span>
+                        <span class="category-tag">Lectures</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="video-card" data-id="2" data-category="Tutorial Series">
+                <div class="thumbnail-container">
+                    <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Solar PV System Setup" class="thumbnail">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Solar PV System Setup</h3>
+                    <p class="video-description">Step-by-step guide to installing solar power systems. Learn about panel placement, wiring, and system optimization.</p>
+                    <div class="video-stats">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">450</span> views</span>
+                        <span class="category-tag">Tutorial Series</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 3 -->
+            <div class="video-card" data-id="3" data-category="Lectures">
+                <div class="thumbnail-container">
+                    <img src="https://ik.imagekit.io/eepowerpeers/transfomer.webp?updatedAt=1760521072898" alt="Transformer Principles and Operation" class="thumbnail">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Transformer Principles and Operation</h3>
+                    <p class="video-description">Understanding how transformers work, their construction, and applications in power systems.</p>
+                    <div class="video-stats">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">280</span> views</span>
+                        <span class="category-tag">Machines</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 4 -->
+            <div class="video-card" data-id="4" data-category="Practical Demonstrations">
+                <div class="thumbnail-container">
+                    <img src="https://ik.imagekit.io/eepowerpeers/induction.jpeg" alt="PCB Design Fundamentals" class="thumbnail">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">3 Phase Induction Motor Construction and Working principle</h3>
+                    <p class="video-description">3 Phase Induction Motor – Construction & Working Principle Explained! ⚙️
+
+In this video, we break down the construction and working principle of a three-phase induction motor in a simple and clear way. Learn how the stator, rotor, and magnetic field work together to produce rotation — the foundation of most industrial machines!</p>
+                    <div class="video-stats">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">520</span> views</span>
+                        <span class="category-tag">Practical Demonstrations</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 5 -->
+            <div class="video-card" data-id="5" data-category="Student Submissions">
+                <div class="thumbnail-container">
+                    <img src="https://ik.imagekit.io/eepowerpeers/3phase%20motor%20rewinding.jpg?updatedAt=1760521082365" alt="Motor rewinding" class="thumbnail">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">3 Phase Motor rewindings</h3>
+                    <p class="video-description">Student project showcasing an autonomous robot built with Arduino and various sensors.</p>
+                    <div class="video-stats">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">190</span> views</span>
+                        <span class="category-tag">Practical Demonstrations</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 6 -->
+            <div class="video-card" data-id="6" data-category="Lectures">
+                <div class="thumbnail-container">
+                    <img src="https://ik.imagekit.io/eepowerpeers/rewind.jpg?updatedAt=1760521072646" alt="single phase motor rewinding" class="thumbnail">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">1 HP 3 Phase 1400 RPM Induction Motor Winding Connection + Winding Data (Step by Step) ⚡</h3>
+                    <p class="video-description">Learn how to connect and rewind a 1 HP 3-phase induction motor like a pro! 💡
+In this video, you’ll see the complete step-by-step winding process, including coil connection, winding data, and terminal setup — perfect for beginners and professionals in motor rewinding and electrical engineering.</p>
+                    <div class="video-stats">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">310</span> views</span>
+                        <span class="category-tag">Lectures</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 7 -->
+            <div class="video-card" data-id="7" data-category="Lectures">
+                <div class="thumbnail-container">
+                    <img src="https://ik.imagekit.io/eepowerpeers/miltimeter.jpg?updatedAt=1760521076506" alt="How to use multimeter" class="thumbnail">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">🔧 Learn How to Use a Multimeter Like a Pro! ⚡</h3>
+                    <p class="video-description">In this quick and easy tutorial, you’ll discover how to measure voltage, current, and resistance safely using a digital multimeter. Perfect for beginners in electronics or electrical engineering!</p>
+                    <div class="video-stats">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">275</span> views</span>
+                        <span class="category-tag">Lectures</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 8 -->
+            <div class="video-card" data-id="8" data-category="Tutorial Series">
+                <div class="thumbnail-container">
+                    <img src="https://ik.imagekit.io/eepowerpeers/2gang.jpg?updatedAt=1760521077297" alt="switches" class="thumbnail">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Learn how to wire a 2-way with 2-gang switch step by step in this clear and practical</h3>
+                    <p class="video-description">Perfect for beginners and professionals who want to understand proper wiring techniques.</p>
+                    <div class="video-stats">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">420</span> views</span>
+                        <span class="category-tag">Tutorial Series</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 9 -->
+            <div class="video-card" data-id="9" data-category="Lectures">
+                <div class="thumbnail-container">
+                    <img src="https://ik.imagekit.io/eepowerpeers/solar.jpeg?updatedAt=1760521071512" alt="Circuit Analysis Techniques" class="thumbnail">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Solar Installation – Lesson 1 (Lecture)</h3>
+                    <p class="video-description">Welcome to the first lesson in our Solar Installation Training Series! 🌞
+In this video, you’ll learn the basics of solar energy, key components of a solar system, and step-by-step installation concepts to get you started in the world of renewable energy.</p>
+                    <div class="video-stats">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">350</span> views</span>
+                        <span class="category-tag">Lectures</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 10 -->
+            <div class="video-card" data-id="10" data-category="Student Submissions">
+                <div class="thumbnail-container">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Home Automation System" class="thumbnail">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Home Automation System</h3>
+                    <p class="video-description">Student project demonstrating a smart home automation system using IoT.</p>
+                    <div class="video-stats">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">230</span> views</span>
+                        <span class="category-tag">Student Submissions</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 11 -->
+            <div class="video-card" data-id="11" data-category="Practical Demonstrations">
+                <div class="thumbnail-container">
+                    <img src="https://images.unsplash.com/photo-1562408590-e32931084e23?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Electrical Safety Procedures" class="thumbnail">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Electrical Safety Procedures</h3>
+                    <p class="video-description">Essential safety guidelines for working with electrical systems and equipment.</p>
+                    <div class="video-stats">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">290</span> views</span>
+                        <span class="category-tag">Practical Demonstrations</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 12 -->
+            <div class="video-card" data-id="12" data-category="Lectures">
+                <div class="thumbnail-container">
+                    <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Renewable Energy Systems" class="thumbnail">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">Renewable Energy Systems</h3>
+                    <p class="video-description">Overview of renewable energy technologies and their integration into power grids.</p>
+                    <div class="video-stats">
+                        <span><i class="fas fa-eye"></i> <span class="view-count">380</span> views</span>
+                        <span class="category-tag">Lectures</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Video Title</h3>
+                <button class="close-button" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="video-container">
+                <iframe class="video-iframe" id="videoIframe" src="" allowfullscreen></iframe>
+            </div>
+            <div class="modal-footer">
+                <div class="reactions">
+                    <button class="reaction-btn" id="likeBtn">
+                        <i class="fas fa-thumbs-up"></i>
+                        <span id="likeCount">0</span>
+                    </button>
+                    <button class="reaction-btn" id="dislikeBtn">
+                        <i class="fas fa-thumbs-down"></i>
+                        <span id="dislikeCount">0</span>
+                    </button>
+                </div>
+                <div class="view-count">
+                    <i class="fas fa-eye"></i>
+                    <span id="viewCount">0</span> views
+                </div>
+                <button class="share-btn" id="shareBtn">
+                    <i class="fas fa-share-alt"></i>
+                    Share Video
+                </button>
+            </div>
+        </div>
+    </div>
+    <a href="index.html" class="float-btn">Back to Home</a>
+
+    <script>
+        // Video URL data
+        const videoUrls = {
+            1: "https://www.youtube.com/embed/ze8OpXGSDH4?si=PjoS1ZzAFoBPlier",
+            2: "https://www.youtube.com/embed/JKEPwTQGD2o?si=t84O7QF-am3VmdM3",
+            3: "https://www.youtube.com/embed/Cq2c3q5Qx3E?si=HELnUmWrjMo_0M60",
+            4: "https://www.youtube.com/embed/ruY-NElLjDU",
+            5: "https://www.youtube.com/embed/O4njmq9Ig78?si=Fn4gXHgksl7kQWyw",
+            6: "https://www.youtube.com/embed/N5T_Ue5esNA?si=DN8p_BUe30BNMXFO",
+            7: "https://www.youtube.com/embed/E_FZgEZ1YoQ?si=BVZQJ676uHP-E62Y",
+            8: "https://www.youtube.com/embed/dG-HGpwCzP8?si=0HTRLPssKhkdfpzb",
+            9: "https://www.youtube.com/embed/kkwZ_iW-OEc?si=MQxN959nSfcJRYV1",
+            10: "https://www.youtube.com/embed/example10",
+            11: "https://www.youtube.com/embed/example11",
+            12: "https://www.youtube.com/embed/example12"
+        };
+
+        // DOM Elements
+        const videoGrid = document.getElementById('videoGrid');
+        const tabs = document.querySelectorAll('.tab');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const closeModal = document.getElementById('closeModal');
+        const videoIframe = document.getElementById('videoIframe');
+        const modalTitle = document.getElementById('modalTitle');
+        const likeBtn = document.getElementById('likeBtn');
+        const dislikeBtn = document.getElementById('dislikeBtn');
+        const likeCount = document.getElementById('likeCount');
+        const dislikeCount = document.getElementById('dislikeCount');
+        const viewCount = document.getElementById('viewCount');
+        const shareBtn = document.getElementById('shareBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+
+        // State
+        let currentVideoId = null;
+        let videoStats = {};
+        let currentCategory = 'all';
+        let currentSearchTerm = '';
+
+        // Initialize the app
+        function init() {
+            loadVideoStats();
+            updateVideoStatsDisplay();
+            setupEventListeners();
+        }
+
+        // Load video stats from localStorage
+        function loadVideoStats() {
+            const storedStats = localStorage.getItem('eePowerPeersVideoStats');
+            if (storedStats) {
+                videoStats = JSON.parse(storedStats);
+            } else {
+                // Initialize with default values
+                const videoCards = document.querySelectorAll('.video-card');
+                videoCards.forEach(card => {
+                    const id = card.dataset.id;
+                    const initialViews = parseInt(card.querySelector('.view-count').textContent);
+                    videoStats[id] = {
+                        views: initialViews,
+                        likes: Math.floor(initialViews * 0.18), // Approximate like ratio
+                        dislikes: Math.floor(initialViews * 0.01), // Approximate dislike ratio
+                        userLiked: false,
+                        userDisliked: false
+                    };
+                });
+                saveVideoStats();
+            }
+        }
+
+        // Save video stats to localStorage
+        function saveVideoStats() {
+            localStorage.setItem('eePowerPeersVideoStats', JSON.stringify(videoStats));
+        }
+
+        // Update video stats display
+        function updateVideoStatsDisplay() {
+            const videoCards = document.querySelectorAll('.video-card');
+            videoCards.forEach(card => {
+                const id = card.dataset.id;
+                const stats = videoStats[id];
+                if (stats) {
+                    const viewCountElement = card.querySelector('.view-count');
+                    if (viewCountElement) {
+                        viewCountElement.textContent = stats.views;
+                    }
+                }
+            });
+        }
+
+        // Filter videos based on category and search term
+        function filterVideos() {
+            const videoCards = document.querySelectorAll('.video-card');
+            let hasVisibleVideos = false;
+            
+            videoCards.forEach(card => {
+                const category = card.dataset.category;
+                const title = card.querySelector('.video-title').textContent.toLowerCase();
+                const description = card.querySelector('.video-description').textContent.toLowerCase();
+                
+                const matchesCategory = currentCategory === 'all' || category === currentCategory;
+                const matchesSearch = currentSearchTerm === '' || 
+                    title.includes(currentSearchTerm) || 
+                    description.includes(currentSearchTerm);
+                
+                if (matchesCategory && matchesSearch) {
+                    card.style.display = 'flex';
+                    hasVisibleVideos = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Show no results message if needed
+            const noResults = document.querySelector('.no-results');
+            if (!hasVisibleVideos) {
+                if (!noResults) {
+                    const noResultsDiv = document.createElement('div');
+                    noResultsDiv.className = 'no-results';
+                    noResultsDiv.textContent = 'No videos found matching your criteria';
+                    videoGrid.appendChild(noResultsDiv);
+                }
+            } else if (noResults) {
+                noResults.remove();
+            }
+        }
+
+        // Handle search
+        function handleSearch() {
+            currentSearchTerm = searchInput.value.toLowerCase().trim();
+            filterVideos();
+        }
+
+        // Open modal with video
+        function openModal(videoId) {
+            const videoCard = document.querySelector(`.video-card[data-id="${videoId}"]`);
+            if (!videoCard) return;
+            
+            currentVideoId = videoId;
+            const stats = videoStats[videoId];
+            const videoUrl = videoUrls[videoId];
+            const title = videoCard.querySelector('.video-title').textContent;
+            
+            // Update modal content
+            modalTitle.textContent = title;
+            videoIframe.src = videoUrl;
+            likeCount.textContent = stats.likes;
+            dislikeCount.textContent = stats.dislikes;
+            viewCount.textContent = stats.views;
+            
+            // Update button states
+            likeBtn.classList.toggle('liked', stats.userLiked);
+            dislikeBtn.classList.toggle('disliked', stats.userDisliked);
+            
+            // Increment view count
+            stats.views++;
+            saveVideoStats();
+            updateVideoStatsDisplay();
+            
+            // Show modal
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeVideoModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            videoIframe.src = '';
+            currentVideoId = null;
+        }
+
+        // Handle like button click
+        function handleLike() {
+            if (!currentVideoId) return;
+            
+            const stats = videoStats[currentVideoId];
+            const wasLiked = stats.userLiked;
+            const wasDisliked = stats.userDisliked;
+            
+            // Reset dislike if active
+            if (wasDisliked) {
+                stats.userDisliked = false;
+                stats.dislikes--;
+                dislikeBtn.classList.remove('disliked');
+            }
+            
+            // Toggle like
+            if (wasLiked) {
+                stats.userLiked = false;
+                stats.likes--;
+                likeBtn.classList.remove('liked');
+            } else {
+                stats.userLiked = true;
+                stats.likes++;
+                likeBtn.classList.add('liked');
+            }
+            
+            likeCount.textContent = stats.likes;
+            dislikeCount.textContent = stats.dislikes;
+            saveVideoStats();
+        }
+
+        // Handle dislike button click
+        function handleDislike() {
+            if (!currentVideoId) return;
+            
+            const stats = videoStats[currentVideoId];
+            const wasLiked = stats.userLiked;
+            const wasDisliked = stats.userDisliked;
+            
+            // Reset like if active
+            if (wasLiked) {
+                stats.userLiked = false;
+                stats.likes--;
+                likeBtn.classList.remove('liked');
+            }
+            
+            // Toggle dislike
+            if (wasDisliked) {
+                stats.userDisliked = false;
+                stats.dislikes--;
+                dislikeBtn.classList.remove('disliked');
+            } else {
+                stats.userDisliked = true;
+                stats.dislikes++;
+                dislikeBtn.classList.add('disliked');
+            }
+            
+            likeCount.textContent = stats.likes;
+            dislikeCount.textContent = stats.dislikes;
+            saveVideoStats();
+        }
+
+        // Handle share button click
+        function handleShare() {
+            if (!currentVideoId) return;
+            
+            const videoCard = document.querySelector(`.video-card[data-id="${currentVideoId}"]`);
+            if (!videoCard) return;
+            
+            const title = videoCard.querySelector('.video-title').textContent;
+            const description = videoCard.querySelector('.video-description').textContent;
+            
+            const shareData = {
+                title: title,
+                text: description,
+                url: window.location.href.split('?')[0] + '?video=' + currentVideoId
+            };
+            
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .then(() => console.log('Shared successfully'))
+                    .catch(error => console.log('Error sharing:', error));
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(shareData.url)
+                    .then(() => alert('Video link copied to clipboard!'))
+                    .catch(err => console.error('Could not copy text: ', err));
+            }
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Tab clicks
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentCategory = tab.dataset.category;
+                    filterVideos();
+                });
+            });
+            
+            // Video card clicks
+            const videoCards = document.querySelectorAll('.video-card');
+            videoCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const videoId = card.dataset.id;
+                    openModal(videoId);
+                });
+            });
+            
+            // Search functionality
+            searchButton.addEventListener('click', handleSearch);
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    handleSearch();
+                }
+            });
+            
+            // Modal close
+            closeModal.addEventListener('click', closeVideoModal);
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) closeVideoModal();
+            });
+            
+            // Reaction buttons
+            likeBtn.addEventListener('click', handleLike);
+            dislikeBtn.addEventListener('click', handleDislike);
+            shareBtn.addEventListener('click', handleShare);
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeVideoModal();
+            });
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

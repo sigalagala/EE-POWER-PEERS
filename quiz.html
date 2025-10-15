@@ -1,0 +1,4491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electrical Engineering Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+    /* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #f5f7fa;
+    line-height: 1.5;
+    min-height: 100vh;
+    padding: clamp(8px, 2vw, 12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: min(94vw, 1000px);
+    margin: 0 auto;
+}
+
+/* Header Styles */
+header {
+    text-align: center;
+    margin-bottom: clamp(16px, 3vw, 20px);
+    padding: clamp(12px, 3vw, 16px);
+    background: linear-gradient(135deg, rgba(26, 86, 240, 0.1) 0%, rgba(10, 46, 127, 0.1) 100%);
+    color: white;
+    border-radius: clamp(8px, 2vw, 12px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(74, 124, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    transform: rotate(30deg);
+}
+
+h1 {
+    font-size: clamp(1.4rem, 4.5vw, 1.8rem);
+    margin-bottom: clamp(4px, 1vw, 8px);
+    position: relative;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #4a7cff, 0 0 20px #4a7cff;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+}
+
+.header-subtitle {
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    opacity: 0.9;
+    margin-bottom: clamp(4px, 1vw, 8px);
+    line-height: 1.3;
+}
+
+.day-indicator {
+    font-size: clamp(0.75rem, 2.2vw, 0.85rem);
+    background: rgba(74, 124, 255, 0.2);
+    padding: clamp(6px, 1.5vw, 10px) clamp(12px, 2.5vw, 16px);
+    border-radius: 16px;
+    display: inline-block;
+    margin-top: clamp(8px, 1.5vw, 12px);
+    border: 1px solid rgba(74, 124, 255, 0.5);
+    box-shadow: 0 0 8px rgba(74, 124, 255, 0.3);
+}
+
+/* Strict 2x2 Grid Layout - No exceptions */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(10px, 2.5vw, 14px);
+    width: 100%;
+    margin-bottom: clamp(16px, 3vw, 20px);
+}
+
+.category-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: clamp(6px, 1.5vw, 10px);
+    padding: clamp(10px, 2.5vw, 14px);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(74, 124, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: clamp(100px, 25vh, 140px);
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    backdrop-filter: blur(5px);
+}
+
+.category-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #1a56f0, #ffc107);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 10px rgba(74, 124, 255, 0.7), 0 0 20px rgba(74, 124, 255, 0.5), 0 0 30px rgba(74, 124, 255, 0.3);
+    border-color: rgba(74, 124, 255, 0.5);
+}
+
+.category-card:hover::after {
+    transform: scaleX(1);
+}
+
+.category-icon {
+    font-size: clamp(1.5rem, 6vw, 1.8rem);
+    margin-bottom: clamp(8px, 1.5vw, 12px);
+    color: #4a7cff;
+    background: rgba(26, 86, 240, 0.1);
+    width: clamp(45px, 15vw, 55px);
+    height: clamp(45px, 15vw, 55px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 auto clamp(8px, 1.5vw, 12px);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(74, 124, 255, 0.3);
+    box-shadow: 0 0 10px rgba(74, 124, 255, 0.2);
+}
+
+.category-card:hover .category-icon {
+    transform: scale(1.05);
+    background: rgba(26, 86, 240, 0.2);
+    box-shadow: 0 0 15px rgba(74, 124, 255, 0.4);
+}
+
+.category-title {
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    margin-bottom: clamp(4px, 1vw, 8px);
+    color: #f5f7fa;
+    line-height: 1.2;
+}
+
+.category-desc {
+    font-size: clamp(0.7rem, 2vw, 0.75rem);
+    color: #5f6368;
+    margin-bottom: clamp(6px, 1.5vw, 10px);
+    display: none;
+    line-height: 1.2;
+}
+
+.category-score {
+    font-size: clamp(0.7rem, 2vw, 0.75rem);
+    padding: clamp(4px, 1vw, 6px) clamp(8px, 1.5vw, 12px);
+    border-radius: 14px;
+    display: inline-block;
+    margin-top: clamp(4px, 1vw, 8px);
+    font-weight: 500;
+}
+
+.score-pass {
+    background-color: rgba(52, 168, 83, 0.2);
+    color: #34a853;
+    border: 1px solid rgba(52, 168, 83, 0.5);
+    box-shadow: 0 0 8px rgba(52, 168, 83, 0.3);
+}
+
+.score-fail {
+    background-color: rgba(234, 67, 53, 0.2);
+    color: #ea4335;
+    border: 1px solid rgba(234, 67, 53, 0.5);
+    box-shadow: 0 0 8px rgba(234, 67, 53, 0.3);
+}
+
+.score-na {
+    background-color: rgba(241, 243, 244, 0.1);
+    color: #5f6368;
+    border: 1px solid rgba(241, 243, 244, 0.3);
+}
+
+/* Quiz Container */
+.quiz-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: clamp(8px, 2vw, 12px);
+    padding: clamp(12px, 3vw, 16px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+    width: 100%;
+    max-width: min(92vw, 768px);
+    margin: 0 auto;
+    position: relative;
+    display: none;
+    border: 1px solid rgba(74, 124, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+/* Mobile optimization for quiz container */
+@media (max-width: 480px) {
+    .quiz-container {
+        padding: clamp(10px, 2.5vw, 14px);
+        margin: clamp(6px, 1.5vw, 10px);
+        border-radius: clamp(6px, 1.5vw, 10px);
+    }
+    
+    .quiz-header {
+        flex-direction: column;
+        gap: clamp(8px, 1.5vw, 12px);
+        text-align: center;
+    }
+    
+    .options-container {
+        gap: clamp(6px, 1.5vw, 10px);
+    }
+    
+    .option-btn {
+        padding: clamp(10px, 2.5vw, 14px);
+        font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+    }
+    
+    .quiz-controls {
+        flex-direction: column;
+        gap: clamp(8px, 1.5vw, 12px);
+    }
+    
+    .prev-btn, .next-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: clamp(12px, 3vw, 16px);
+    padding-bottom: clamp(10px, 2.5vw, 14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-wrap: wrap;
+    gap: clamp(8px, 1.5vw, 12px);
+}
+
+.quiz-title {
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    color: #4a7cff;
+    text-shadow: 0 0 5px rgba(74, 124, 255, 0.5);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: clamp(1.1rem, 4vw, 1.3rem);
+    cursor: pointer;
+    color: #5f6368;
+    transition: all 0.3s ease;
+    width: clamp(30px, 8vw, 35px);
+    height: clamp(30px, 8vw, 35px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ea4335;
+    box-shadow: 0 0 8px rgba(234, 67, 53, 0.3);
+}
+
+.progress-container {
+    margin-bottom: clamp(12px, 3vw, 16px);
+}
+
+.progress-bar {
+    height: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: clamp(8px, 1.5vw, 12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1a56f0, #ffc107);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 8px rgba(74, 124, 255, 0.5);
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    color: #5f6368;
+    font-size: clamp(0.75rem, 2.2vw, 0.85rem);
+}
+
+.question-text {
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    margin-bottom: clamp(12px, 3vw, 16px);
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.options-container {
+    display: grid;
+    gap: clamp(8px, 1.5vw, 12px);
+    margin-bottom: clamp(12px, 3vw, 16px);
+}
+
+.option-btn {
+    padding: clamp(10px, 2.5vw, 14px) clamp(12px, 3vw, 16px);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-radius: clamp(6px, 1.5vw, 10px);
+    background: rgba(255, 255, 255, 0.05);
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+    display: flex;
+    align-items: center;
+    color: #f5f7fa;
+}
+
+.option-btn:hover {
+    border-color: #1a56f0;
+    background-color: rgba(74, 124, 255, 0.1);
+    box-shadow: 0 0 8px rgba(74, 124, 255, 0.2);
+}
+
+.option-btn.selected {
+    border-color: #1a56f0;
+    background-color: rgba(74, 124, 255, 0.2);
+    box-shadow: 0 0 12px rgba(74, 124, 255, 0.3);
+}
+
+.option-btn.correct {
+    border-color: #137333;
+    background-color: rgba(52, 168, 83, 0.2);
+    box-shadow: 0 0 12px rgba(52, 168, 83, 0.3);
+}
+
+.option-btn.incorrect {
+    border-color: #c5221f;
+    background-color: rgba(234, 67, 53, 0.2);
+    box-shadow: 0 0 12px rgba(234, 67, 53, 0.3);
+}
+
+.option-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(20px, 6vw, 24px);
+    height: clamp(20px, 6vw, 24px);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    margin-right: clamp(8px, 1.5vw, 12px);
+    font-weight: bold;
+    transition: all 0.3s ease;
+    color: #f5f7fa;
+    font-size: clamp(0.75rem, 2.2vw, 0.85rem);
+}
+
+.option-btn:hover .option-letter {
+    background: #1a56f0;
+    color: white;
+    box-shadow: 0 0 8px rgba(74, 124, 255, 0.5);
+}
+
+.option-btn.selected .option-letter {
+    background: #1a56f0;
+    color: white;
+    box-shadow: 0 0 8px rgba(74, 124, 255, 0.5);
+}
+
+.quiz-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: clamp(8px, 1.5vw, 12px);
+    flex-wrap: wrap;
+}
+
+.prev-btn, .next-btn {
+    padding: clamp(10px, 2.5vw, 14px) clamp(12px, 3vw, 16px);
+    border: none;
+    border-radius: clamp(6px, 1.5vw, 10px);
+    cursor: pointer;
+    font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: clamp(6px, 1.5vw, 10px);
+    flex: 1;
+    min-width: min(30vw, 140px);
+    justify-content: center;
+}
+
+.prev-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #f5f7fa;
+}
+
+.prev-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+.next-btn {
+    background-color: #1a56f0;
+    color: white;
+}
+
+.next-btn:hover {
+    background-color: #0a2e7f;
+    box-shadow: 0 0 10px rgba(74, 124, 255, 0.7), 0 0 20px rgba(74, 124, 255, 0.5), 0 0 30px rgba(74, 124, 255, 0.3);
+}
+
+.next-btn:disabled {
+    background-color: rgba(255, 255, 255, 0.1);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Results Container */
+.results-container {
+    text-align: center;
+    padding: clamp(12px, 3vw, 16px);
+}
+
+.results-icon {
+    font-size: clamp(1.8rem, 10vw, 2.2rem);
+    margin-bottom: clamp(12px, 3vw, 16px);
+    color: #4a7cff;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #4a7cff, 0 0 20px #4a7cff;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.results-title {
+    font-size: clamp(1.1rem, 4vw, 1.3rem);
+    margin-bottom: clamp(12px, 3vw, 16px);
+    color: #4a7cff;
+    text-shadow: 0 0 8px rgba(74, 124, 255, 0.7);
+}
+
+.results-score {
+    font-size: clamp(1.6rem, 10vw, 2rem);
+    font-weight: bold;
+    margin-bottom: clamp(12px, 3vw, 16px);
+    color: #1a56f0;
+    background: linear-gradient(135deg, #1a56f0 0%, #ffc107 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 15px rgba(74, 124, 255, 0.5);
+    animation: scoreGlow 2s infinite alternate;
+}
+
+@keyframes scoreGlow {
+    0% { text-shadow: 0 0 8px rgba(74, 124, 255, 0.5); }
+    100% { text-shadow: 0 0 15px rgba(74, 124, 255, 0.8), 0 0 20px rgba(74, 124, 255, 0.6); }
+}
+
+.results-details {
+    background: rgba(255, 255, 255, 0.05);
+    padding: clamp(10px, 2.5vw, 14px);
+    border-radius: clamp(6px, 1.5vw, 10px);
+    margin-bottom: clamp(12px, 3vw, 16px);
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.results-feedback {
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    margin-bottom: clamp(12px, 3vw, 16px);
+    padding: clamp(10px, 2.5vw, 14px);
+    border-radius: clamp(6px, 1.5vw, 10px);
+    max-width: 400px;
+    margin: 0 auto clamp(12px, 3vw, 16px);
+}
+
+.results-pass {
+    background-color: rgba(52, 168, 83, 0.2);
+    color: #34a853;
+    border: 1px solid rgba(52, 168, 83, 0.5);
+    box-shadow: 0 0 12px rgba(52, 168, 83, 0.3);
+}
+
+.results-fail {
+    background-color: rgba(234, 67, 53, 0.2);
+    color: #ea4335;
+    border: 1px solid rgba(234, 67, 53, 0.5);
+    box-shadow: 0 0 12px rgba(234, 67, 53, 0.3);
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: clamp(8px, 1.5vw, 12px);
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    padding: clamp(10px, 2.5vw, 14px) clamp(12px, 3vw, 16px);
+    border: none;
+    border-radius: clamp(6px, 1.5vw, 10px);
+    cursor: pointer;
+    font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: clamp(6px, 1.5vw, 10px);
+    min-width: min(35vw, 140px);
+    justify-content: center;
+}
+
+.retry-btn {
+    background-color: #1a56f0;
+    color: white;
+}
+
+.retry-btn:hover {
+    background-color: #0a2e7f;
+    box-shadow: 0 0 10px rgba(74, 124, 255, 0.7), 0 0 20px rgba(74, 124, 255, 0.5), 0 0 30px rgba(74, 124, 255, 0.3);
+}
+
+.home-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #f5f7fa;
+}
+
+.home-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: clamp(12px, 3vw, 16px);
+    padding: clamp(10px, 2.5vw, 14px);
+    color: #5f6368;
+    font-size: clamp(0.7rem, 2vw, 0.75rem);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease forwards;
+}
+
+/* Show description on larger screens */
+@media (min-width: 768px) {
+    .category-desc {
+        display: block;
+    }
+    
+    .category-card {
+        min-height: clamp(140px, 30vh, 160px);
+        padding: clamp(12px, 3vw, 16px);
+    }
+    
+    h1 {
+        font-size: clamp(1.6rem, 4vw, 1.8rem);
+    }
+    
+    .header-subtitle {
+        font-size: clamp(0.9rem, 2.8vw, 1rem);
+    }
+    
+    .categories-grid {
+        gap: clamp(12px, 3vw, 16px);
+    }
+}
+
+/* Extra small devices optimization */
+@media (max-width: 320px) {
+    body {
+        padding: clamp(6px, 1.5vw, 10px);
+    }
+    
+    .container {
+        width: 100%;
+    }
+    
+    header {
+        padding: clamp(10px, 2.5vw, 14px);
+        margin-bottom: clamp(12px, 3vw, 16px);
+    }
+    
+    .category-card {
+        padding: clamp(8px, 2vw, 12px);
+        min-height: clamp(90px, 22vh, 120px);
+    }
+    
+    .category-title {
+        font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+    }
+    
+    .quiz-container {
+        padding: clamp(8px, 2vw, 12px);
+    }
+    
+    .option-btn {
+        padding: clamp(8px, 2vw, 12px);
+    }
+}
+
+/* Digital Score Display */
+.digital-display {
+    font-family: 'Courier New', monospace;
+    background: rgba(0, 0, 0, 0.7);
+    padding: clamp(6px, 1.5vw, 10px) clamp(10px, 2.5vw, 14px);
+    border-radius: clamp(6px, 1.5vw, 10px);
+    border: 1px solid rgba(74, 124, 255, 0.5);
+    box-shadow: 0 0 12px rgba(74, 124, 255, 0.3);
+    margin: clamp(8px, 1.5vw, 12px) 0;
+    display: inline-block;
+    font-size: clamp(0.75rem, 2.2vw, 0.85rem);
+}
+
+.score-breakdown {
+    display: flex;
+    justify-content: center;
+    gap: clamp(10px, 2.5vw, 14px);
+    margin: clamp(12px, 3vw, 16px) 0;
+    flex-wrap: wrap;
+}
+
+.score-item {
+    text-align: center;
+    padding: clamp(10px, 2.5vw, 14px);
+    border-radius: clamp(6px, 1.5vw, 10px);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: min(25vw, 100px);
+}
+
+.score-value {
+    font-size: clamp(1.1rem, 4vw, 1.3rem);
+    font-weight: bold;
+    margin: clamp(4px, 1vw, 8px) 0;
+}
+
+.correct-score {
+    color: #34a853;
+    text-shadow: 0 0 8px rgba(52, 168, 83, 0.5);
+}
+
+.wrong-score {
+    color: #ea4335;
+    text-shadow: 0 0 8px rgba(234, 67, 53, 0.5);
+}
+
+.percentage-score {
+    color: #4a7cff;
+    text-shadow: 0 0 8px rgba(74, 124, 255, 0.5);
+}
+
+/* New styles for improved features */
+.quiz-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: clamp(12px, 3vw, 16px);
+    font-size: clamp(0.75rem, 2.2vw, 0.85rem);
+    color: #5f6368;
+    flex-wrap: wrap;
+    gap: clamp(8px, 1.5vw, 12px);
+}
+
+.timer {
+    background: rgba(255, 255, 255, 0.1);
+    padding: clamp(4px, 1vw, 6px) clamp(8px, 1.5vw, 12px);
+    border-radius: 14px;
+    border: 1px solid rgba(74, 124, 255, 0.3);
+}
+
+.review-panel {
+    margin-top: clamp(12px, 3vw, 16px);
+    text-align: left;
+    max-height: clamp(180px, 45vh, 250px);
+    overflow-y: auto;
+    padding: clamp(10px, 2.5vw, 14px);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: clamp(6px, 1.5vw, 10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.review-item {
+    margin-bottom: clamp(10px, 2.5vw, 14px);
+    padding-bottom: clamp(10px, 2.5vw, 14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.review-question {
+    font-weight: 500;
+    margin-bottom: clamp(4px, 1vw, 8px);
+    font-size: clamp(0.75rem, 2.2vw, 0.85rem);
+}
+
+.review-answer {
+    display: flex;
+    align-items: center;
+    gap: clamp(6px, 1.5vw, 10px);
+    font-size: clamp(0.75rem, 2.2vw, 0.85rem);
+}
+
+.correct-answer {
+    color: #34a853;
+}
+
+.incorrect-answer {
+    color: #ea4335;
+}
+
+.streak-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: clamp(8px, 1.5vw, 12px);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.streak-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #5f6368;
+}
+
+.streak-dot.correct {
+    background-color: #34a853;
+    box-shadow: 0 0 4px #34a853;
+}
+
+.streak-dot.incorrect {
+    background-color: #ea4335;
+    box-shadow: 0 0 4px #ea4335;
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .category-card:hover {
+        transform: none;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+    }
+    
+    .category-card:active {
+        transform: scale(0.98);
+        box-shadow: 0 0 10px rgba(74, 124, 255, 0.7), 0 0 20px rgba(74, 124, 255, 0.5), 0 0 30px rgba(74, 124, 255, 0.3);
+    }
+    
+    .option-btn {
+        min-height: 40px;
+    }
+    
+    .action-btn, .prev-btn, .next-btn {
+        min-height: 40px;
+    }
+}
+
+/* High DPI screen optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .category-card {
+        border-width: 0.5px;
+    }
+    
+    .progress-bar {
+        border-width: 0.5px;
+    }
+}
+
+/* Orientation-specific adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: clamp(8px, 1.5vw, 12px);
+    }
+    
+    .category-card {
+        min-height: clamp(80px, 20vh, 100px);
+        aspect-ratio: 3/2;
+    }
+    
+    .category-icon {
+        width: clamp(35px, 10vw, 40px);
+        height: clamp(35px, 10vw, 40px);
+        font-size: clamp(1.2rem, 5vw, 1.4rem);
+    }
+    
+    .category-title {
+        font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+    }
+}
+
+/* Strict 2x2 grid enforcement - removing any 1-column layouts */
+@media (max-width: 360px) {
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: clamp(8px, 1.5vw, 12px);
+    }
+    
+    .category-card {
+        aspect-ratio: 1/1;
+        min-height: clamp(80px, 20vh, 100px);
+    }
+    
+    .category-icon {
+        width: clamp(35px, 12vw, 45px);
+        height: clamp(35px, 12vw, 45px);
+        font-size: clamp(1.2rem, 6vw, 1.5rem);
+    }
+}
+
+
+
+        /*back to home button*/
+ .float-btn {
+    z-index: 1000;
+      position: fixed;
+      bottom: clamp(7px, 5vw, 14px);
+      right: clamp(7px, 5vw, 14px);
+      background-color: #4CAF50;
+      color: #fff;
+      padding: clamp(6px, 2vw, 16px) clamp(8px, 4vw, 20px);
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background-color 0.3s ease-in-out;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+      font-size: clamp(9px, 2vw, 15px);
+    }
+
+    .float-btn:hover {
+      background-color: #3e8e41;
+      box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 768px) {
+      .float-btn {
+        border-radius: 30px;
+        padding: clamp(6px, 2vw, 12px) clamp(12px, 4vw, 18px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .float-btn {
+        bottom: 10px;
+        right: 10px;
+        padding: 2px 12px;
+        font-size: 10px;
+      }
+    }
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Electrical Engineering Quiz</h1>
+            <p class="header-subtitle">Test your knowledge in various electrical engineering topics</p>
+            <div class="day-indicator" id="dayIndicator">Day 1</div>
+        </header>
+
+        <main>
+              <a href="index.html" class="float-btn">Back to Home</a>
+            <!-- Categories Section -->
+            <section id="categories">
+                <div class="categories-grid">
+                    <div class="category-card" data-category="conduit">
+                        <div>
+                            <div class="category-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h2 class="category-title">Conduit</h2>
+                            <p class="category-desc">Conduit systems and installations</p>
+                        </div>
+                        <div class="category-score score-na">Not Attempted</div>
+                    </div>
+
+                    <div class="category-card" data-category="trunking">
+                        <div>
+                            <div class="category-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <h2 class="category-title">Trunking</h2>
+                            <p class="category-desc">trunking systems</p>
+                        </div>
+                        <div class="category-score score-na">Not Attempted</div>
+                    </div>
+
+                    <div class="category-card" data-category="pvc">
+                        <div>
+                            <div class="category-icon">
+                                <i class="fas fa-plug"></i>
+                            </div>
+                            <h2 class="category-title">PVC</h2>
+                            <p class="category-desc">PVC systems and installations</p>
+                        </div>
+                        <div class="category-score score-na">Not Attempted</div>
+                    </div>
+
+                    <div class="category-card" data-category="solar">
+                        <div>
+                            <div class="category-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <h2 class="category-title">Solar</h2>
+                            <p class="category-desc">Solar systems and installations</p>
+                        </div>
+                        <div class="category-score score-na">Not Attempted</div>
+                    </div>
+                </div>
+
+                <div class="categories-grid">
+                    <div class="category-card" data-category="bells">
+                        <div>
+                            <div class="category-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <h2 class="category-title">Bells & Alarms</h2>
+                            <p class="category-desc">Bells and alarm quizes</p>
+                        </div>
+                        <div class="category-score score-na">Not Attempted</div>
+                    </div>
+
+                    <div class="category-card" data-category="machines">
+                        <div>
+                            <div class="category-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h2 class="category-title">Machines</h2>
+                            <p class="category-desc">Electrical machines and motors</p>
+                        </div>
+                        <div class="category-score score-na">Not Attempted</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quiz Container (initially hidden) -->
+            <div id="quiz-container" class="quiz-container">
+                <!-- Quiz content will be dynamically inserted here -->
+            </div>
+        </main>
+
+        <footer>
+            <p>Electrical Engineering Quiz &copy; 2023. All rights reserved.</p>
+        </footer>
+    </div>
+    <script>
+
+    // =============================================
+// QUESTION STORAGE - SEPARATE JSON OBJECTS
+// =============================================
+
+const conduitQuestions = [
+    {
+        question: "What is the primary purpose of electrical conduit?",
+        options: [
+            "A. To protect and route electrical wiring",
+            "B. To insulate electrical connections",
+            "C. To ground electrical systems",
+            "D. To measure electrical current"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which material is NOT commonly used for electrical conduit?",
+        options: [
+            "A. PVC",
+            "B. Steel",
+            "C. Aluminum",
+            "D. Wood"
+        ],
+        answer: "D"
+    },
+     {
+        question: "Which type of conduit is best suited for outdoor and underground use?",
+        options: [
+            "A. Flexible metal conduit",
+            "B. Rigid PVC conduit",
+            "C. EMT conduit",
+            "D. Surface trunking"
+        ],
+        answer: "B"
+    },
+    {
+        question: "EMT conduit stands for?",
+        options: [
+            "A. Electrical Metal Tubing",
+            "B. Electrical Main Trunking",
+            "C. Encased Metallic Tube",
+            "D. Electro Mechanical Tube"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which conduit type is typically used in areas requiring high corrosion resistance?",
+        options: [
+            "A. Rigid steel conduit",
+            "B. EMT conduit",
+            "C. PVC conduit",
+            "D. Flexible metal conduit"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is the main disadvantage of flexible metal conduit?",
+        options: [
+            "A. It cannot be bent",
+            "B. It is not suitable for wet locations",
+            "C. It is heavier than rigid conduit",
+            "D. It cannot be grounded"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Rigid metal conduit (RMC) is commonly made of:",
+        options: [
+            "A. Copper",
+            "B. Aluminum",
+            "C. Galvanized steel",
+            "D. Plastic"
+        ],
+        answer: "C"
+    },
+    {
+        question: "Which code governs conduit installation in most countries?",
+        options: [
+            "A. IEC",
+            "B. NEC",
+            "C. IEEE",
+            "D. ISO"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is used to join two lengths of conduit together?",
+        options: [
+            "A. Coupling",
+            "B. Clamp",
+            "C. Nut",
+            "D. Clip"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which tool is commonly used to bend conduit?",
+        options: [
+            "A. Conduit former",
+            "B. Pliers",
+            "C. Hammer",
+            "D. Vice grip"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the maximum number of 90° bends allowed in a conduit run between pull points?",
+        options: [
+            "A. 1",
+            "B. 2",
+            "C. 3",
+            "D. 4"
+        ],
+        answer: "D"
+    },
+    {
+        question: "What is installed at conduit junctions to allow pulling of wires?",
+        options: [
+            "A. Pull box",
+            "B. Coupling",
+            "C. Gland",
+            "D. Insulator"
+        ],
+        answer: "A"
+    },
+    {
+        question: "PVC conduit requires which type of fitting for joining?",
+        options: [
+            "A. Welding",
+            "B. Solvent cement",
+            "C. Screws",
+            "D. Clamps"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which type of conduit is also known as 'thin-wall' conduit?",
+        options: [
+            "A. RMC",
+            "B. EMT",
+            "C. IMC",
+            "D. FMC"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Intermediate Metal Conduit (IMC) is:",
+        options: [
+            "A. Thicker than RMC",
+            "B. Lighter than RMC but stronger than EMT",
+            "C. Made of PVC",
+            "D. Not recognized in the NEC"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which color is often used for PVC electrical conduit?",
+        options: [
+            "A. Green",
+            "B. Black",
+            "C. Grey",
+            "D. Blue"
+        ],
+        answer: "C"
+    },
+    {
+        question: "Conduit bushings are used for:",
+        options: [
+            "A. Reducing voltage",
+            "B. Protecting conductors from sharp edges",
+            "C. Grounding the conduit",
+            "D. Supporting conduit runs"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Flexible nonmetallic conduit is also known as:",
+        options: [
+            "A. Smurf tube",
+            "B. EMT",
+            "C. RMC",
+            "D. BX cable"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the main reason for derating wires in conduit?",
+        options: [
+            "A. To save copper",
+            "B. To account for heat buildup",
+            "C. To reduce cost",
+            "D. To improve insulation"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which tool is used to cut conduit?",
+        options: [
+            "A. Pipe cutter",
+            "B. Drill press",
+            "C. Bolt cutter",
+            "D. Hacksaw"
+        ],
+        answer: "D"
+    },
+    {
+        question: "In hazardous locations, which conduit is most recommended?",
+        options: [
+            "A. PVC",
+            "B. EMT",
+            "C. RMC",
+            "D. Flexible plastic"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is the purpose of conduit threading?",
+        options: [
+            "A. To reduce friction",
+            "B. To allow fittings to be screwed on",
+            "C. To protect insulation",
+            "D. To ground wires"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is used to secure conduit to walls?",
+        options: [
+            "A. Couplings",
+            "B. Saddles or straps",
+            "C. Binders",
+            "D. Insulators"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which conduit type offers the highest mechanical protection?",
+        options: [
+            "A. EMT",
+            "B. PVC",
+            "C. Flexible plastic",
+            "D. Rigid steel"
+        ],
+        answer: "D"
+    },
+    {
+        question: "What is the main hazard of overfilling conduit?",
+        options: [
+            "A. Conduit breakage",
+            "B. Difficulty pulling wires and overheating",
+            "C. Electrical shock",
+            "D. Loose connections"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Liquid-tight flexible metal conduit (LFMC) is mainly used in:",
+        options: [
+            "A. Underground runs",
+            "B. Wet or oily environments",
+            "C. Drywall installations",
+            "D. Overhead lines"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What determines conduit fill capacity?",
+        options: [
+            "A. Type of insulation",
+            "B. Conduit diameter and number of conductors",
+            "C. Voltage level",
+            "D. Length of conduit"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which fitting is used to connect flexible conduit to a box?",
+        options: [
+            "A. Locknut",
+            "B. Connector",
+            "C. Clamp",
+            "D. Saddle"
+        ],
+        answer: "B"
+    },
+    {
+        question: "When bending PVC conduit, what tool is typically used?",
+        options: [
+            "A. Heat gun",
+            "B. Pliers",
+            "C. Cold bender",
+            "D. Drill"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Conduit expansion fittings are required when:",
+        options: [
+            "A. Installed underground",
+            "B. Installed in long runs subject to temperature change",
+            "C. Used in hazardous areas",
+            "D. In short runs only"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which conduit provides electromagnetic shielding?",
+        options: [
+            "A. PVC",
+            "B. RMC",
+            "C. EMT",
+            "D. Flexible metallic conduit"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the purpose of a conduit reamer?",
+        options: [
+            "A. Cutting conduit",
+            "B. Smoothing sharp edges after cutting",
+            "C. Threading conduit",
+            "D. Bending conduit"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which of the following conduits is sunlight resistant?",
+        options: [
+            "A. Indoor PVC",
+            "B. UV-rated PVC",
+            "C. Flexible metallic",
+            "D. EMT"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the abbreviation FMC used for?",
+        options: [
+            "A. Flexible Metal Conduit",
+            "B. Fast Mounting Clamp",
+            "C. Fused Mechanical Cable",
+            "D. Fixed Metal Channel"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which of these conduits is most lightweight?",
+        options: [
+            "A. RMC",
+            "B. EMT",
+            "C. PVC",
+            "D. IMC"
+        ],
+        answer: "C"
+    },
+    {
+        question: "Conduit seals in hazardous areas prevent:",
+        options: [
+            "A. Moisture ingress",
+            "B. Explosive gases from traveling through conduit",
+            "C. Wire overheating",
+            "D. Overcurrent protection"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the typical angle for an 'offset bend' in conduit?",
+        options: [
+            "A. 5°",
+            "B. 10°",
+            "C. 15°",
+            "D. 30°"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is used to protect buried conduit from physical damage?",
+        options: [
+            "A. Warning tape",
+            "B. Rigid metal conduit",
+            "C. Plastic sheath",
+            "D. Concrete encasement"
+        ],
+        answer: "D"
+    },
+    {
+        question: "Which conduit type is least fire resistant?",
+        options: [
+            "A. EMT",
+            "B. PVC",
+            "C. IMC",
+            "D. RMC"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the main difference between IMC and RMC?",
+        options: [
+            "A. IMC is thicker",
+            "B. IMC is lighter and easier to handle",
+            "C. IMC is made of aluminum",
+            "D. IMC is flexible"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the purpose of fish tape in conduit installation?",
+        options: [
+            "A. To clean conduit",
+            "B. To pull wires through conduit",
+            "C. To join conduits",
+            "D. To test insulation"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which of the following is a flexible conduit?",
+        options: [
+            "A. RMC",
+            "B. IMC",
+            "C. FMC",
+            "D. EMT"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is the minimum burial depth for PVC conduit outdoors (per NEC)?",
+        options: [
+            "A. 6 inches",
+            "B. 12 inches",
+            "C. 18 inches",
+            "D. 24 inches"
+        ],
+        answer: "C"
+    },
+    {
+        question: "Which component prevents moisture entry at outdoor conduit terminations?",
+        options: [
+            "A. Insulator",
+            "B. Bushing",
+            "C. Seal fitting",
+            "D. Coupling"
+        ],
+        answer: "C"
+    },
+    {
+        question: "Which is easier to cut and install: EMT or RMC?",
+        options: [
+            "A. EMT",
+            "B. RMC",
+            "C. Both are equal",
+            "D. Neither"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the standard trade size range for conduits?",
+        options: [
+            "A. 1/4 inch to 2 inch",
+            "B. 1/2 inch to 6 inch",
+            "C. 1 inch to 10 inch",
+            "D. 2 inch to 12 inch"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is used to terminate conduit into a metal box?",
+        options: [
+            "A. Connector with locknut",
+            "B. Bushing only",
+            "C. Saddle clamp",
+            "D. Coupling"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the main purpose of conduit color coding?",
+        options: [
+            "A. Decoration",
+            "B. Identifying type or purpose of wiring",
+            "C. Increasing strength",
+            "D. Protecting against moisture"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which of the following is NOT a benefit of conduit?",
+        options: [
+            "A. Protection from physical damage",
+            "B. Easier wire replacement",
+            "C. Preventing electrical overload",
+            "D. Neat installation"
+        ],
+        answer: "C"
+    },
+    {
+        question: "Conduit elbows are used for:",
+        options: [
+            "A. Changing direction of conduit runs",
+            "B. Supporting conduits",
+            "C. Grounding",
+            "D. Splicing wires"
+        ],
+        answer: "A"
+    }
+];
+
+const trunkingQuestions = [
+    {
+        question: "What is the main advantage of using trunking in electrical installations?",
+        options: [
+            "A. It provides better cable protection than conduit",
+            "B. It allows for easy addition or modification of cables",
+            "C. It is cheaper than all other cable management systems",
+            "D. It doesn't require any maintenance"
+        ],
+        answer: "B"
+    },
+      {
+        question: "Which material is most commonly used for trunking?",
+        options: [
+            "A. Wood",
+            "B. PVC plastic",
+            "C. Copper",
+            "D. Rubber"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Metallic trunking is often preferred because:",
+        options: [
+            "A. It is cheaper than PVC",
+            "B. It provides better mechanical protection",
+            "C. It cannot rust",
+            "D. It requires no earthing"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is trunking primarily used for?",
+        options: [
+            "A. Supporting lighting fixtures",
+            "B. Protecting and organizing cables",
+            "C. Measuring current",
+            "D. Earthing electrical systems"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What accessory is required for changing direction in trunking runs?",
+        options: [
+            "A. Bushings",
+            "B. Bends and tees",
+            "C. Couplers",
+            "D. Junction box"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which type of trunking is suitable for offices with frequent cable changes?",
+        options: [
+            "A. PVC surface trunking",
+            "B. Metal conduit",
+            "C. Underground ducting",
+            "D. Rigid conduit"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which is an advantage of PVC trunking?",
+        options: [
+            "A. Fire resistance",
+            "B. Light weight and easy installation",
+            "C. Higher strength than steel",
+            "D. Excellent heat dissipation"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the purpose of trunking lids?",
+        options: [
+            "A. To insulate conductors",
+            "B. To cover and protect cables inside trunking",
+            "C. To ground trunking",
+            "D. To act as cable clamps"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which type of trunking allows separation of power and data cables?",
+        options: [
+            "A. Mini trunking",
+            "B. Compartment trunking",
+            "C. Surface trunking",
+            "D. Conduit trunking"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is a disadvantage of metal trunking?",
+        options: [
+            "A. It is lightweight",
+            "B. It can rust if not treated",
+            "C. It is too flexible",
+            "D. It is non-durable"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What tool is commonly used to cut PVC trunking?",
+        options: [
+            "A. Saw",
+            "B. File",
+            "C. Drill",
+            "D. Screwdriver"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which installation is trunking NOT suitable for?",
+        options: [
+            "A. Underground installations",
+            "B. Surface wiring in offices",
+            "C. Computer labs",
+            "D. Industrial cable runs"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is mini-trunking usually used for?",
+        options: [
+            "A. Lighting fixtures",
+            "B. Small cable runs such as telephone or data wires",
+            "C. High-voltage feeders",
+            "D. Underground cables"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the main difference between conduit and trunking?",
+        options: [
+            "A. Conduit is openable while trunking is not",
+            "B. Trunking has removable covers while conduit is enclosed",
+            "C. Conduit is always metallic, trunking is not",
+            "D. Trunking is only for outdoor use"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the purpose of trunking dividers?",
+        options: [
+            "A. To reduce cost",
+            "B. To separate different types of cables",
+            "C. To improve insulation",
+            "D. To reduce trunking weight"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Why must metallic trunking be earthed?",
+        options: [
+            "A. To provide mechanical strength",
+            "B. To prevent corrosion",
+            "C. To avoid electric shock hazards",
+            "D. To make it lighter"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is trunking made of when used in corrosive environments?",
+        options: [
+            "A. Mild steel",
+            "B. Galvanized steel or PVC",
+            "C. Copper",
+            "D. Rubber"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which trunking is best for aesthetic finishes in homes?",
+        options: [
+            "A. Metal trunking",
+            "B. PVC mini-trunking",
+            "C. Flexible metallic trunking",
+            "D. Underground ducting"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the main purpose of couplers in trunking?",
+        options: [
+            "A. To connect two trunking lengths",
+            "B. To join wires",
+            "C. To terminate cables",
+            "D. To support trunking on walls"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Why is trunking preferred in IT data centers?",
+        options: [
+            "A. For easy heat dissipation",
+            "B. For neat, organized and easily accessible cabling",
+            "C. Because it is cheaper than conduit",
+            "D. It requires no maintenance"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which is NOT a type of trunking?",
+        options: [
+            "A. Mini trunking",
+            "B. Compartment trunking",
+            "C. Surface trunking",
+            "D. Shielded conduit trunking"
+        ],
+        answer: "D"
+    },
+    {
+        question: "What is the function of a trunking end cap?",
+        options: [
+            "A. To provide mechanical support",
+            "B. To cover the open end of trunking",
+            "C. To join trunking pieces",
+            "D. To hold cables inside"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What material is commonly used for industrial heavy-duty trunking?",
+        options: [
+            "A. PVC",
+            "B. Steel",
+            "C. Aluminum",
+            "D. Wood"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What installation method reduces dust accumulation in trunking?",
+        options: [
+            "A. Vertical mounting",
+            "B. Horizontal mounting",
+            "C. Concealed mounting",
+            "D. Painted surfaces"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which tool is required for drilling fixing holes in metal trunking?",
+        options: [
+            "A. Hacksaw",
+            "B. Electric drill",
+            "C. Screwdriver",
+            "D. Chisel"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the maximum fill ratio recommended for trunking?",
+        options: [
+            "A. 20%",
+            "B. 30%",
+            "C. 45%",
+            "D. 50%"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is the purpose of grommets in trunking?",
+        options: [
+            "A. To add color",
+            "B. To prevent cable insulation damage at entry points",
+            "C. To secure lids",
+            "D. To improve cooling"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which trunking system is used for suspended ceilings?",
+        options: [
+            "A. Duct trunking",
+            "B. Underfloor trunking",
+            "C. Compartment trunking",
+            "D. Cable tray trunking"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which of the following is a disadvantage of trunking?",
+        options: [
+            "A. Difficult to access wires",
+            "B. Requires a lot of fittings for neat finishes",
+            "C. Not reusable",
+            "D. Cannot be surface mounted"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the purpose of a tee fitting in trunking?",
+        options: [
+            "A. To change trunking size",
+            "B. To branch trunking at right angles",
+            "C. To terminate trunking",
+            "D. To seal trunking ends"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which of the following is NOT an advantage of trunking?",
+        options: [
+            "A. Easy to add or remove cables",
+            "B. Provides mechanical protection",
+            "C. Reduces voltage drop",
+            "D. Provides neat installation"
+        ],
+        answer: "C"
+    },
+    {
+        question: "How are trunking lids usually fixed?",
+        options: [
+            "A. Screwed on",
+            "B. Hinged",
+            "C. Snap-on fit",
+            "D. Riveted"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is the purpose of an angle bend in trunking?",
+        options: [
+            "A. To increase airflow",
+            "B. To change direction of trunking",
+            "C. To separate wires",
+            "D. To ground cables"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is underfloor trunking mainly used for?",
+        options: [
+            "A. Domestic lighting",
+            "B. Data and power distribution in offices",
+            "C. Outdoor wiring",
+            "D. High-voltage feeders"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What material is preferred for outdoor trunking?",
+        options: [
+            "A. Mild steel",
+            "B. UV-resistant PVC",
+            "C. Aluminum",
+            "D. Copper"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which trunking is best for concealing wiring in schools and hospitals?",
+        options: [
+            "A. Surface trunking",
+            "B. Compartment trunking",
+            "C. Cable trays",
+            "D. Metal conduit"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the advantage of perforated trunking?",
+        options: [
+            "A. Reduces weight and improves ventilation",
+            "B. Provides stronger support",
+            "C. Easier to paint",
+            "D. Easier to cut"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What fixing method is commonly used for trunking on walls?",
+        options: [
+            "A. Adhesive tape",
+            "B. Screws and wall plugs",
+            "C. Glue",
+            "D. Welding"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the main safety hazard in overfilled trunking?",
+        options: [
+            "A. Dust accumulation",
+            "B. Overheating and fire risk",
+            "C. Electric shock",
+            "D. Vibration"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is trunking primarily designed to improve?",
+        options: [
+            "A. Cable protection and management",
+            "B. Voltage regulation",
+            "C. Electrical grounding",
+            "D. Circuit speed"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which is cheaper and easier to install?",
+        options: [
+            "A. Conduit",
+            "B. PVC trunking",
+            "C. Steel trunking",
+            "D. Armored cable"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the difference between cable tray and trunking?",
+        options: [
+            "A. Trunking is enclosed while cable trays are open",
+            "B. Trunking carries heavier loads",
+            "C. Cable trays are used indoors only",
+            "D. They are exactly the same"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What happens if trunking lids are not properly closed?",
+        options: [
+            "A. Moisture protection increases",
+            "B. Cables may fall out or be exposed",
+            "C. Heat dissipation improves",
+            "D. Voltage increases"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is a common trunking width used in offices?",
+        options: [
+            "A. 10mm",
+            "B. 25mm",
+            "C. 50mm",
+            "D. 100mm"
+        ],
+        answer: "C"
+    },
+    {
+        question: "Which trunking type has built-in cable management partitions?",
+        options: [
+            "A. Surface trunking",
+            "B. Compartment trunking",
+            "C. Mini trunking",
+            "D. Cable trays"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What fitting is used when two trunking runs meet at right angles?",
+        options: [
+            "A. Tee",
+            "B. Coupler",
+            "C. End cap",
+            "D. Spacer"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the main factor when selecting trunking size?",
+        options: [
+            "A. Voltage of the system",
+            "B. Number and size of cables",
+            "C. Weight of trunking",
+            "D. Type of insulation"
+        ],
+        answer: "B"
+    }
+];
+
+const pvcQuestions = [
+    {
+        question: "What does PVC stand for in electrical terms?",
+        options: [
+            "A. Polyvinyl Chloride",
+            "B. Positive Voltage Conduit",
+            "C. Primary Voltage Carrier",
+            "D. Protected Voltage Channel"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Why is PVC commonly used for insulation in electrical cables?",
+        options: [
+            "A. It is transparent",
+            "B. It is cheap and waterproof",
+            "C. It conducts electricity",
+            "D. It is magnetic"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which of the following is a property of PVC material?",
+        options: [
+            "A. Highly flammable",
+            "B. Good electrical insulator",
+            "C. Poor resistance to chemicals",
+            "D. Brittle at all temperatures"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What type of PVC is commonly used for electrical conduits?",
+        options: [
+            "A. Flexible PVC",
+            "B. Rigid PVC",
+            "C. Transparent PVC",
+            "D. Liquid PVC"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which of the following is NOT an advantage of PVC insulation?",
+        options: [
+            "A. Durability",
+            "B. Resistance to moisture",
+            "C. High electrical conductivity",
+            "D. Low cost"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is added to PVC to make it flexible?",
+        options: [
+            "A. Plasticizers",
+            "B. Copper",
+            "C. Aluminum",
+            "D. Insulating tape"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What color coding is PVC insulation often used for?",
+        options: [
+            "A. Identifying resistors",
+            "B. Identifying conductors",
+            "C. Identifying capacitors",
+            "D. Identifying switches"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which of the following is a limitation of PVC insulation?",
+        options: [
+            "A. It resists moisture",
+            "B. It degrades under UV exposure",
+            "C. It is flexible",
+            "D. It is cost-effective"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the typical temperature limit for PVC insulation in electrical cables?",
+        options: [
+            "A. 50°C",
+            "B. 70°C",
+            "C. 100°C",
+            "D. 200°C"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which industry most commonly uses PVC insulated cables?",
+        options: [
+            "A. Textile industry",
+            "B. Electrical wiring",
+            "C. Food processing",
+            "D. Mining"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Why is PVC conduit used in wiring?",
+        options: [
+            "A. To improve conduction",
+            "B. To protect wires from damage",
+            "C. To increase resistance",
+            "D. To store spare wires"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which of the following is true about PVC conduits?",
+        options: [
+            "A. They are metallic",
+            "B. They are corrosion resistant",
+            "C. They conduct electricity",
+            "D. They are magnetic"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the main disadvantage of PVC conduits compared to metal conduits?",
+        options: [
+            "A. Higher cost",
+            "B. Cannot be used outdoors",
+            "C. Less mechanical strength",
+            "D. Higher conductivity"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What safety issue is associated with burning PVC?",
+        options: [
+            "A. Releases chlorine gas",
+            "B. Releases oxygen",
+            "C. Produces electricity",
+            "D. Produces nitrogen"
+        ],
+        answer: "A"
+    },
+    {
+        question: "PVC used in wiring is primarily classified as?",
+        options: [
+            "A. Thermoplastic",
+            "B. Thermosetting",
+            "C. Ceramic",
+            "D. Metallic"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which additive improves fire resistance of PVC?",
+        options: [
+            "A. Chlorine",
+            "B. Plasticizer",
+            "C. Flame retardants",
+            "D. Copper"
+        ],
+        answer: "C"
+    },
+    {
+        question: "PVC conduit bends are usually made using?",
+        options: [
+            "A. Heat bending",
+            "B. Hammering",
+            "C. Welding",
+            "D. Cutting"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which of the following applications is NOT suitable for PVC conduit?",
+        options: [
+            "A. Underground wiring",
+            "B. Moisture-prone areas",
+            "C. High temperature environments",
+            "D. Concealed wiring"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is the main environmental issue with PVC disposal?",
+        options: [
+            "A. It corrodes easily",
+            "B. It does not biodegrade",
+            "C. It melts into soil",
+            "D. It evaporates"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which PVC conduit type is easiest to install?",
+        options: [
+            "A. Flexible PVC",
+            "B. Rigid PVC",
+            "C. Transparent PVC",
+            "D. Metal-reinforced PVC"
+        ],
+        answer: "A"
+    },
+    {
+        question: "PVC insulated wires are best suited for which type of voltage?",
+        options: [
+            "A. High voltage transmission",
+            "B. Low and medium voltage distribution",
+            "C. Microwave transmission",
+            "D. Satellite signals"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What happens to PVC at very low temperatures?",
+        options: [
+            "A. Becomes brittle",
+            "B. Becomes magnetic",
+            "C. Becomes conductive",
+            "D. Becomes transparent"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Why is PVC often preferred over rubber insulation?",
+        options: [
+            "A. It is heavier",
+            "B. It is more expensive",
+            "C. It is more durable and moisture resistant",
+            "D. It conducts electricity better"
+        ],
+        answer: "C"
+    },
+    {
+        question: "In electrical installations, PVC trunking is mainly used for?",
+        options: [
+            "A. Cooling cables",
+            "B. Carrying current",
+            "C. Housing and organizing cables",
+            "D. Reflecting light"
+        ],
+        answer: "C"
+    },
+    {
+        question: "PVC insulated wires are commonly found in?",
+        options: [
+            "A. Domestic wiring",
+            "B. Power transformers",
+            "C. High voltage substations",
+            "D. Switchgear oil tanks"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which characteristic of PVC makes it unsuitable for high current cables?",
+        options: [
+            "A. Low conductivity",
+            "B. Low melting point",
+            "C. High cost",
+            "D. Corrosion"
+        ],
+        answer: "B"
+    },
+    {
+        question: "How is PVC insulation tested for quality?",
+        options: [
+            "A. Voltage withstand test",
+            "B. Weight test",
+            "C. Magnetism test",
+            "D. Transparency test"
+        ],
+        answer: "A"
+    },
+    {
+        question: "PVC is a type of?",
+        options: [
+            "A. Plastic polymer",
+            "B. Metal alloy",
+            "C. Natural fiber",
+            "D. Ceramic"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Why is PVC trunking often used in offices?",
+        options: [
+            "A. For aesthetics and cable management",
+            "B. To increase power supply",
+            "C. To ground wires",
+            "D. To provide lighting"
+        ],
+        answer: "A"
+    },
+    {
+        question: "PVC conduits are preferred in damp environments because?",
+        options: [
+            "A. They are conductive",
+            "B. They are corrosion resistant",
+            "C. They are heavy",
+            "D. They melt easily"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the main role of plasticizers in PVC?",
+        options: [
+            "A. Make PVC flexible",
+            "B. Make PVC conductive",
+            "C. Make PVC magnetic",
+            "D. Make PVC brittle"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What happens when PVC insulation is exposed to sunlight for long periods?",
+        options: [
+            "A. It melts",
+            "B. It degrades and cracks",
+            "C. It becomes transparent",
+            "D. It conducts electricity"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Why are PVC conduits lightweight compared to metal conduits?",
+        options: [
+            "A. They contain air bubbles",
+            "B. Made from polymer materials",
+            "C. They are hollow",
+            "D. They are insulated"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which is NOT a use of PVC in electrical installations?",
+        options: [
+            "A. Insulation of wires",
+            "B. Fabrication of resistors",
+            "C. Conduits",
+            "D. Trunking"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is one of the fire safety risks of PVC?",
+        options: [
+            "A. Emits toxic smoke when burnt",
+            "B. Cools fires",
+            "C. Increases flame resistance",
+            "D. Melts without releasing gases"
+        ],
+        answer: "A"
+    },
+    {
+        question: "PVC is resistant to most?",
+        options: [
+            "A. Acids and alkalis",
+            "B. High voltages",
+            "C. Magnetic fields",
+            "D. Radio signals"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which standard usually governs PVC insulated cables?",
+        options: [
+            "A. IEC standards",
+            "B. GPS standards",
+            "C. ISO food standards",
+            "D. Wi-Fi standards"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the main hazard of cutting PVC without proper ventilation?",
+        options: [
+            "A. Toxic dust",
+            "B. Oxygen depletion",
+            "C. Water leakage",
+            "D. Radioactive gas"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What type of PVC is used for domestic water pipes as well as conduits?",
+        options: [
+            "A. Unplasticized PVC (uPVC)",
+            "B. Liquid PVC",
+            "C. Transparent PVC",
+            "D. Rubberized PVC"
+        ],
+        answer: "A"
+    },
+    {
+        question: "PVC insulation is not recommended for?",
+        options: [
+            "A. Underground use",
+            "B. High frequency cables",
+            "C. Household use",
+            "D. Moist areas"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What color is often used for earth wire insulation in PVC cables?",
+        options: [
+            "A. Red",
+            "B. Green/Yellow",
+            "C. Blue",
+            "D. Black"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What color is typically used for neutral wire in PVC insulation?",
+        options: [
+            "A. Brown",
+            "B. Blue",
+            "C. Red",
+            "D. Green"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What color is typically used for live wire insulation in PVC?",
+        options: [
+            "A. Brown",
+            "B. Black",
+            "C. Green",
+            "D. Blue"
+        ],
+        answer: "A"
+    },
+    {
+        question: "PVC insulated twin cables are mostly used for?",
+        options: [
+            "A. Telephone wiring",
+            "B. Domestic lighting circuits",
+            "C. Substation transformers",
+            "D. Transmission towers"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which gas is released when PVC burns?",
+        options: [
+            "A. Carbon monoxide",
+            "B. Chlorine gas",
+            "C. Oxygen",
+            "D. Helium"
+        ],
+        answer: "B"
+    },
+    {
+        question: "PVC insulation is NOT suitable for which application?",
+        options: [
+            "A. Underground cables",
+            "B. High voltage transmission lines",
+            "C. Indoor wiring",
+            "D. Flexible appliance cords"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which property makes PVC durable in damp environments?",
+        options: [
+            "A. High conductivity",
+            "B. Water resistance",
+            "C. High melting point",
+            "D. Magnetic properties"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the main cost advantage of PVC?",
+        options: [
+            "A. It is recyclable",
+            "B. It is lightweight and cheap",
+            "C. It increases current flow",
+            "D. It conducts heat efficiently"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What classification of plastic is PVC?",
+        options: [
+            "A. Thermoplastic",
+            "B. Thermoset",
+            "C. Rubber",
+            "D. Ceramic"
+        ],
+        answer: "A"
+    }
+];
+
+const machinesQuestions = [
+    {
+        question: "What is the principle of operation of an electric motor?",
+        options: [
+            "A. Converting electrical energy to mechanical energy",
+            "B. Converting mechanical energy to electrical energy",
+            "C. Converting heat energy to electrical energy",
+            "D. Converting light energy to electrical energy"
+        ],
+        answer: "A"
+    },
+      {
+        question: "Which type of machine converts mechanical energy into electrical energy?",
+        options: [
+            "A. Motor",
+            "B. Generator",
+            "C. Transformer",
+            "D. Inverter"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the main function of a transformer?",
+        options: [
+            "A. To increase or decrease AC voltage",
+            "B. To convert AC to DC",
+            "C. To store electrical energy",
+            "D. To convert heat to electricity"
+        ],
+        answer: "A"
+    },
+    {
+        question: "The rotating part of a DC machine is called?",
+        options: [
+            "A. Stator",
+            "B. Rotor",
+            "C. Armature",
+            "D. Field winding"
+        ],
+        answer: "C"
+    },
+    {
+        question: "The stationary part of an AC machine is known as?",
+        options: [
+            "A. Armature",
+            "B. Stator",
+            "C. Rotor",
+            "D. Slip rings"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which law governs the working principle of a generator?",
+        options: [
+            "A. Lenz’s law",
+            "B. Faraday’s law of electromagnetic induction",
+            "C. Ohm’s law",
+            "D. Coulomb’s law"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which motor is commonly used in ceiling fans?",
+        options: [
+            "A. DC shunt motor",
+            "B. Induction motor",
+            "C. Stepper motor",
+            "D. Universal motor"
+        ],
+        answer: "B"
+    },
+    {
+        question: "The efficiency of a transformer is maximum when?",
+        options: [
+            "A. Copper loss = Iron loss",
+            "B. Copper loss > Iron loss",
+            "C. Copper loss < Iron loss",
+            "D. No losses"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which component maintains constant speed in a DC motor?",
+        options: [
+            "A. Commutator",
+            "B. Governor",
+            "C. Brushes",
+            "D. Field winding"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which type of motor is widely used in traction (trains)?",
+        options: [
+            "A. Shunt motor",
+            "B. Series motor",
+            "C. Synchronous motor",
+            "D. Universal motor"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which test is used to determine transformer iron losses?",
+        options: [
+            "A. Open circuit test",
+            "B. Short circuit test",
+            "C. Load test",
+            "D. Insulation test"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which machine operates at synchronous speed?",
+        options: [
+            "A. Induction motor",
+            "B. Synchronous motor",
+            "C. DC motor",
+            "D. Universal motor"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the main cause of hysteresis loss in machines?",
+        options: [
+            "A. Resistance",
+            "B. Magnetic reversal",
+            "C. Friction",
+            "D. Eddy currents"
+        ],
+        answer: "B"
+    },
+    {
+        question: "The commutator in a DC machine is used for?",
+        options: [
+            "A. Cooling",
+            "B. Current collection",
+            "C. Rectification",
+            "D. Field excitation"
+        ],
+        answer: "C"
+    },
+    {
+        question: "Which machine requires slip rings?",
+        options: [
+            "A. DC motor",
+            "B. Synchronous motor",
+            "C. Transformer",
+            "D. Universal motor"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which type of induction motor is commonly used in domestic appliances?",
+        options: [
+            "A. Squirrel cage",
+            "B. Wound rotor",
+            "C. Stepper motor",
+            "D. Linear motor"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which part of the transformer is laminated to reduce eddy current loss?",
+        options: [
+            "A. Windings",
+            "B. Core",
+            "C. Insulation",
+            "D. Tank"
+        ],
+        answer: "B"
+    },
+    {
+        question: "In a 3-phase induction motor, the speed difference between synchronous speed and rotor speed is called?",
+        options: [
+            "A. Torque",
+            "B. Slip",
+            "C. Efficiency",
+            "D. Load factor"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which device is used to measure the speed of a motor?",
+        options: [
+            "A. Ammeter",
+            "B. Voltmeter",
+            "C. Tachometer",
+            "D. Wattmeter"
+        ],
+        answer: "C"
+    },
+    {
+        question: "In synchronous machines, the rotor field is excited by?",
+        options: [
+            "A. Permanent magnets",
+            "B. DC supply",
+            "C. AC supply",
+            "D. Battery only"
+        ],
+        answer: "B"
+    },
+    {
+        question: "The main loss in a transformer at no-load is?",
+        options: [
+            "A. Copper loss",
+            "B. Eddy current and hysteresis loss",
+            "C. Mechanical loss",
+            "D. Stray loss"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which motor is used in clocks and record players?",
+        options: [
+            "A. Synchronous motor",
+            "B. Induction motor",
+            "C. Stepper motor",
+            "D. Shunt motor"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which part of the DC motor conducts current between stationary and rotating parts?",
+        options: [
+            "A. Commutator",
+            "B. Rotor",
+            "C. Brushes",
+            "D. Bearings"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is the main application of a stepper motor?",
+        options: [
+            "A. Ceiling fans",
+            "B. Robots and CNC machines",
+            "C. Electric trains",
+            "D. Refrigerators"
+        ],
+        answer: "B"
+    },
+    {
+        question: "In a transformer, voltage transformation ratio is?",
+        options: [
+            "A. N1/N2",
+            "B. V2/V1",
+            "C. N2/N1",
+            "D. Both A and C"
+        ],
+        answer: "D"
+    },
+    {
+        question: "The efficiency of a DC generator is maximum when?",
+        options: [
+            "A. Copper loss = Iron loss",
+            "B. Copper loss = Stray loss",
+            "C. Mechanical loss = Iron loss",
+            "D. No loss"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which motor can operate on both AC and DC supply?",
+        options: [
+            "A. Shunt motor",
+            "B. Universal motor",
+            "C. Induction motor",
+            "D. Synchronous motor"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which machine uses Fleming’s left-hand rule for its working principle?",
+        options: [
+            "A. Motor",
+            "B. Generator",
+            "C. Transformer",
+            "D. Inverter"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the purpose of a starter in a DC motor?",
+        options: [
+            "A. To increase voltage",
+            "B. To limit starting current",
+            "C. To reduce losses",
+            "D. To control temperature"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which generator is used for electroplating?",
+        options: [
+            "A. DC shunt generator",
+            "B. DC series generator",
+            "C. DC compound generator",
+            "D. AC generator"
+        ],
+        answer: "A"
+    },
+    {
+        question: "The speed of a DC motor can be controlled by?",
+        options: [
+            "A. Varying resistance in the field circuit",
+            "B. Varying armature voltage",
+            "C. Using variable resistors",
+            "D. All of the above"
+        ],
+        answer: "D"
+    },
+    {
+        question: "The armature reaction in a DC machine causes?",
+        options: [
+            "A. Reduced flux",
+            "B. Increased flux",
+            "C. No change in flux",
+            "D. Heating only"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which type of cooling is used in large transformers?",
+        options: [
+            "A. Air cooling",
+            "B. Oil cooling",
+            "C. Water cooling",
+            "D. Gas cooling"
+        ],
+        answer: "B"
+    },
+    {
+        question: "The material used for brushes in DC machines is?",
+        options: [
+            "A. Copper",
+            "B. Aluminum",
+            "C. Carbon/graphite",
+            "D. Steel"
+        ],
+        answer: "C"
+    },
+    {
+        question: "The voltage regulation of a transformer is best when?",
+        options: [
+            "A. Unity power factor",
+            "B. Leading power factor",
+            "C. Lagging power factor",
+            "D. Zero power factor"
+        ],
+        answer: "A"
+    },
+    {
+        question: "The unit of magnetic flux is?",
+        options: [
+            "A. Tesla",
+            "B. Henry",
+            "C. Weber",
+            "D. Ohm"
+        ],
+        answer: "C"
+    },
+    {
+        question: "In an induction motor, torque is directly proportional to?",
+        options: [
+            "A. Slip",
+            "B. Speed",
+            "C. Current",
+            "D. Voltage"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which loss occurs in both the core and copper of machines?",
+        options: [
+            "A. Hysteresis",
+            "B. Eddy current",
+            "C. I²R",
+            "D. Stray loss"
+        ],
+        answer: "D"
+    },
+    {
+        question: "The emf equation of a DC generator is?",
+        options: [
+            "A. E = 60ANP/Z",
+            "B. E = PΦZN/60",
+            "C. E = VIt",
+            "D. E = IR"
+        ],
+        answer: "B"
+    },
+    {
+        question: "The slip of a synchronous motor is?",
+        options: [
+            "A. Zero",
+            "B. Less than 1",
+            "C. Greater than 1",
+            "D. Infinite"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What does the back emf in a DC motor do?",
+        options: [
+            "A. Increases armature current",
+            "B. Opposes armature current",
+            "C. Reduces speed",
+            "D. Produces torque"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which type of current is supplied to the rotor of a synchronous motor?",
+        options: [
+            "A. AC",
+            "B. DC",
+            "C. Pulsating DC",
+            "D. None"
+        ],
+        answer: "B"
+    },
+    {
+        question: "The advantage of parallel operation of transformers is?",
+        options: [
+            "A. Reliability and flexibility",
+            "B. More losses",
+            "C. Increased voltage",
+            "D. Poor efficiency"
+        ],
+        answer: "A"
+    },
+    {
+        question: "The main function of interpoles in a DC machine is?",
+        options: [
+            "A. Reduce heating",
+            "B. Improve commutation",
+            "C. Increase flux",
+            "D. Reduce copper loss"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What happens when a synchronous motor is overexcited?",
+        options: [
+            "A. It acts as an inductor",
+            "B. It acts as a capacitor",
+            "C. It stops working",
+            "D. It becomes unstable"
+        ],
+        answer: "B"
+    },
+    {
+        question: "The device used for measuring electrical energy is?",
+        options: [
+            "A. Wattmeter",
+            "B. Energy meter",
+            "C. Ammeter",
+            "D. Voltmeter"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which type of motor is used in elevators?",
+        options: [
+            "A. Series motor",
+            "B. Shunt motor",
+            "C. Synchronous motor",
+            "D. Universal motor"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which test determines the copper loss of a transformer?",
+        options: [
+            "A. Open circuit test",
+            "B. Short circuit test",
+            "C. Load test",
+            "D. Spark test"
+        ],
+        answer: "B"
+    }
+];
+
+const solarQuestions = [
+    {
+        question: "What is the typical efficiency range of commercial solar panels?",
+        options: [
+            "A. 5-10%",
+            "B. 15-20%",
+            "C. 25-30%",
+            "D. 35-40%"
+        ],
+        answer: "B"
+    },
+     {
+        question: "What is the typical efficiency range of commercial solar panels?",
+        options: [
+            "A. 5-10%",
+            "B. 15-20%",
+            "C. 25-30%",
+            "D. 35-40%"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which type of solar cell has the highest efficiency?",
+        options: [
+            "A. Monocrystalline",
+            "B. Polycrystalline",
+            "C. Amorphous silicon",
+            "D. Thin-film"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What does PV stand for in solar technology?",
+        options: [
+            "A. Power Voltage",
+            "B. Photovoltaic",
+            "C. Phase Variation",
+            "D. Panel Voltage"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the main advantage of solar energy?",
+        options: [
+            "A. High pollution",
+            "B. Renewable and sustainable",
+            "C. Limited supply",
+            "D. Expensive to maintain"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which factor does NOT affect solar panel output?",
+        options: [
+            "A. Sunlight intensity",
+            "B. Panel orientation",
+            "C. Cloud cover",
+            "D. Wire color"
+        ],
+        answer: "D"
+    },
+    {
+        question: "What is the unit of solar radiation?",
+        options: [
+            "A. Joules",
+            "B. Watts per square meter",
+            "C. Newtons",
+            "D. Volts"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which layer in a solar cell absorbs sunlight?",
+        options: [
+            "A. Glass cover",
+            "B. Semiconductor layer",
+            "C. Metal frame",
+            "D. Back sheet"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What device converts DC electricity from solar panels to AC?",
+        options: [
+            "A. Rectifier",
+            "B. Inverter",
+            "C. Transformer",
+            "D. Converter"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which country is the largest producer of solar energy?",
+        options: [
+            "A. USA",
+            "B. China",
+            "C. Germany",
+            "D. India"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which type of current is generated by solar panels?",
+        options: [
+            "A. AC",
+            "B. DC",
+            "C. Pulsating AC",
+            "D. Mixed"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the lifespan of most solar panels?",
+        options: [
+            "A. 5-10 years",
+            "B. 15-20 years",
+            "C. 25-30 years",
+            "D. 50 years"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is net metering in solar energy?",
+        options: [
+            "A. Measuring battery health",
+            "B. Selling excess power back to the grid",
+            "C. Monitoring inverter voltage",
+            "D. Calculating power factor"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which type of solar panel is flexible and lightweight?",
+        options: [
+            "A. Monocrystalline",
+            "B. Polycrystalline",
+            "C. Thin-film",
+            "D. Hybrid"
+        ],
+        answer: "C"
+    },
+    {
+        question: "Which solar panel type has a blue hue?",
+        options: [
+            "A. Monocrystalline",
+            "B. Polycrystalline",
+            "C. Amorphous",
+            "D. Hybrid"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the main disadvantage of solar energy?",
+        options: [
+            "A. Produces greenhouse gases",
+            "B. Intermittent due to weather",
+            "C. Non-renewable",
+            "D. Noisy operation"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What does MPPT stand for in solar technology?",
+        options: [
+            "A. Maximum Power Point Tracking",
+            "B. Minimum Power Panel Technology",
+            "C. Multi Phase Power Transformer",
+            "D. Maximum Panel Performance Test"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What angle should solar panels be tilted at?",
+        options: [
+            "A. Equal to latitude of location",
+            "B. Always flat",
+            "C. 90 degrees",
+            "D. Random"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which storage device is commonly used with solar systems?",
+        options: [
+            "A. Capacitor",
+            "B. Battery",
+            "C. Inductor",
+            "D. Transformer"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is a solar farm?",
+        options: [
+            "A. A farm using tractors with solar panels",
+            "B. A large area covered with solar panels",
+            "C. A greenhouse using sunlight",
+            "D. A small rooftop installation"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which factor reduces solar panel efficiency over time?",
+        options: [
+            "A. Aging and degradation",
+            "B. More sunlight",
+            "C. Frequent cleaning",
+            "D. High efficiency cells"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the main raw material used in solar cells?",
+        options: [
+            "A. Copper",
+            "B. Silicon",
+            "C. Iron",
+            "D. Carbon"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which part of a solar cell allows light to pass through?",
+        options: [
+            "A. Glass cover",
+            "B. Metal contacts",
+            "C. Semiconductor",
+            "D. Plastic sheet"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the fill factor of a solar cell?",
+        options: [
+            "A. Ratio of actual power to theoretical power",
+            "B. Ratio of sunlight absorbed to reflected",
+            "C. Ratio of current to voltage",
+            "D. Ratio of battery capacity to load"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is solar thermal energy used for?",
+        options: [
+            "A. Cooling",
+            "B. Heating water or air",
+            "C. Producing wind",
+            "D. Lighting homes directly"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the standard test condition for solar panels?",
+        options: [
+            "A. 1000 W/m², 25°C",
+            "B. 500 W/m², 10°C",
+            "C. 2000 W/m², 50°C",
+            "D. 750 W/m², 20°C"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which part of the solar system regulates charging of batteries?",
+        options: [
+            "A. Inverter",
+            "B. Charge controller",
+            "C. Capacitor",
+            "D. Rectifier"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which factor increases with shading on solar panels?",
+        options: [
+            "A. Power output",
+            "B. Efficiency",
+            "C. Power loss",
+            "D. Voltage gain"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is solar tracking?",
+        options: [
+            "A. Following the sun’s position for maximum output",
+            "B. Tracking electricity usage",
+            "C. Monitoring inverter efficiency",
+            "D. Calculating payback period"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the advantage of net metering?",
+        options: [
+            "A. Increased shading",
+            "B. Ability to sell excess energy",
+            "C. Higher panel temperature",
+            "D. Lower inverter efficiency"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which device measures solar irradiance?",
+        options: [
+            "A. Voltmeter",
+            "B. Pyranometer",
+            "C. Lux meter",
+            "D. Anemometer"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What does STC stand for in solar testing?",
+        options: [
+            "A. Solar Test Certification",
+            "B. Standard Test Conditions",
+            "C. Solar Tracking Circuit",
+            "D. Storage Test Capacity"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which is a major application of solar PV systems?",
+        options: [
+            "A. Lighting",
+            "B. Cooking",
+            "C. Refrigeration",
+            "D. All of the above"
+        ],
+        answer: "D"
+    },
+    {
+        question: "What is the effect of high temperature on solar panels?",
+        options: [
+            "A. Increases efficiency",
+            "B. Reduces efficiency",
+            "C. No effect",
+            "D. Doubles efficiency"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the unit of solar cell efficiency?",
+        options: [
+            "A. Joules",
+            "B. Percent (%)",
+            "C. Watts",
+            "D. Lumens"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which type of battery is mostly used in solar systems?",
+        options: [
+            "A. Lead-acid",
+            "B. Lithium-ion",
+            "C. Nickel-cadmium",
+            "D. All of the above"
+        ],
+        answer: "D"
+    },
+    {
+        question: "What is the payback period of a typical solar system?",
+        options: [
+            "A. 1-2 years",
+            "B. 3-5 years",
+            "C. 6-10 years",
+            "D. 15-20 years"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is a hybrid solar system?",
+        options: [
+            "A. Solar + Wind",
+            "B. Solar + Grid + Battery",
+            "C. Solar + Diesel",
+            "D. Solar + Hydro"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which layer in a solar cell is doped with phosphorus?",
+        options: [
+            "A. P-layer",
+            "B. N-layer",
+            "C. Intrinsic layer",
+            "D. Back layer"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the main purpose of anti-reflective coating on solar cells?",
+        options: [
+            "A. Reduce heating",
+            "B. Increase light absorption",
+            "C. Protect from dust",
+            "D. Enhance color"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the average voltage of a single solar cell?",
+        options: [
+            "A. 0.1V",
+            "B. 0.6V",
+            "C. 1.2V",
+            "D. 5V"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the main purpose of a bypass diode in solar panels?",
+        options: [
+            "A. Reduce shading losses",
+            "B. Increase voltage",
+            "C. Reduce current",
+            "D. Increase power"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the maximum power point?",
+        options: [
+            "A. Point of lowest power",
+            "B. Point of highest efficiency",
+            "C. Point of maximum voltage",
+            "D. Point of current saturation"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which solar technology is used in calculators?",
+        options: [
+            "A. Polycrystalline",
+            "B. Amorphous silicon",
+            "C. Monocrystalline",
+            "D. Thin-film"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What happens to solar panel output at night?",
+        options: [
+            "A. Increases",
+            "B. Decreases to zero",
+            "C. Doubles",
+            "D. Becomes AC"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which environmental factor reduces solar output the most?",
+        options: [
+            "A. Wind",
+            "B. Rain",
+            "C. Snow and dust",
+            "D. Clouds"
+        ],
+        answer: "D"
+    },
+    {
+        question: "What is the main function of the junction box in a solar panel?",
+        options: [
+            "A. Cooling",
+            "B. Electrical connection and safety",
+            "C. Storing power",
+            "D. Increasing voltage"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which country has the highest installed solar capacity?",
+        options: [
+            "A. USA",
+            "B. Germany",
+            "C. China",
+            "D. Japan"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is the effect of dust on solar panels?",
+        options: [
+            "A. Increases power",
+            "B. Reduces power output",
+            "C. No effect",
+            "D. Changes voltage only"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is a solar inverter’s primary job?",
+        options: [
+            "A. Convert DC to AC",
+            "B. Store power",
+            "C. Absorb sunlight",
+            "D. Track power usage"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which government policy supports solar adoption?",
+        options: [
+            "A. Feed-in tariffs",
+            "B. Pollution taxes",
+            "C. Rainwater harvesting",
+            "D. Carbon trading only"
+        ],
+        answer: "A"
+    }
+];
+
+const bellsAlarmsQuestions = [
+    {
+        question: "What voltage is typically used for doorbell systems in homes?",
+        options: [
+            "A. 120V AC",
+            "B. 240V AC",
+            "C. 12-24V AC",
+            "D. 5V DC"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What is the main purpose of a fire alarm system?",
+        options: [
+            "A. To protect property from theft",
+            "B. To warn occupants of a fire hazard",
+            "C. To provide lighting during emergencies",
+            "D. To monitor electrical usage"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which type of alarm detects smoke particles?",
+        options: [
+            "A. Heat detector",
+            "B. Ionization detector",
+            "C. Pressure detector",
+            "D. Motion detector"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which device is used to manually trigger a fire alarm?",
+        options: [
+            "A. Break-glass call point",
+            "B. Thermostat",
+            "C. Circuit breaker",
+            "D. Relay switch"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the purpose of a burglar alarm system?",
+        options: [
+            "A. To prevent electric shock",
+            "B. To detect unauthorized entry",
+            "C. To provide backup power",
+            "D. To monitor energy consumption"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which of the following is NOT part of a typical bell circuit?",
+        options: [
+            "A. Push button",
+            "B. Transformer",
+            "C. Buzzer or bell",
+            "D. Solar panel"
+        ],
+        answer: "D"
+    },
+    {
+        question: "Why is a transformer used in bell circuits?",
+        options: [
+            "A. To increase voltage",
+            "B. To step down voltage",
+            "C. To provide alternating current",
+            "D. To convert DC to AC"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is a strobe light used for in an alarm system?",
+        options: [
+            "A. To increase sound",
+            "B. To provide a visual warning",
+            "C. To monitor voltage",
+            "D. To reduce current"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the function of a siren in an alarm system?",
+        options: [
+            "A. To alert people through loud sound",
+            "B. To store electrical energy",
+            "C. To connect to CCTV",
+            "D. To control current flow"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which type of alarm uses infrared sensors?",
+        options: [
+            "A. Fire alarm",
+            "B. Intruder alarm",
+            "C. Heat alarm",
+            "D. Gas alarm"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which alarm system is commonly installed in vehicles?",
+        options: [
+            "A. Heat alarm",
+            "B. Burglar alarm",
+            "C. Smoke alarm",
+            "D. Gas alarm"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What type of battery is typically used for alarm backup?",
+        options: [
+            "A. Lithium-ion",
+            "B. Nickel-cadmium",
+            "C. Lead-acid",
+            "D. Dry cell"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What does an addressable fire alarm system provide?",
+        options: [
+            "A. Identifies the exact location of the detector activated",
+            "B. Provides wireless communication only",
+            "C. Works without electricity",
+            "D. Replaces sprinkler systems"
+        ],
+        answer: "A"
+    },
+    {
+        question: "Which alarm system component detects temperature rise?",
+        options: [
+            "A. Smoke detector",
+            "B. Heat detector",
+            "C. PIR sensor",
+            "D. Ultrasonic sensor"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What type of circuit is used in most simple doorbells?",
+        options: [
+            "A. Parallel circuit",
+            "B. Series circuit",
+            "C. Short circuit",
+            "D. Three-phase circuit"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Why are piezoelectric buzzers used in alarms?",
+        options: [
+            "A. They are silent",
+            "B. They produce loud sound from small current",
+            "C. They replace transformers",
+            "D. They are waterproof"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which alarm detects dangerous gas levels?",
+        options: [
+            "A. Smoke alarm",
+            "B. Gas alarm",
+            "C. Heat alarm",
+            "D. PIR alarm"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the role of the control panel in an alarm system?",
+        options: [
+            "A. To supply backup power",
+            "B. To receive signals from sensors and trigger alarms",
+            "C. To reduce noise levels",
+            "D. To provide internet connection"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which of these is a disadvantage of battery-powered alarms?",
+        options: [
+            "A. Easy to install",
+            "B. Limited operating life",
+            "C. No need for mains supply",
+            "D. Portable"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which is NOT a fire alarm detector type?",
+        options: [
+            "A. Ionization smoke detector",
+            "B. Photoelectric smoke detector",
+            "C. Heat detector",
+            "D. Ultrasonic distance detector"
+        ],
+        answer: "D"
+    },
+    {
+        question: "Which alarm component ensures the system stays powered during a blackout?",
+        options: [
+            "A. Transformer",
+            "B. Battery backup",
+            "C. Siren",
+            "D. Push button"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which alarm system is designed to prevent theft?",
+        options: [
+            "A. Smoke alarm",
+            "B. Heat alarm",
+            "C. Intruder alarm",
+            "D. Carbon monoxide alarm"
+        ],
+        answer: "C"
+    },
+    {
+        question: "Why are carbon monoxide alarms important?",
+        options: [
+            "A. CO is visible and explosive",
+            "B. CO is invisible and toxic",
+            "C. CO is useful for fire prevention",
+            "D. CO is a good conductor"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What type of switch is used in a simple bell system?",
+        options: [
+            "A. Toggle switch",
+            "B. Push button switch",
+            "C. Rotary switch",
+            "D. Dimmer switch"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the function of a motion detector in an alarm system?",
+        options: [
+            "A. Detects heat",
+            "B. Detects movement",
+            "C. Detects smoke",
+            "D. Detects gas"
+        ],
+        answer: "B"
+    }, 
+      {
+        question: "Which type of sensor is commonly used in motion alarms?",
+        options: [
+            "A. PIR (Passive Infrared)",
+            "B. Heat sink",
+            "C. Thermistor",
+            "D. Resistor"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the typical sound level of an alarm siren?",
+        options: [
+            "A. 10-20 dB",
+            "B. 30-40 dB",
+            "C. 70-120 dB",
+            "D. 150-200 dB"
+        ],
+        answer: "C"
+    },
+    {
+        question: "What does a relay do in a bell circuit?",
+        options: [
+            "A. Converts AC to DC",
+            "B. Switches a higher current using a small current",
+            "C. Increases sound",
+            "D. Stores energy"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which fire alarm type is best for kitchens?",
+        options: [
+            "A. Smoke detector",
+            "B. Heat detector",
+            "C. PIR sensor",
+            "D. Gas detector"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is a disadvantage of wired alarm systems?",
+        options: [
+            "A. Require maintenance",
+            "B. More expensive installation",
+            "C. They need batteries",
+            "D. They make no sound"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which type of alarm communicates with a smartphone?",
+        options: [
+            "A. Conventional wired alarm",
+            "B. Smart alarm system",
+            "C. Magnetic bell alarm",
+            "D. Manual call point"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the function of a magnetic contact in an intruder alarm?",
+        options: [
+            "A. Detects open doors/windows",
+            "B. Measures temperature",
+            "C. Detects smoke",
+            "D. Increases alarm volume"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What type of detector is best for detecting slow smouldering fires?",
+        options: [
+            "A. Ionization smoke detector",
+            "B. Photoelectric smoke detector",
+            "C. Heat detector",
+            "D. Gas detector"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the main role of a siren horn in outdoor alarms?",
+        options: [
+            "A. To scare away animals",
+            "B. To produce loud sound for neighbors to hear",
+            "C. To store energy",
+            "D. To prevent smoke"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which alarm system uses CCTV integration?",
+        options: [
+            "A. Simple bell alarm",
+            "B. Burglar alarm system",
+            "C. Fire alarm",
+            "D. Gas detector system"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which gas alarm is commonly installed in homes with gas stoves?",
+        options: [
+            "A. CO2 alarm",
+            "B. CO alarm",
+            "C. LPG/propane alarm",
+            "D. Oxygen alarm"
+        ],
+        answer: "C"
+    },
+    {
+        question: "Which part of a bell system produces the ringing sound?",
+        options: [
+            "A. Push button",
+            "B. Armature and gong",
+            "C. Battery",
+            "D. Relay"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which alarm system provides both sound and flashing light?",
+        options: [
+            "A. Silent alarm",
+            "B. Audio-visual alarm",
+            "C. Heat detector",
+            "D. Smart plug"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Why is a test button provided on smoke alarms?",
+        options: [
+            "A. To reduce sensitivity",
+            "B. To check proper functioning",
+            "C. To silence the alarm permanently",
+            "D. To increase battery life"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the typical wiring configuration of a simple bell?",
+        options: [
+            "A. Series with switch",
+            "B. Parallel with switch",
+            "C. Three-phase",
+            "D. Star-delta"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the main limitation of a conventional fire alarm system?",
+        options: [
+            "A. Cannot detect smoke",
+            "B. Cannot identify exact location of the fire",
+            "C. Works only in daylight",
+            "D. Requires no power"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which alarm type is best suited for detecting rapid flames?",
+        options: [
+            "A. Photoelectric detector",
+            "B. Flame detector",
+            "C. Heat detector",
+            "D. Gas detector"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the advantage of wireless alarms?",
+        options: [
+            "A. Cheaper batteries",
+            "B. Easier installation and relocation",
+            "C. No need for sensors",
+            "D. They work without power"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which type of alarm system is used in hotels?",
+        options: [
+            "A. Conventional fire alarm",
+            "B. Addressable fire alarm system",
+            "C. Manual bell only",
+            "D. Car alarm"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the usual frequency range of alarm sirens?",
+        options: [
+            "A. 10-20 Hz",
+            "B. 50-60 Hz",
+            "C. 2-4 kHz",
+            "D. 100 kHz"
+        ],
+        answer: "C"
+    },
+    {
+        question: "Which component connects alarm systems to security companies?",
+        options: [
+            "A. Control panel",
+            "B. Communicator or dialer",
+            "C. Battery backup",
+            "D. Siren"
+        ],
+        answer: "B"
+    },
+    {
+        question: "Which is a disadvantage of alarm systems?",
+        options: [
+            "A. Expensive installation",
+            "B. No sound warning",
+            "C. No visual alert",
+            "D. No battery backup"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the purpose of a panic button in alarm systems?",
+        options: [
+            "A. To silence the alarm",
+            "B. To trigger an emergency alert manually",
+            "C. To reset the system",
+            "D. To switch off power"
+        ],
+        answer: "B"
+    },
+    {
+        question: "What is the full form of PIR in alarms?",
+        options: [
+            "A. Passive Infrared",
+            "B. Primary Infra Relay",
+            "C. Power Integrated Resistor",
+            "D. Protected Infrared Receiver"
+        ],
+        answer: "A"
+    },
+    {
+        question: "What is the main purpose of alarm zoning?",
+        options: [
+            "A. To divide power supply",
+            "B. To identify specific areas of intrusion or fire",
+            "C. To reduce costs",
+            "D. To increase noise"
+        ],
+        answer: "B"
+    }
+];
+
+// =============================================
+// DAILY ROTATION LOGIC
+// =============================================
+
+class QuizRotationSystem {
+    constructor() {
+        this.QUESTIONS_PER_DAY = 10;
+        this.TOTAL_DAYS = 5;
+        this.STORAGE_KEY = 'quiz_daily_rotation';
+    }
+
+    // Get current day (1-5) based on date with persistence
+    getCurrentDay() {
+        const storedData = this.getStoredRotationData();
+        
+        if (storedData && this.isSameDay(storedData.lastAccessed)) {
+            return storedData.currentDay;
+        }
+        
+        // Calculate new day - cycles every 5 days
+        const startDate = new Date('2023-01-01');
+        const currentDate = new Date();
+        const timeDiff = currentDate.getTime() - startDate.getTime();
+        const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+        const newDay = (daysDiff % this.TOTAL_DAYS) + 1;
+        
+        this.saveRotationData(newDay);
+        return newDay;
+    }
+
+    // Get questions for specific day and category
+    getDailyQuestions(category, day) {
+        const allQuestions = this.getCategoryQuestions(category);
+        const startIndex = (day - 1) * this.QUESTIONS_PER_DAY;
+        const endIndex = startIndex + this.QUESTIONS_PER_DAY;
+        
+        return allQuestions.slice(startIndex, endIndex);
+    }
+
+    // Get questions by category name
+    getCategoryQuestions(category) {
+        const categoryMap = {
+            'conduit': conduitQuestions,
+            'trunking': trunkingQuestions,
+            'pvc': pvcQuestions,
+            'machines': machinesQuestions,
+            'solar': solarQuestions,
+            'bells': bellsAlarmsQuestions
+        };
+        
+        return categoryMap[category] || [];
+    }
+
+    // Local storage management
+    getStoredRotationData() {
+        try {
+            const data = localStorage.getItem(this.STORAGE_KEY);
+            return data ? JSON.parse(data) : null;
+        } catch (error) {
+            console.warn('Failed to read rotation data from localStorage:', error);
+            return null;
+        }
+    }
+
+    saveRotationData(currentDay) {
+        try {
+            const data = {
+                currentDay: currentDay,
+                lastAccessed: new Date().toISOString()
+            };
+            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+        } catch (error) {
+            console.warn('Failed to save rotation data to localStorage:', error);
+        }
+    }
+
+    isSameDay(dateString) {
+        const storedDate = new Date(dateString);
+        const currentDate = new Date();
+        
+        return storedDate.getDate() === currentDate.getDate() &&
+               storedDate.getMonth() === currentDate.getMonth() &&
+               storedDate.getFullYear() === currentDate.getFullYear();
+    }
+
+    // Reset rotation (for testing purposes)
+    resetRotation() {
+        try {
+            localStorage.removeItem(this.STORAGE_KEY);
+        } catch (error) {
+            console.warn('Failed to reset rotation data:', error);
+        }
+    }
+}
+
+// =============================================
+// QUIZ APPLICATION - IMPROVED VERSION
+// =============================================
+
+class QuizApplication {
+    constructor() {
+        this.rotationSystem = new QuizRotationSystem();
+        this.currentCategory = null;
+        this.currentQuestions = [];
+        this.currentQuestionIndex = 0;
+        this.userScore = 0;
+        this.userAnswers = [];
+        this.currentDay = 1;
+        this.quizTime = 0;
+        this.timerInterval = null;
+        this.questionStreak = [];
+        
+        // DOM elements
+        this.categoriesSection = document.getElementById('categories');
+        this.quizContainer = document.getElementById('quiz-container');
+        this.categoryCards = document.querySelectorAll('.category-card');
+        this.dayIndicator = document.getElementById('dayIndicator');
+        
+        this.init();
+    }
+
+    init() {
+        this.updateDayIndicator();
+        this.updateScoreDisplays();
+        this.setupEventListeners();
+    }
+
+    updateDayIndicator() {
+        this.currentDay = this.rotationSystem.getCurrentDay();
+        if (this.dayIndicator) {
+            this.dayIndicator.textContent = `Day ${this.currentDay}`;
+        }
+    }
+
+    updateScoreDisplays() {
+        this.categoryCards.forEach(card => {
+            const category = card.getAttribute('data-category');
+            const scoreData = this.getScoreForCategory(category);
+            
+            const scoreElement = card.querySelector('.category-score');
+            if (!scoreElement) return;
+            
+            if (scoreData && scoreData.day === this.currentDay) {
+                scoreElement.textContent = `Score: ${scoreData.score}% (${scoreData.status})`;
+                scoreElement.className = `category-score ${scoreData.status === 'Pass' ? 'score-pass' : 'score-fail'}`;
+            } else {
+                scoreElement.textContent = 'Not Attempted';
+                scoreElement.className = 'category-score score-na';
+            }
+        });
+    }
+
+    getScoreForCategory(category) {
+        try {
+            const scoreData = localStorage.getItem(`quiz_${category}`);
+            if (scoreData) {
+                const parsed = JSON.parse(scoreData);
+                if (parsed.day === this.currentDay) {
+                    return parsed;
+                }
+            }
+        } catch (error) {
+            console.warn('Failed to read score from localStorage:', error);
+        }
+        return null;
+    }
+
+    hasCompletedToday(category) {
+        return this.getScoreForCategory(category) !== null;
+    }
+
+    setupEventListeners() {
+        this.categoryCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const category = card.getAttribute('data-category');
+                this.startQuiz(category);
+            });
+        });
+    }
+
+    startQuiz(category) {
+        if (this.hasCompletedToday(category)) {
+            if (confirm('You have already completed today\'s quiz. Would you like to retake it?')) {
+                try {
+                    localStorage.removeItem(`quiz_${category}`);
+                } catch (error) {
+                    console.warn('Failed to remove quiz data:', error);
+                }
+            } else {
+                return;
+            }
+        }
+        
+        this.currentCategory = category;
+        this.currentQuestions = this.rotationSystem.getDailyQuestions(category, this.currentDay);
+        
+        // Validate we have enough questions
+        if (this.currentQuestions.length === 0) {
+            alert('No questions available for this category and day.');
+            return;
+        }
+        
+        this.currentQuestionIndex = 0;
+        this.userScore = 0;
+        this.userAnswers = new Array(this.currentQuestions.length).fill(null);
+        this.quizTime = 0;
+        this.questionStreak = [];
+        
+        // Start timer
+        this.startTimer();
+        this.renderQuiz();
+    }
+
+    startTimer() {
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+        }
+        
+        this.timerInterval = setInterval(() => {
+            this.quizTime++;
+            this.updateTimerDisplay();
+        }, 1000);
+    }
+
+    updateTimerDisplay() {
+        const timerElement = document.querySelector('.timer');
+        if (timerElement) {
+            const minutes = Math.floor(this.quizTime / 60);
+            const seconds = this.quizTime % 60;
+            timerElement.textContent = `Time: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+    }
+
+    renderQuiz() {
+        if (this.currentQuestionIndex >= this.currentQuestions.length) {
+            this.showResults();
+            return;
+        }
+        
+        // Hide categories and show quiz container
+        this.categoriesSection.style.display = 'none';
+        this.quizContainer.style.display = 'block';
+        
+        const question = this.currentQuestions[this.currentQuestionIndex];
+        const progressPercent = ((this.currentQuestionIndex + 1) / this.currentQuestions.length) * 100;
+        
+        const optionsHTML = question.options.map((option, index) => {
+            const isSelected = this.userAnswers[this.currentQuestionIndex] === option.charAt(0);
+            return `
+                <button class="option-btn ${isSelected ? 'selected' : ''}" data-option="${option.charAt(0)}">
+                    <span class="option-letter">${option.charAt(0)}</span>
+                    ${option.substring(3)}
+                </button>
+            `;
+        }).join('');
+        
+        // Create streak indicator
+        const streakHTML = this.questionStreak.length > 0 ? `
+            <div class="streak-indicator">
+                ${this.questionStreak.map(result => 
+                    `<div class="streak-dot ${result}"></div>`
+                ).join('')}
+            </div>
+        ` : '';
+        
+        this.quizContainer.innerHTML = `
+            <div class="quiz-header">
+                <h2 class="quiz-title">${this.currentCategory.charAt(0).toUpperCase() + this.currentCategory.slice(1)} Quiz - Day ${this.currentDay}</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            
+            <div class="quiz-info">
+                <div>Question ${this.currentQuestionIndex + 1} of ${this.currentQuestions.length}</div>
+                <div class="timer">Time: 0:00</div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${progressPercent}%"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Progress: ${Math.round(progressPercent)}%</span>
+                    <span>${this.currentQuestionIndex + 1}/${this.currentQuestions.length}</span>
+                </div>
+            </div>
+            
+            ${streakHTML}
+            
+            <h3 class="question-text">${question.question}</h3>
+            
+            <div class="options-container">
+                ${optionsHTML}
+            </div>
+            
+            <div class="quiz-controls">
+                <button class="prev-btn" ${this.currentQuestionIndex === 0 ? 'disabled' : ''}>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="next-btn" ${this.userAnswers[this.currentQuestionIndex] ? '' : 'disabled'}>
+                    ${this.currentQuestionIndex === this.currentQuestions.length - 1 ? 'Finish Quiz' : 'Next Question'} 
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        `;
+        
+        this.attachQuizEventListeners();
+        this.updateTimerDisplay();
+    }
+
+    attachQuizEventListeners() {
+        // Close button
+        document.querySelector('.close-btn')?.addEventListener('click', () => {
+            if (confirm('Are you sure you want to leave the quiz? Your progress will be lost.')) {
+                this.quitQuiz();
+            }
+        });
+        
+        // Option buttons
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const selectedOption = btn.getAttribute('data-option');
+                this.userAnswers[this.currentQuestionIndex] = selectedOption;
+                
+                document.querySelectorAll('.option-btn').forEach(optBtn => {
+                    optBtn.classList.remove('selected');
+                });
+                btn.classList.add('selected');
+                
+                document.querySelector('.next-btn').disabled = false;
+            });
+        });
+        
+        // Navigation buttons
+        document.querySelector('.prev-btn')?.addEventListener('click', () => {
+            if (this.currentQuestionIndex > 0) {
+                this.currentQuestionIndex--;
+                this.renderQuiz();
+            }
+        });
+        
+        document.querySelector('.next-btn')?.addEventListener('click', () => {
+            this.handleNextQuestion();
+        });
+    }
+
+    handleNextQuestion() {
+        const isCorrect = this.userAnswers[this.currentQuestionIndex] === this.currentQuestions[this.currentQuestionIndex].answer;
+        this.questionStreak.push(isCorrect ? 'correct' : 'incorrect');
+        
+        if (this.currentQuestionIndex < this.currentQuestions.length - 1) {
+            this.currentQuestionIndex++;
+            this.renderQuiz();
+        } else {
+            this.showResults();
+        }
+    }
+
+    quitQuiz() {
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
+        this.categoriesSection.style.display = 'block';
+        this.quizContainer.style.display = 'none';
+    }
+
+    showResults() {
+        // Stop timer
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
+        
+        // Calculate score
+        this.userScore = 0;
+        this.currentQuestions.forEach((question, index) => {
+            if (this.userAnswers[index] === question.answer) {
+                this.userScore++;
+            }
+        });
+        
+        const percentage = Math.round((this.userScore / this.currentQuestions.length) * 100);
+        const passed = percentage >= 70;
+        const wrongAnswers = this.currentQuestions.length - this.userScore;
+        
+        // Calculate time taken
+        const minutes = Math.floor(this.quizTime / 60);
+        const seconds = this.quizTime % 60;
+        const timeString = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        
+        // Save score
+        this.saveQuizResults(percentage, passed, timeString);
+        
+        // Create review panel
+        const reviewHTML = this.generateReviewHTML();
+        
+        this.quizContainer.innerHTML = `
+            <div class="results-container">
+                <div class="results-icon">${passed ? '🎉' : '❌'}</div>
+                <h2 class="results-title">${passed ? 'Congratulations!' : 'Try Again!'}</h2>
+                <div class="results-score">${percentage}%</div>
+                
+                <div class="score-breakdown">
+                    <div class="score-item">
+                        <div>Correct</div>
+                        <div class="score-value correct-score">${this.userScore}</div>
+                        <div>Answers</div>
+                    </div>
+                    <div class="score-item">
+                        <div>Wrong</div>
+                        <div class="score-value wrong-score">${wrongAnswers}</div>
+                        <div>Answers</div>
+                    </div>
+                    <div class="score-item">
+                        <div>Time</div>
+                        <div class="score-value percentage-score">${timeString}</div>
+                        <div>Minutes</div>
+                    </div>
+                </div>
+                
+                <div class="results-feedback ${passed ? 'results-pass' : 'results-fail'}">
+                    ${passed ? 
+                        'You have successfully passed the quiz. Well done!' : 
+                        'You did not pass. Please study more and try again.'}
+                </div>
+                
+                <div class="review-panel">
+                    <h3>Review Your Answers</h3>
+                    ${reviewHTML}
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="action-btn retry-btn">
+                        <i class="fas fa-redo"></i> Retry Quiz
+                    </button>
+                    <button class="action-btn home-btn">
+                        <i class="fas fa-home"></i> Back to Home
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        this.attachResultsEventListeners();
+    }
+
+    generateReviewHTML() {
+        return this.currentQuestions.map((question, index) => {
+            const userAnswer = this.userAnswers[index];
+            const isCorrect = userAnswer === question.answer;
+            
+            return `
+                <div class="review-item">
+                    <div class="review-question">${index + 1}. ${question.question}</div>
+                    <div class="review-answer">
+                        <span>Your answer: ${userAnswer || 'Not answered'}</span>
+                        ${!isCorrect ? `<span class="correct-answer">(Correct: ${question.answer})</span>` : ''}
+                        <span class="${isCorrect ? 'correct-answer' : 'incorrect-answer'}">
+                            ${isCorrect ? '✓' : '✗'}
+                        </span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    saveQuizResults(percentage, passed, timeString) {
+        try {
+            const scoreData = {
+                score: percentage,
+                status: passed ? 'Pass' : 'Fail',
+                day: this.currentDay,
+                date: new Date().toISOString(),
+                time: this.quizTime,
+                timeString: timeString
+            };
+            localStorage.setItem(`quiz_${this.currentCategory}`, JSON.stringify(scoreData));
+        } catch (error) {
+            console.warn('Failed to save quiz results:', error);
+        }
+    }
+
+    attachResultsEventListeners() {
+        document.querySelector('.retry-btn')?.addEventListener('click', () => {
+            this.retryQuiz();
+        });
+        
+        document.querySelector('.home-btn')?.addEventListener('click', () => {
+            this.returnToHome();
+        });
+    }
+
+    retryQuiz() {
+        this.currentQuestionIndex = 0;
+        this.userScore = 0;
+        this.userAnswers = new Array(this.currentQuestions.length).fill(null);
+        this.quizTime = 0;
+        this.questionStreak = [];
+        
+        this.startTimer();
+        this.renderQuiz();
+    }
+
+    returnToHome() {
+        this.updateScoreDisplays();
+        this.categoriesSection.style.display = 'block';
+        this.quizContainer.style.display = 'none';
+    }
+}
+
+// =============================================
+// APPLICATION INITIALIZATION
+// =============================================
+
+// Initialize the application when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new QuizApplication();
+});
+
+// Export for testing purposes (if needed)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        QuizApplication,
+        QuizRotationSystem,
+        conduitQuestions,
+        trunkingQuestions,
+        pvcQuestions,
+        machinesQuestions,
+        solarQuestions,
+        bellsAlarmsQuestions
+    };
+}
+</script>
+</body>
+</html>

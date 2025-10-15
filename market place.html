@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Market & Money Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Previous CSS remains the same */
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --warning: #f9c74f;
+            --danger: #f94144;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.5;
+            padding: clamp(0.5rem, 2vw, 1rem);
+            font-size: clamp(0.875rem, 2vw, 1rem);
+        }
+
+        .market-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .market-section {
+            background: white;
+            border-radius: clamp(8px, 2vw, 12px);
+            padding: clamp(1rem, 2vw, 1.5rem);
+            margin: clamp(0.75rem, 2vw, 1.5rem) 0;
+            box-shadow: var(--card-shadow);
+        }
+
+        .market-heading {
+            font-size: clamp(1.25rem, 4vw, 1.75rem);
+            color: var(--primary);
+            margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
+            padding-bottom: clamp(0.25rem, 1vw, 0.5rem);
+            border-bottom: 2px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: clamp(0.5rem, 1.5vw, 0.75rem);
+        }
+
+        .market-heading i {
+            color: var(--secondary);
+            font-size: clamp(1rem, 3vw, 1.5rem);
+        }
+
+        .market-button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 2vw, 1.5rem);
+            border-radius: clamp(6px, 1.5vw, 8px);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: clamp(0.25rem, 1vw, 0.5rem);
+            font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+        }
+
+        .market-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+
+        .market-button-secondary {
+            background: linear-gradient(135deg, var(--success), #2a9d8f);
+        }
+
+        .market-button-warning {
+            background: linear-gradient(135deg, var(--warning), #f8961e);
+        }
+
+        /* Hot Deals Section */
+        .market-hot-deals {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(0.75rem, 2vw, 1.5rem);
+            margin-top: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        .market-deal-card {
+            background: linear-gradient(135deg, #fff 80%, #f0f4ff 100%);
+            border-radius: clamp(8px, 2vw, 12px);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .market-deal-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .market-deal-badge {
+            position: absolute;
+            top: clamp(0.5rem, 1.5vw, 1rem);
+            right: clamp(0.5rem, 1.5vw, 1rem);
+            background: var(--accent);
+            color: white;
+            padding: clamp(0.15rem, 0.75vw, 0.25rem) clamp(0.5rem, 1.5vw, 0.75rem);
+            border-radius: 20px;
+            font-size: clamp(0.6rem, 1.5vw, 0.75rem);
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .market-deal-image {
+            height: clamp(100px, 25vw, 140px);
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .market-deal-content {
+            padding: clamp(0.75rem, 2vw, 1.25rem);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .market-deal-title {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
+            color: var(--dark);
+            line-height: 1.3;
+        }
+
+        .market-deal-details {
+            color: var(--gray);
+            margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+            font-size: clamp(0.7rem, 1.75vw, 0.85rem);
+            flex-grow: 1;
+        }
+
+        .market-deal-timer {
+            display: flex;
+            gap: clamp(0.25rem, 1vw, 0.5rem);
+            background: var(--light);
+            padding: clamp(0.5rem, 1.5vw, 0.75rem);
+            border-radius: clamp(6px, 1.5vw, 8px);
+            justify-content: center;
+            margin-top: auto;
+        }
+
+        .market-timer-unit {
+            text-align: center;
+            flex: 1;
+        }
+
+        .market-timer-value {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .market-timer-label {
+            font-size: clamp(0.55rem, 1.5vw, 0.65rem);
+            color: var(--gray);
+            text-transform: uppercase;
+        }
+
+        /* Marketplace Listings */
+        .market-listings {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(0.75rem, 2vw, 1.5rem);
+            margin-top: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        .market-listing-card {
+            background: white;
+            border-radius: clamp(8px, 2vw, 12px);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .market-listing-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .market-listing-image {
+            height: clamp(100px, 25vw, 140px);
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .market-listing-content {
+            padding: clamp(0.75rem, 2vw, 1rem);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .market-listing-title {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
+            color: var(--dark);
+            line-height: 1.3;
+        }
+
+        .market-listing-price {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+        }
+
+        .market-listing-seller {
+            color: var(--gray);
+            font-size: clamp(0.7rem, 1.75vw, 0.85rem);
+            margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        .market-listing-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+        }
+
+        /* Student Discounts */
+        .market-discounts {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(0.75rem, 2vw, 1.5rem);
+            margin-top: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        .market-discount-card {
+            background: white;
+            border-radius: clamp(8px, 2vw, 12px);
+            padding: clamp(0.75rem, 2vw, 1.25rem);
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .market-discount-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .market-discount-badge {
+            align-self: center;
+            background: var(--warning);
+            color: var(--dark);
+            padding: clamp(0.15rem, 0.75vw, 0.25rem) clamp(0.5rem, 1.5vw, 0.75rem);
+            border-radius: 20px;
+            font-size: clamp(0.6rem, 1.5vw, 0.75rem);
+            font-weight: 600;
+            margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        .market-discount-logo {
+            height: clamp(40px, 10vw, 60px);
+            width: clamp(40px, 10vw, 60px);
+            object-fit: contain;
+            margin: 0 auto clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        .market-discount-value {
+            font-size: clamp(1.25rem, 5vw, 1.75rem);
+            font-weight: 800;
+            color: var(--success);
+            margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
+        }
+
+        .market-discount-expiry {
+            color: var(--gray);
+            font-size: clamp(0.7rem, 1.75vw, 0.85rem);
+            margin-top: auto;
+        }
+
+        /* Services Section */
+        .market-services {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(0.75rem, 2vw, 1.5rem);
+            margin-top: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        .market-service-card {
+            background: white;
+            border-radius: clamp(8px, 2vw, 12px);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .market-service-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .market-service-image {
+            height: clamp(80px, 20vw, 100px);
+            width: clamp(80px, 20vw, 100px);
+            object-fit: cover;
+            border-radius: 50%;
+            margin: clamp(0.75rem, 2vw, 1rem) auto clamp(0.5rem, 1.5vw, 1rem);
+            border: 2px solid var(--primary);
+        }
+
+        .market-service-content {
+            padding: 0 clamp(0.5rem, 1.5vw, 1rem) clamp(0.75rem, 2vw, 1rem);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .market-service-name {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            margin-bottom: clamp(0.15rem, 0.75vw, 0.25rem);
+            color: var(--dark);
+        }
+
+        .market-service-type {
+            color: var(--gray);
+            margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+            font-size: clamp(0.7rem, 1.75vw, 0.85rem);
+            flex-grow: 1;
+        }
+
+        /* Price Comparison */
+        .market-comparison-tabs {
+            display: flex;
+            gap: clamp(0.25rem, 1vw, 0.5rem);
+            margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
+            flex-wrap: wrap;
+        }
+
+        .market-tab {
+            padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 2vw, 1.5rem);
+            background: var(--light);
+            border-radius: clamp(6px, 1.5vw, 8px);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: clamp(0.7rem, 1.75vw, 0.85rem);
+        }
+
+        .market-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .market-comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: clamp(0.5rem, 1.5vw, 1rem);
+            background: white;
+            border-radius: clamp(6px, 1.5vw, 8px);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            font-size: clamp(0.7rem, 1.75vw, 0.85rem);
+        }
+
+        .market-comparison-table th,
+        .market-comparison-table td {
+            padding: clamp(0.5rem, 1.5vw, 1rem);
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .market-comparison-table th {
+            background: var(--light);
+            font-weight: 600;
+        }
+
+        .market-comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Shared Expenses */
+        .market-expenses-groups {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(0.75rem, 2vw, 1.5rem);
+            margin-top: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        .market-expense-group {
+            background: white;
+            border-radius: clamp(8px, 2vw, 12px);
+            padding: clamp(0.75rem, 2vw, 1rem);
+            box-shadow: var(--card-shadow);
+        }
+
+        .market-expense-group h3 {
+            margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+            color: var(--primary);
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+        }
+
+        .market-expense-list {
+            margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
+        }
+
+        .market-expense-item {
+            display: flex;
+            justify-content: space-between;
+            padding: clamp(0.5rem, 1.5vw, 0.75rem) 0;
+            border-bottom: 1px solid var(--light-gray);
+            font-size: clamp(0.7rem, 1.75vw, 0.85rem);
+        }
+
+        .market-expense-item:last-child {
+            border-bottom: none;
+        }
+
+        .market-balances {
+            background: var(--light);
+            padding: clamp(0.5rem, 1.5vw, 1rem);
+            border-radius: clamp(6px, 1.5vw, 8px);
+            margin-top: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        .market-balance-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
+            font-size: clamp(0.7rem, 1.75vw, 0.85rem);
+        }
+
+        .market-balance-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Electrical Installation Tools Section */
+        .market-tools {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(0.75rem, 2vw, 1.5rem);
+            margin-top: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        .market-tool-card {
+            background: white;
+            border-radius: clamp(8px, 2vw, 12px);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .market-tool-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .market-tool-image {
+            height: clamp(100px, 25vw, 140px);
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .market-tool-content {
+            padding: clamp(0.75rem, 2vw, 1rem);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .market-tool-title {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
+            color: var(--dark);
+            line-height: 1.3;
+        }
+
+        .market-tool-price {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+        }
+
+        .market-tool-description {
+            color: var(--gray);
+            font-size: clamp(0.7rem, 1.75vw, 0.85rem);
+            margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+            flex-grow: 1;
+        }
+
+        .market-tool-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+        }
+
+        /* Modal Styles */
+        .market-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(0.5rem, 2vw, 1rem);
+        }
+
+        .market-modal-content {
+            background: white;
+            border-radius: clamp(8px, 2vw, 12px);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: clamp(1rem, 3vw, 2rem);
+            position: relative;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .market-modal-close {
+            position: absolute;
+            top: clamp(0.5rem, 1.5vw, 1rem);
+            right: clamp(0.5rem, 1.5vw, 1rem);
+            background: none;
+            border: none;
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .market-form-group {
+            margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
+        }
+
+        .market-form-group label {
+            display: block;
+            margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
+            font-weight: 600;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+        }
+
+        .market-form-group input,
+        .market-form-group select,
+        .market-form-group textarea {
+            width: 100%;
+            padding: clamp(0.5rem, 1.5vw, 0.75rem);
+            border: 1px solid var(--light-gray);
+            border-radius: clamp(6px, 1.5vw, 8px);
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+            transition: var(--transition);
+        }
+
+        .market-form-group input:focus,
+        .market-form-group select:focus,
+        .market-form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+        }
+
+        /* Toast Notification */
+        .market-toast {
+            position: fixed;
+            bottom: clamp(1rem, 3vw, 2rem);
+            right: clamp(1rem, 3vw, 2rem);
+            background: var(--dark);
+            color: white;
+            padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 2.5vw, 1.5rem);
+            border-radius: clamp(6px, 1.5vw, 8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: none;
+            z-index: 1001;
+            animation: marketToastIn 0.3s ease forwards;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+        }
+
+        @keyframes marketToastIn {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Swap & Save Corner */
+        .market-swap-corner {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            border-radius: clamp(8px, 2vw, 12px);
+            padding: clamp(1rem, 2vw, 1.5rem);
+            margin-top: clamp(1rem, 2vw, 2rem);
+            text-align: center;
+        }
+
+        .market-swap-corner h2 {
+            color: white;
+            margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+        }
+
+        /* Share Button */
+        .market-share-btn {
+            background: var(--light);
+            border: none;
+            border-radius: 50%;
+            width: clamp(28px, 7vw, 36px);
+            height: clamp(28px, 7vw, 36px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: clamp(0.8rem, 2vw, 1rem);
+        }
+
+        .market-share-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* WhatsApp confirmation modal */
+        .market-whatsapp-modal {
+            text-align: center;
+        }
+        
+        .market-whatsapp-icon {
+            font-size: clamp(2rem, 8vw, 3rem);
+            color: #25D366;
+            margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        /* Form Success Message */
+        .market-form-success {
+            background-color: #d4edda;
+            color: #155724;
+            padding: clamp(0.5rem, 1.5vw, 1rem);
+            border-radius: clamp(6px, 1.5vw, 8px);
+            margin-top: clamp(0.5rem, 1.5vw, 1rem);
+            text-align: center;
+            display: none;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+        }
+
+        /* File Input Styling */
+        .market-file-input {
+            padding: clamp(0.25rem, 1vw, 0.5rem);
+        }
+
+        .market-file-input::-webkit-file-upload-button {
+            background: var(--light);
+            border: 1px solid var(--light-gray);
+            padding: clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 1.5vw, 1rem);
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: clamp(0.5rem, 1.5vw, 1rem);
+            transition: var(--transition);
+            font-size: clamp(0.7rem, 1.75vw, 0.85rem);
+        }
+
+        .market-file-input::-webkit-file-upload-button:hover {
+            background: var(--light-gray);
+        }
+
+        /* Payment Info Card */
+        .market-payment-card {
+            background: linear-gradient(135deg, #fff5e6, #ffe8cc);
+            border-radius: clamp(6px, 1.5vw, 8px);
+            padding: clamp(0.75rem, 2vw, 1rem);
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            border-left: 4px solid var(--warning);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.5rem, 1.5vw, 0.75rem);
+        }
+
+        .market-payment-text {
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+            color: #8a6d3b;
+            font-weight: 600;
+        }
+
+        .market-payment-number {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            font-weight: 700;
+            color: var(--dark);
+            letter-spacing: 1px;
+        }
+
+        .market-copy-btn {
+            background: var(--warning);
+            color: var(--dark);
+            border: none;
+            padding: clamp(0.3rem, 1vw, 0.5rem) clamp(0.75rem, 2vw, 1rem);
+            border-radius: clamp(4px, 1vw, 6px);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            align-self: flex-start;
+            font-size: clamp(0.7rem, 1.75vw, 0.85rem);
+        }
+
+        .market-copy-btn:hover {
+            background: #f9b84f;
+            transform: translateY(-1px);
+        }
+
+        .market-copy-confirmation {
+            position: absolute;
+            background: var(--success);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .market-copy-confirmation.show {
+            opacity: 1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .market-hot-deals,
+            .market-listings,
+            .market-discounts,
+            .market-services,
+            .market-tools,
+            .market-expenses-groups {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .market-comparison-table {
+                display: block;
+                overflow-x: auto;
+                font-size: clamp(0.65rem, 3vw, 0.8rem);
+            }
+        }
+
+        @media (max-width: 360px) {
+            .market-button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.7rem;
+            }
+            
+            .market-tab {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        /*back to home button*/
+        .float-btn {
+            z-index: 1000;
+            position: fixed;
+            bottom: clamp(7px, 5vw, 14px);
+            right: clamp(7px, 5vw, 14px);
+            background-color: #4CAF50;
+            color: #fff;
+            padding: clamp(6px, 2vw, 16px) clamp(8px, 4vw, 20px);
+            border-radius: 50px;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+            font-size: clamp(9px, 2vw, 15px);
+        }
+
+        .float-btn:hover {
+            background-color: #3e8e41;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .float-btn {
+                border-radius: 30px;
+                padding: clamp(6px, 2vw, 12px) clamp(12px, 4vw, 18px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .float-btn {
+                bottom: 10px;
+                right: 10px;
+                padding: 2px 12px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="float-btn">Back to Home</a>
+    <div class="market-container">
+        <h1 style="text-align: center; margin: clamp(1rem, 3vw, 2rem) 0; color: var(--primary); font-size: clamp(1.5rem, 5vw, 2.25rem);">
+            <i class="fas fa-store"></i> Student Market
+        </h1>
+
+        <!-- Hot Deals Section -->
+        <section class="market-section">
+            <h2 class="market-heading"><i class="fas fa-fire"></i> Hot Deals</h2>
+            <div class="market-hot-deals">
+                <div class="market-deal-card">
+                    <div class="market-deal-badge">Sponsored</div>
+                    <img src="https://ik.imagekit.io/eepowerpeers/screwdriver.jpg?updatedAt=1760556345440" alt="Pizza Deal" class="market-deal-image">
+                    <div class="market-deal-content">
+                        <h3 class="market-deal-title">Electric Screwdriver Portable Set</h3>
+                        <p class="market-deal-details">Mythco Rechargeable Electric Screwdriver Portable Set, With 47pcs Cordless Accessories</p>
+                        <div class="market-deal-timer">
+                            <div class="market-timer-unit">
+                                <div class="market-timer-value">02</div>
+                                <div class="market-timer-label">Days</div>
+                            </div>
+                            <div class="market-timer-unit">
+                                <div class="market-timer-value">12</div>
+                                <div class="market-timer-label">Hours</div>
+                            </div>
+                        </div>
+                        <button class="market-button" style="width: 100%; margin-top: 0.75rem;" onclick="redirectToWhatsApp('50% Off Large Pizza')">
+                            <i class="fab fa-whatsapp"></i> Order Now
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="market-deal-card">
+                    <div class="market-deal-badge">Sponsored</div>
+                    <img src="https://ik.imagekit.io/eepowerpeers/drilsssssssss.jpg" alt="Bookstore Deal" class="market-deal-image">
+                    <div class="market-deal-content">
+                        <h3 class="market-deal-title">Fully Automatic Electric Screwdriver Rechargeable </h3>
+                        <p class="market-deal-details">47-Piece Set - Fully Automatic Electric Screwdriver Rechargeable Small Household Set Pen Screwdriver Multi-Function Electric Drill Tool</p>
+                        <div class="market-deal-timer">
+                            <div class="market-timer-unit">
+                                <div class="market-timer-value">04</div>
+                                <div class="market-timer-label">Days</div>
+                            </div>
+                            <div class="market-timer-unit">
+                                <div class="market-timer-value">08</div>
+                                <div class="market-timer-label">Hours</div>
+                            </div>
+                        </div>
+                        <button class="market-button" style="width: 100%; margin-top: 0.75rem;" onclick="redirectToWhatsApp('Textbook Buyback +20%')">
+                            <i class="fab fa-whatsapp"></i> Claim Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Electrical Installation Tools Section -->
+        <section class="market-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                <h2 class="market-heading"><i class="fas fa-tools"></i> Electrical Installation Tools</h2>
+                <button class="market-button" onclick="redirectToWhatsApp('Inquiry about electrical installation tools')">
+                    <i class="fab fa-whatsapp"></i> Request Tools
+                </button>
+            </div>
+            <div class="market-tools">
+                <!-- Screwdriver set -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/screw%20driver.jpg?updatedAt=1760552502286" alt="Screwdriver set" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Screwdriver Set</h3>
+                        <p class="market-tool-price">From 800 Ksh</p>
+                        <p class="market-tool-description">Complete set with various sizes and types for electrical work</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Screwdriver Set')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pliers -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/pliers.jpg" alt="Pliers" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Pliers </h3>
+                        <p class="market-tool-price">From 450 Ksh</p>
+                        <p class="market-tool-description">Combination & long-nose pliers for electrical installations</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Pliers Set')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Wire stripper and cutter -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/wire%20stripper.jpg?updatedAt=1760553354577" alt="Wire stripper and cutter" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Wire Stripper & Cutter</h3>
+                        <p class="market-tool-price">From 800 Ksh</p>
+                        <p class="market-tool-description">Professional tool for stripping and cutting electrical wires</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Wire Stripper & Cutter')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hacksaw -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/hacksaw.jpg" alt="Hacksaw" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Hacksaw</h3>
+                        <p class="market-tool-price">From 880 Ksh</p>
+                        <p class="market-tool-description">For cutting metal conduits and other materials</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Hacksaw')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Measuring tape -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/Measuring%20Tape.jpg" alt="Measuring tape" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Measuring Tape</h3>
+                        <p class="market-tool-price">From 520 Ksh</p>
+                        <p class="market-tool-description">Accurate measurements for electrical layout planning</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Measuring Tape')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hammer -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/Hammer.jpg" alt="Hammer" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Hammer</h3>
+                        <p class="market-tool-price">From 550 Ksh</p>
+                        <p class="market-tool-description">For mounting electrical boxes and fixtures</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Hammer')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- File -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/File%20Set.jpg" alt="File" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">File Set</h3>
+                        <p class="market-tool-price">From 300 Ksh</p>
+                        <p class="market-tool-description">Flat and round files for smoothing rough edges</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('File Set')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Spirit level -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/Spirit%20Level.jpg" alt="Spirit level" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Spirit Level</h3>
+                        <p class="market-tool-price">From 300 Ksh</p>
+                        <p class="market-tool-description">Ensuring level installations of electrical components</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Spirit Level')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Drill and bits -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/Drill%20&%20Bit%20Set.jpg" alt="Drill and bits" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">full set tools </h3>
+                        <p class="market-tool-price">From 6,500 Ksh</p>
+                        <p class="market-tool-description">All in one toola</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Drill & Bit Set')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Spanner set -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/Spanner%20Set.jpg" alt="Spanner set" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Spanner Set</h3>
+                        <p class="market-tool-price">From 1,980 Ksh</p>
+                        <p class="market-tool-description">Complete set for tightening nuts and bolts</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Spanner Set')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Multimeter -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/Multimeter.jpg" alt="Multimeter" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Multimeter</h3>
+                        <p class="market-tool-price">From 1,300 Ksh</p>
+                        <p class="market-tool-description">Essential for testing voltage, current, and resistance</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Multimeter')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Crimping tool -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/Crimping%20Tool.jpg" alt="Crimping tool" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Crimping Tool</h3>
+                        <p class="market-tool-price">From 1,200 Ksh</p>
+                        <p class="market-tool-description">For secure wire connections and terminals</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Crimping Tool')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Insulation tape -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/Insulation%20Tape.jpg" alt="Insulation tape" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Insulation Tape 10 p16ces</h3>
+                        <p class="market-tool-price">From 650 Ksh</p>
+                        <p class="market-tool-description">Electrical tape for insulating wire connections</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Insulation Tape')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Marker or pencil -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/MarkerPencil.jpg" alt="Marker or pencil" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Marker/Pencil</h3>
+                        <p class="market-tool-price">From 30 Ksh</p>
+                        <p class="market-tool-description">For marking measurements and layouts</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Marker/Pencil')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Soldering iron and solder -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/Soldering%20Kit.jpg" alt="Soldering iron and solder" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Soldering Kit</h3>
+                        <p class="market-tool-price">From 1,500 Ksh</p>
+                        <p class="market-tool-description">Iron and solder for electronic connections</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Soldering Kit')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PVC bending spring or heater -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/PVC%20Bending%20Tools.jpg" alt="PVC bending spring or heater" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">PVC Bending Tools</h3>
+                        <p class="market-tool-price">From 400Ksh</p>
+                        <p class="market-tool-description">Spring or heater for bending PVC conduits</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('PVC Bending Tools')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+                <!-- Allen keys (hex keys) -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/Allen%20Key%20Set.jpg" alt="Allen keys" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Allen Key Set</h3>
+                        <p class="market-tool-price">From 530 Ksh</p>
+                        <p class="market-tool-description">Hex keys for various electrical components</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Allen Key Set')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+               
+                
+              
+                
+                
+                
+                <!-- Cable ties -->
+                <div class="market-tool-card">
+                    <img src="https://ik.imagekit.io/eepowerpeers/Cable%20Ties.jpg" alt="Cable ties" class="market-tool-image">
+                    <div class="market-tool-content">
+                        <h3 class="market-tool-title">Cable Ties 100 pieces</h3>
+                        <p class="market-tool-price">From 500 Ksh</p>
+                        <p class="market-tool-description">For organizing and securing cables</p>
+                        <div class="market-tool-actions">
+                            <button class="market-button" style="padding: 0.4rem 0.8rem;" onclick="redirectToWhatsApp('Cable Ties')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <button class="market-share-btn">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       
+
+        <!-- Swap & Save Corner -->
+        <section class="market-section market-swap-corner">
+            <h2><i class="fas fa-exchange-alt"></i> Swap & Save</h2>
+            <p>Trade items with other students instead of buying new ones!</p>
+            <button class="market-button market-button-warning" style="margin-top: 0.75rem;" onclick="redirectToWhatsApp('Swap & Save Corner inquiry')">
+                <i class="fab fa-whatsapp"></i> Start Trading
+            </button>
+        </section>
+    </div>
+
+    <!-- Post Item Modal with FormSubmit Integration -->
+    <div class="market-modal" id="market-post-modal">
+        <div class="market-modal-content">
+            <button class="market-modal-close">&times;</button>
+            <h2 style="margin-bottom: 1rem; font-size: clamp(1.1rem, 3vw, 1.5rem);">Post a New Item</h2>
+            
+            <!-- Payment Information Card -->
+            <div class="market-payment-card">
+                <p class="market-payment-text">Pay Ksh 20 to post your item. Send money to:</p>
+                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                    <span class="market-payment-number" id="payment-number">0769882553</span>
+                    <button class="market-copy-btn" id="copy-number-btn">
+                        <i class="fas fa-copy"></i> Copy Number
+                    </button>
+                    <span class="market-copy-confirmation" id="copy-confirmation">Number copied!</span>
+                </div>
+            </div>
+            
+            <form id="market-post-form" action="https://formsubmit.co/jameskiladi@gmail.com" method="POST" enctype="multipart/form-data">
+                <!-- FormSubmit Configuration -->
+                <input type="hidden" name="_subject" value="New Item Listing - Student Market">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="#">
+                
+                <div class="market-form-group">
+                    <label for="market-item-name">Item Name *</label>
+                    <input type="text" id="market-item-name" name="Item Name" required>
+                </div>
+                
+                <div class="market-form-group">
+                    <label for="market-item-description">Description *</label>
+                    <textarea id="market-item-description" name="Description" rows="3" required></textarea>
+                </div>
+                
+                <div class="market-form-group">
+                    <label for="market-item-type">Type *</label>
+                    <select id="market-item-type" name="Type" required>
+                        <option value="">Select a type</option>
+                        <option value="Phones">Phones</option>
+                        <option value="Clothes">Clothes</option>
+                        <option value="Books">Books</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="market-form-group">
+                    <label for="market-item-quantity">Quantity *</label>
+                    <input type="number" id="market-item-quantity" name="Quantity" min="1" required>
+                </div>
+                
+                <div class="market-form-group">
+                    <label for="market-item-price">Price (Ksh) *</label>
+                    <input type="number" id="market-item-price" name="Price" min="0" step="1" required>
+                </div>
+                
+                <div class="market-form-group">
+                    <label for="market-item-images">Upload Images</label>
+                    <input type="file" id="market-item-images" name="Images" class="market-file-input" accept="image/*" multiple>
+                </div>
+                
+                <button type="submit" class="market-button" style="width: 100%;">
+                    <i class="fas fa-upload"></i> Post Item
+                </button>
+                
+                <div class="market-form-success" id="market-form-success">
+                    ✅ Your item has been posted successfully!
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- WhatsApp Confirmation Modal -->
+    <div class="market-modal" id="market-whatsapp-modal">
+        <div class="market-modal-content market-whatsapp-modal">
+            <button class="market-modal-close">&times;</button>
+            <div class="market-whatsapp-icon">
+                <i class="fab fa-whatsapp"></i>
+            </div>
+            <h2>Redirecting to WhatsApp</h2>
+            <p>You're being redirected to WhatsApp to complete your order.</p>
+            <p>If you aren't redirected automatically, <a href="#" id="market-whatsapp-link">click here</a>.</p>
+        </div>
+    </div>
+
+    <script>
+        // WhatsApp redirection function
+        function redirectToWhatsApp(item) {
+            const phoneNumber = "0769882553";
+            const message = `Hello! I'm interested in: ${item}`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            
+            // Show confirmation modal
+            const modal = document.getElementById('market-whatsapp-modal');
+            const link = document.getElementById('market-whatsapp-link');
+            link.href = whatsappURL;
+            modal.style.display = 'flex';
+            
+            // Redirect after a short delay
+            setTimeout(() => {
+                window.location.href = whatsappURL;
+            }, 2500);
+            
+            return false;
+        }
+
+        // DOM Elements
+        const postItemBtn = document.getElementById('market-post-item-btn');
+        const postModal = document.getElementById('market-post-modal');
+        const whatsappModal = document.getElementById('market-whatsapp-modal');
+        const closeModalButtons = document.querySelectorAll('.market-modal-close');
+        const postForm = document.getElementById('market-post-form');
+        const successMessage = document.getElementById('market-form-success');
+        const copyNumberBtn = document.getElementById('copy-number-btn');
+        const copyConfirmation = document.getElementById('copy-confirmation');
+        const paymentNumber = document.getElementById('payment-number');
+        const tabs = document.querySelectorAll('.market-tab');
+        const shareButtons = document.querySelectorAll('.market-share-btn');
+
+        // Event Listeners
+        postItemBtn.addEventListener('click', () => openModal(postModal));
+        
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                postModal.style.display = 'none';
+                whatsappModal.style.display = 'none';
+            });
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target === postModal) {
+                postModal.style.display = 'none';
+            }
+            if (event.target === whatsappModal) {
+                whatsappModal.style.display = 'none';
+            }
+        });
+
+        // Copy Number Functionality
+        copyNumberBtn.addEventListener('click', () => {
+            const textArea = document.createElement('textarea');
+            textArea.value = paymentNumber.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            // Show confirmation message
+            copyConfirmation.classList.add('show');
+            
+            // Hide confirmation after 2 seconds
+            setTimeout(() => {
+                copyConfirmation.classList.remove('show');
+            }, 2000);
+        });
+
+        // Form Submission with FormSubmit
+        postForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitButton = postForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            
+            // Show loading state
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Posting...';
+            submitButton.disabled = true;
+            
+            try {
+                const formData = new FormData(postForm);
+                
+                // Add additional form data that FormSubmit expects
+                formData.append('_subject', 'New Item Listing - Student Market');
+                formData.append('_template', 'table');
+                formData.append('_captcha', 'false');
+                formData.append('_next', '#');
+                
+                const response = await fetch(postForm.action, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    
+                    // Reset form
+                    postForm.reset();
+                    
+                    // Hide success message after 3 seconds
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 3000);
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error submitting your form. Please try again.');
+            } finally {
+                // Reset button state
+                submitButton.innerHTML = originalButtonText;
+                submitButton.disabled = false;
+            }
+        });
+
+        // Tab Switching
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                // Here you would switch the comparison table data
+            });
+        });
+
+        // Share Buttons
+        shareButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Student Market Listing',
+                        text: 'Check out this item on the Student Market!',
+                        url: window.location.href
+                    })
+                    .catch(error => {
+                        console.log('Error sharing:', error);
+                    });
+                } else {
+                    // Fallback for browsers that don't support Web Share API
+                    alert('Web Share API not supported in your browser. Please copy the URL manually.');
+                }
+            });
+        });
+
+        // Functions
+        function openModal(modal) {
+            modal.style.display = 'flex';
+        }
+
+        // Initialize the page
+        console.log('Student Market & Money Tools initialized');
+    </script>
+</body>
+</html>

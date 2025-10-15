@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EE Power Peers - Freshers' Section</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        :root {
+            --primary-blue: #0056b3;
+            --secondary-blue: #003d82;
+            --accent-yellow: #ffc107;
+            --accent-orange: #ff9800;
+            --light-bg: #f5f7fa;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #555555;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        section:nth-child(even) {
+            background-color: var(--light-bg);
+        }
+        
+        .section-content {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            color: var(--primary-blue);
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-yellow);
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            max-width: 700px;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: var(--text-light);
+        }
+        
+        .section-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent-yellow);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-blue);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            padding: 160px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            color: var(--white);
+        }
+        
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: var(--accent-yellow);
+            color: var(--primary-blue);
+            box-shadow: 0 6px 15px rgba(255, 193, 7, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 193, 7, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .hero-illustration {
+            margin-top: 60px;
+            font-size: 6rem;
+            opacity: 0.8;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .hero-illustration i {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .hero-illustration i:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        
+        .hero-illustration i:nth-child(3) {
+            animation-delay: 1s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        /* Stats Section */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 60px;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-yellow);
+            margin-bottom: 10px;
+        }
+        
+        .stat-text {
+            font-size: 1.1rem;
+            color: var(--white);
+        }
+        
+        /* Media Elements */
+        .media-container {
+            margin: 40px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+        
+        .media-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .media-placeholder {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .column-content {
+            padding-right: 20px;
+        }
+        
+        .column-media {
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* Faculty Profiles */
+        .faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .faculty-profile {
+            text-align: center;
+            background: var(--white);
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+        
+        .faculty-profile:hover {
+            transform: translateY(-10px);
+        }
+        
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 1rem;
+            border: 4px solid var(--primary-blue);
+            overflow: hidden;
+        }
+        
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+        }
+        
+        .profile-title {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        
+        .profile-bio {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .testimonial {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .testimonial:hover {
+            transform: translateY(-5px);
+        }
+        
+        .testimonial::before {
+            content: '"';
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--accent-yellow);
+            opacity: 0.3;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e9ecef;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        .author-info {
+            flex: 1;
+        }
+        
+        .author-name {
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        .author-year {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        /* Events List */
+        .events-list {
+            margin-top: 40px;
+        }
+        
+        .event-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 25px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+        
+        .event-item:hover {
+            transform: translateX(10px);
+        }
+        
+        .event-icon {
+            font-size: 2.2rem;
+            margin-right: 25px;
+            color: var(--primary-blue);
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .event-details {
+            flex: 1;
+        }
+        
+        .event-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+        }
+        
+        .event-date {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+        }
+        
+        .event-location {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+        
+        .event-actions {
+            margin-left: 20px;
+        }
+        
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .tool-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+        
+        .tool-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+        }
+        
+        .tool-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .tool-desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        /* Curriculum Table */
+        .curriculum-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            box-shadow: var(--card-shadow);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .curriculum-table th {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .curriculum-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .curriculum-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .curriculum-table tr:hover {
+            background: #e9ecef;
+        }
+        
+        /* Peer Groups */
+        .peer-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .peer-group {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .peer-group:hover {
+            transform: translateY(-10px);
+        }
+        
+        .group-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+        }
+        
+        .group-name {
+            font-weight: 600;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+        }
+        
+        .group-desc {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        
+        .group-members {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .member {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #e9ecef;
+            margin: 0 -5px;
+            border: 2px solid var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 0.7rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+        }
+        
+        .cta-section h2 {
+            color: var(--white);
+        }
+        
+        .cta-section h2::after {
+            background-color: var(--accent-yellow);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-size: 1.2rem;
+        }
+        
+        .cta-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            background: var(--accent-yellow);
+            color: var(--primary-blue);
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25);
+        }
+        
+        .cta-btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+        
+        .cta-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: var(--accent-yellow);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-yellow);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-yellow);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--accent-yellow);
+            color: var(--primary-blue);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: var(--secondary-blue);
+            transform: translateY(-5px);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .column-content {
+                padding-right: 0;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            section {
+                padding: 80px 0;
+            }
+            
+            .hero {
+                padding: 140px 0 80px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .cta-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            h2 {
+                font-size: 1.9rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-icon {
+                font-size: 2.5rem;
+            }
+            
+            .testimonials,
+            .peer-groups,
+            .faculty-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            
+            .event-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .event-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .event-actions {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="nav-container">
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <span>EE Power Peers</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#getting-started">Getting Started</a></li>
+                    <li><a href="#peer-group">Peer Groups</a></li>
+                    <li><a href="#essential-tools">Tools</a></li>
+                    <li><a href="#mentorship">Mentorship</a></li>
+                    <li><a href="#orientation-videos">Videos</a></li>
+                    <li><a href="#meet-faculty">Faculty</a></li>
+                    <li><a href="#upcoming-events">Events</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>New to Electrical Engineering? Start Here ⚡</h1>
+                <p>Welcome to EE Power Peers — your interactive learning hub designed to help you grow from day one! Explore essential tools, meet your mentors, and start your engineering journey with confidence.</p>
+                
+                <div class="hero-btns">
+                    <a href="#getting-started" class="btn btn-primary">Get Started</a>
+                    <a href="#peer-group" class="btn btn-secondary">Join Community</a>
+                </div>
+                
+                <div class="hero-illustration">
+                    <i class="fas fa-bolt"></i>
+                    <i class="fas fa-microchip"></i>
+                    <i class="fas fa-plug"></i>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-text">Active Students</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-text">Senior Mentors</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-text">Peer Groups</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-text">Satisfaction Rate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Getting Started Section -->
+    <section id="getting-started">
+        <div class="container">
+            <div class="section-content">
+                <span class="section-icon">🎓</span>
+                <h2>Getting Started</h2>
+                <p class="section-subtitle">Your journey to becoming an Electrical Engineer starts here. We'll guide you through everything you need to know for a successful first year.</p>
+                
+                <div class="two-column">
+                    <div class="column-content">
+                        <h3>First Year Roadmap</h3>
+                        <p>Your first year in Electrical Engineering is designed to build a strong foundation. You'll explore core concepts that form the basis of all electrical systems and technologies.</p>
+                        
+                        <h4>Key Subjects You'll Encounter:</h4>
+                        <ul>
+                            <li><strong>Circuit Analysis</strong> - Understand voltage, current, and resistance relationships</li>
+                            <li><strong>Electrical Measurements</strong> - Learn to use multimeters, oscilloscopes, and other tools</li>
+                            <li><strong>Digital Logic Design</strong> - Explore the building blocks of digital systems</li>
+                            <li><strong>Engineering Mathematics</strong> - Master the math behind electrical concepts</li>
+                            <li><strong>Electromagnetic Theory</strong> - Discover the principles of electromagnetism</li>
+                        </ul>
+                        
+                        <p>Beyond academics, you'll also learn lab safety protocols, teamwork skills, and how to use essential engineering software like MATLAB and SPICE.</p>
+                    </div>
+                    <div class="column-media">
+                        <div class="media-container">
+                            <div class="media-placeholder">
+                                First Year Curriculum Visual Timeline
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 50px;">First Semester Curriculum</h3>
+                <table class="curriculum-table">
+                    <thead>
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Credits</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>EE101</td>
+                            <td>Introduction to Electrical Engineering</td>
+                            <td>3</td>
+                            <td>Core</td>
+                        </tr>
+                        <tr>
+                            <td>EE110</td>
+                            <td>Circuit Theory</td>
+                            <td>4</td>
+                            <td>Core</td>
+                        </tr>
+                        <tr>
+                            <td>MATH151</td>
+                            <td>Engineering Mathematics I</td>
+                            <td>4</td>
+                            <td>Core</td>
+                        </tr>
+                        <tr>
+                            <td>PHY120</td>
+                            <td>Physics for Engineers</td>
+                            <td>3</td>
+                            <td>Core</td>
+                        </tr>
+                        <tr>
+                            <td>CS105</td>
+                            <td>Programming Fundamentals</td>
+                            <td>3</td>
+                            <td>Core</td>
+                        </tr>
+                        <tr>
+                            <td>EE191</td>
+                            <td>Electrical Workshop</td>
+                            <td>1</td>
+                            <td>Lab</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Peer Groups Section -->
+    <section id="peer-group">
+        <div class="container">
+            <div class="section-content">
+                <span class="section-icon">💡</span>
+                <h2>Join a Peer Group</h2>
+                <p class="section-subtitle">Connect with students who share your interests. Our Power Peer Circles make it easy to find study partners, collaborate on projects, and build lasting friendships.</p>
+                
+                <div class="peer-groups">
+                    <div class="peer-group">
+                        <div class="group-icon"><i class="fas fa-robot"></i></div>
+                        <div class="group-name">Robotics & Automation</div>
+                        <div class="group-desc">Explore the world of robotics, from simple circuits to autonomous systems. Perfect for those interested in control systems and AI.</div>
+                        <div class="group-members">
+                            <div class="member">JD</div>
+                            <div class="member">SM</div>
+                            <div class="member">AK</div>
+                            <div class="member">+12</div>
+                        </div>
+                        <a href="#" class="btn btn-primary">Join Group</a>
+                    </div>
+                    
+                    <div class="peer-group">
+                        <div class="group-icon"><i class="fas fa-bolt"></i></div>
+                        <div class="group-name">Power Systems</div>
+                        <div class="group-desc">Dive into generation, transmission, and distribution of electricity. Focus on renewable energy and smart grid technologies.</div>
+                        <div class="group-members">
+                            <div class="member">RJ</div>
+                            <div class="member">PT</div>
+                            <div class="member">KM</div>
+                            <div class="member">+9</div>
+                        </div>
+                        <a href="#" class="btn btn-primary">Join Group</a>
+                    </div>
+                    
+                    <div class="peer-group">
+                        <div class="group-icon"><i class="fas fa-microchip"></i></div>
+                        <div class="group-name">Electronics & VLSI</div>
+                        <div class="group-desc">From basic components to integrated circuit design. Explore analog, digital, and mixed-signal electronics.</div>
+                        <div class="group-members">
+                            <div class="member">AS</div>
+                            <div class="member">VR</div>
+                            <div class="member">NP</div>
+                            <div class="member">+15</div>
+                        </div>
+                        <a href="#" class="btn btn-primary">Join Group</a>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 50px;">
+                    <p>Can't find a group that matches your interests? Start your own!</p>
+                    <a href="#" class="btn btn-secondary">Create New Group</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Essential Tools Section -->
+    <section id="essential-tools">
+        <div class="container">
+            <div class="section-content">
+                <span class="section-icon">🧰</span>
+                <h2>Know Your Essential Tools</h2>
+                <p class="section-subtitle">Get familiar with your must-have Electrical Engineering tools. Understanding your tools early will make every lab session easier and more productive.</p>
+                
+                <div class="tools-grid">
+                    <div class="tool-item">
+                        <div class="tool-icon"><i class="fas fa-bolt"></i></div>
+                        <div class="tool-name">Digital Multimeter</div>
+                        <div class="tool-desc">Measures voltage, current, and resistance. Your most basic and essential tool.</div>
+                    </div>
+                    <div class="tool-item">
+                        <div class="tool-icon"><i class="fas fa-wave-square"></i></div>
+                        <div class="tool-name">Oscilloscope</div>
+                        <div class="tool-desc">Visualizes electrical signals. Critical for debugging circuits.</div>
+                    </div>
+                    <div class="tool-item">
+                        <div class="tool-icon"><i class="fas fa-plug"></i></div>
+                        <div class="tool-name">Power Supply</div>
+                        <div class="tool-desc">Provides adjustable voltage and current to power your circuits.</div>
+                    </div>
+                    <div class="tool-item">
+                        <div class="tool-icon"><i class="fas fa-microchip"></i></div>
+                        <div class="tool-name">Breadboard</div>
+                        <div class="tool-desc">Allows temporary circuit construction without soldering.</div>
+                    </div>
+                    <div class="tool-item">
+                        <div class="tool-icon"><i class="fas fa-tools"></i></div>
+                        <div class="tool-name">Soldering Iron</div>
+                        <div class="tool-desc">Used to create permanent connections between components.</div>
+                    </div>
+                    <div class="tool-item">
+                        <div class="tool-icon"><i class="fas fa-ruler-combined"></i></div>
+                        <div class="tool-name">Wire Strippers</div>
+                        <div class="tool-desc">Removes insulation from wires for connections.</div>
+                    </div>
+                    <div class="tool-item">
+                        <div class="tool-icon"><i class="fas fa-compress-arrows-alt"></i></div>
+                        <div class="tool-name">Function Generator</div>
+                        <div class="tool-desc">Produces various waveforms for testing circuits.</div>
+                    </div>
+                    <div class="tool-item">
+                        <div class="tool-icon"><i class="fas fa-desktop"></i></div>
+                        <div class="tool-name">Simulation Software</div>
+                        <div class="tool-desc">SPICE, MATLAB, and other tools for virtual circuit testing.</div>
+                    </div>
+                </div>
+                
+                <div class="media-container" style="margin-top: 50px;">
+                    <div class="media-placeholder">
+                        Video Tutorial: How to Use a Multimeter
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Mentorship Program Section -->
+    <section id="mentorship">
+        <div class="container">
+            <div class="section-content">
+                <span class="section-icon">🤝</span>
+                <h2>Mentorship Program</h2>
+                <p class="section-subtitle">Get paired with a senior mentor who'll help you adjust to campus life, study better, and discover your engineering passion. Mentorship builds confidence and support.</p>
+                
+                <div class="two-column">
+                    <div class="column-content">
+                        <h3>How Our Mentorship Works</h3>
+                        <p>Our peer-to-peer mentorship program connects you with experienced students who have successfully navigated the challenges you're about to face.</p>
+                        
+                        <h4>Benefits of Having a Mentor:</h4>
+                        <ul>
+                            <li>Personalized guidance on course selection and study strategies</li>
+                            <li>Insider tips on professors, courses, and campus resources</li>
+                            <li>Career advice and internship opportunities</li>
+                            <li>Emotional support during stressful periods</li>
+                            <li>Networking opportunities with other EE students</li>
+                        </ul>
+                        
+                        <h4>Mentor Matching Process:</h4>
+                        <ol>
+                            <li>Complete our mentorship interest form</li>
+                            <li>We match you based on academic interests, career goals, and personality</li>
+                            <li>Attend an orientation session with your mentor</li>
+                            <li>Schedule regular meetings throughout the semester</li>
+                        </ol>
+                        
+                        <a href="#" class="btn btn-primary" style="margin-top: 20px;">Apply for a Mentor</a>
+                    </div>
+                    <div class="column-media">
+                        <div class="media-container">
+                            <div class="media-placeholder">
+                                Mentor-Mentee Meeting in Progress
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 60px;">What Our Students Say</h3>
+                <div class="testimonials">
+                    <div class="testimonial">
+                        <p class="testimonial-text">My mentor helped me navigate my first semester with confidence. She shared study resources and introduced me to key professors.</p>
+                        <div class="testimonial-author">
+                            <div class="author-img">SK</div>
+                            <div class="author-info">
+                                <div class="author-name">Sarah Kim</div>
+                                <div class="author-year">2nd Year EE Student</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <p class="testimonial-text">Thanks to my mentor, I landed an internship at a renewable energy company. The guidance on resume building and interviews was invaluable.</p>
+                        <div class="testimonial-author">
+                            <div class="author-img">JM</div>
+                            <div class="author-info">
+                                <div class="author-name">James Miller</div>
+                                <div class="author-year">3rd Year EE Student</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Orientation Videos Section -->
+    <section id="orientation-videos">
+        <div class="container">
+            <div class="section-content">
+                <span class="section-icon">🎥</span>
+                <h2>Orientation & Tour Videos</h2>
+                <p class="section-subtitle">Watch our short orientation videos to get familiar with your new department — from classrooms to labs. Start exploring before you even step in!</p>
+                
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="EE Power Peers Orientation" allowfullscreen></iframe>
+                </div>
+                
+                <div class="two-column" style="margin-top: 50px;">
+                    <div class="column-content">
+                        <h3>Additional Video Resources</h3>
+                        <p>We've created a library of videos to help you get started with Electrical Engineering concepts and tools.</p>
+                        
+                        <div class="events-list">
+                            <div class="event-item">
+                                <div class="event-icon"><i class="fas fa-video"></i></div>
+                                <div class="event-details">
+                                    <div class="event-title">Circuit Basics for Beginners</div>
+                                    <div class="event-date">15 minutes | Dr. Elena Rodriguez</div>
+                                </div>
+                                <div class="event-actions">
+                                    <a href="#" class="btn btn-primary">Watch</a>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-icon"><i class="fas fa-video"></i></div>
+                                <div class="event-details">
+                                    <div class="event-title">Lab Safety Orientation</div>
+                                    <div class="event-date">22 minutes | Eng. Michael Otieno</div>
+                                </div>
+                                <div class="event-actions">
+                                    <a href="#" class="btn btn-primary">Watch</a>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-icon"><i class="fas fa-video"></i></div>
+                                <div class="event-details">
+                                    <div class="event-title">Using MATLAB for EE Calculations</div>
+                                    <div class="event-date">35 minutes | Prof. David Chen</div>
+                                </div>
+                                <div class="event-actions">
+                                    <a href="#" class="btn btn-primary">Watch</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column-media">
+                        <div class="media-container">
+                            <div class="media-placeholder">
+                                Video Library Thumbnails
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Department Location Section -->
+    <section id="department-location">
+        <div class="container">
+            <div class="section-content">
+                <span class="section-icon">🗺️</span>
+                <h2>Locate the Electrical Engineering Department</h2>
+                <p class="section-subtitle">Find your way easily with this map of the Electrical Engineering Department and key facilities.</p>
+                
+                <div class="media-container">
+                    <div class="media-placeholder">
+                        Interactive Campus Map - EE Department Highlighted
+                    </div>
+                </div>
+                
+                <div class="two-column" style="margin-top: 40px;">
+                    <div class="column-content">
+                        <h3>Key Locations in the EE Building</h3>
+                        
+                        <div class="events-list">
+                            <div class="event-item">
+                                <div class="event-icon"><i class="fas fa-flask"></i></div>
+                                <div class="event-details">
+                                    <div class="event-title">Electronics Lab (Room 204)</div>
+                                    <div class="event-location">2nd floor, East Wing - Basic circuit experiments</div>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-icon"><i class="fas fa-bolt"></i></div>
+                                <div class="event-details">
+                                    <div class="event-title">Power Systems Lab (Room 315)</div>
+                                    <div class="event-location">3rd floor, West Wing - High voltage experiments</div>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-icon"><i class="fas fa-desktop"></i></div>
+                                <div class="event-details">
+                                    <div class="event-title">Computer Lab (Room 110)</div>
+                                    <div class="event-location">1st floor, Center - Simulation software access</div>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-icon"><i class="fas fa-book"></i></div>
+                                <div class="event-details">
+                                    <div class="event-title">EE Library (Room 101)</div>
+                                    <div class="event-location">1st floor, East Wing - Textbooks and study space</div>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-icon"><i class="fas fa-users"></i></div>
+                                <div class="event-details">
+                                    <div class="event-title">Student Lounge (Room 205)</div>
+                                    <div class="event-location">2nd floor, Center - Relaxation and group study</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column-media">
+                        <div class="media-container">
+                            <div class="media-placeholder">
+                                Building Floor Plan
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Faculty Section -->
+    <section id="meet-faculty">
+        <div class="container">
+            <div class="section-content">
+                <span class="section-icon">🧑‍🏫</span>
+                <h2>Meet the Faculty</h2>
+                <p class="section-subtitle">Get to know the professors and staff who will guide your academic journey in Electrical Engineering.</p>
+                
+                <div class="faculty-grid">
+                    <div class="faculty-profile">
+                        <div class="profile-img">Dr. Jane Achieng</div>
+                        <div class="profile-name">Dr. Jane Achieng</div>
+                        <div class="profile-title">Head of Department</div>
+                        <div class="profile-bio">Specializes in Power Systems and Renewable Energy. 15+ years of teaching experience.</div>
+                    </div>
+                    <div class="faculty-profile">
+                        <div class="profile-img">Eng. Michael Otieno</div>
+                        <div class="profile-name">Eng. Michael Otieno</div>
+                        <div class="profile-title">Lab Coordinator</div>
+                        <div class="profile-bio">Industry expert in Electronics and Embedded Systems. Manages all EE laboratory facilities.</div>
+                    </div>
+                    <div class="faculty-profile">
+                        <div class="profile-img">Prof. Sarah Johnson</div>
+                        <div class="profile-name">Prof. Sarah Johnson</div>
+                        <div class="profile-title">Circuit Theory</div>
+                        <div class="profile-bio">Research focus on Analog Circuit Design and Signal Processing. Author of 3 textbooks.</div>
+                    </div>
+                    <div class="faculty-profile">
+                        <div class="profile-img">Dr. Robert Chen</div>
+                        <div class="profile-name">Dr. Robert Chen</div>
+                        <div class="profile-title">Power Systems</div>
+                        <div class="profile-bio">Expert in Smart Grid technologies and Power Electronics. Consulted for major utilities.</div>
+                    </div>
+                    <div class="faculty-profile">
+                        <div class="profile-img">Dr. Elena Rodriguez</div>
+                        <div class="profile-name">Dr. Elena Rodriguez</div>
+                        <div class="profile-title">Digital Systems</div>
+                        <div class="profile-bio">Specializes in VLSI Design and Computer Architecture. Leads the microelectronics research group.</div>
+                    </div>
+                    <div class="faculty-profile">
+                        <div class="profile-img">Prof. David Wilson</div>
+                        <div class="profile-name">Prof. David Wilson</div>
+                        <div class="profile-title">Electromagnetic Theory</div>
+                        <div class="profile-bio">Research in Antenna Design and Wireless Communications. Former industry researcher.</div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 50px;">
+                    <p>Want to connect with a faculty member? Check their office hours or schedule an appointment.</p>
+                    <a href="#" class="btn btn-primary">View Office Hours</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Freshers' Stories Section -->
+    <section id="freshers-stories">
+        <div class="container">
+            <div class="section-content">
+                <span class="section-icon">💬</span>
+                <h2>Freshers' Stories</h2>
+                <p class="section-subtitle">Hear from students who started their journey with EE Power Peers and discover how the program transformed their university experience.</p>
+                
+                <div class="testimonials">
+                    <div class="testimonial">
+                        <p class="testimonial-text">I joined EE Power Peers last year — the mentorship and community helped me find my path! My mentor guided me through course selection and introduced me to research opportunities I wouldn't have known about otherwise.</p>
+                        <div class="testimonial-author">
+                            <div class="author-img">BK</div>
+                            <div class="author-info">
+                                <div class="author-name">Brian Kariuki</div>
+                                <div class="author-year">2nd Year EE Student</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <p class="testimonial-text">The peer groups made all the difference. I found study partners and friends who share my passion for robotics. We now work on projects together and even entered a robotics competition as a team!</p>
+                        <div class="testimonial-author">
+                            <div class="author-img">SM</div>
+                            <div class="author-info">
+                                <div class="author-name">Sophia Mwangi</div>
+                                <div class="author-year">1st Year EE Student</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <p class="testimonial-text">The orientation videos helped me feel prepared even before stepping into the lab. Highly recommend! I knew where to go on my first day and wasn't nervous about using the equipment.</p>
+                        <div class="testimonial-author">
+                            <div class="author-img">AN</div>
+                            <div class="author-info">
+                                <div class="author-name">Alex Nderitu</div>
+                                <div class="author-year">1st Year EE Student</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="media-container" style="margin-top: 50px;">
+                    <div class="media-placeholder">
+                        Video: Student Success Stories Compilation
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Upcoming Events Section -->
+    <section id="upcoming-events">
+        <div class="container">
+            <div class="section-content">
+                <span class="section-icon">📅</span>
+                <h2>Upcoming Events</h2>
+                <p class="section-subtitle">Don't miss our upcoming events designed especially for freshers! Mark your calendar and join us for these exciting opportunities.</p>
+                
+                <div class="events-list">
+                    <div class="event-item">
+                        <div class="event-icon">🗓️</div>
+                        <div class="event-details">
+                            <div class="event-title">Freshers Meet & Greet</div>
+                            <div class="event-date">September 15, 2023 | 3:00 PM - 5:00 PM</div>
+                            <div class="event-location">EE Department Courtyard</div>
+                        </div>
+                        <div class="event-actions">
+                            <a href="#" class="btn btn-primary">RSVP</a>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-icon">⚙️</div>
+                        <div class="event-details">
+                            <div class="event-title">Intro to Circuits Workshop</div>
+                            <div class="event-date">September 20, 2023 | 10:00 AM - 12:00 PM</div>
+                            <div class="event-location">Electronics Lab, Room 204</div>
+                        </div>
+                        <div class="event-actions">
+                            <a href="#" class="btn btn-primary">Register</a>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-icon">💬</div>
+                        <div class="event-details">
+                            <div class="event-title">Power Peers Induction Week</div>
+                            <div class="event-date">September 25-29, 2023 | Various Times</div>
+                            <div class="event-location">Multiple Locations</div>
+                        </div>
+                        <div class="event-actions">
+                            <a href="#" class="btn btn-primary">View Schedule</a>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-icon">🔌</div>
+                        <div class="event-details">
+                            <div class="event-title">Lab Equipment Orientation</div>
+                            <div class="event-date">October 5, 2023 | 2:00 PM - 4:00 PM</div>
+                            <div class="event-location">Main EE Laboratory</div>
+                        </div>
+                        <div class="event-actions">
+                            <a href="#" class="btn btn-primary">Sign Up</a>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-icon">🤝</div>
+                        <div class="event-details">
+                            <div class="event-title">Mentor-Mentee Mixer</div>
+                            <div class="event-date">October 12, 2023 | 4:00 PM - 6:00 PM</div>
+                            <div class="event-location">Student Lounge, Room 205</div>
+                        </div>
+                        <div class="event-actions">
+                            <a href="#" class="btn btn-primary">Join</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 50px;">
+                    <p>Want to stay updated on all EE Power Peers events?</p>
+                    <a href="#" class="btn btn-secondary">Subscribe to Event Alerts</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="section-content">
+                <h2>Join the Power Peers Community</h2>
+                <p>Ready to begin your journey? Join the EE Power Peers network today and unlock learning, mentorship, and growth opportunities designed specifically for Electrical Engineering students.</p>
+                
+                <div class="cta-btns">
+                    <a href="#" class="cta-btn">Join Now</a>
+                    <a href="#" class="cta-btn cta-btn-secondary">Learn More</a>
+                </div>
+                
+                <div class="stats" style="margin-top: 60px; background: rgba(255, 255, 255, 0.15);">
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-text">Community Support</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-text">Free to Join</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1,000+</div>
+                        <div class="stat-text">Resources Available</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>EE Power Peers</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 20px;">Your interactive learning hub for Electrical Engineering success.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#getting-started">Getting Started</a></li>
+                        <li><a href="#peer-group">Peer Groups</a></li>
+                        <li><a href="#essential-tools">Essential Tools</a></li>
+                        <li><a href="#mentorship">Mentorship Program</a></li>
+                        <li><a href="#orientation-videos">Orientation Videos</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Course Materials</a></li>
+                        <li><a href="#">Lab Manuals</a></li>
+                        <li><a href="#">Tutorial Videos</a></li>
+                        <li><a href="#">Research Opportunities</a></li>
+                        <li><a href="#">Career Guidance</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Electrical Engineering Department</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> eepowerpeers@university.edu</li>
+                        <li><i class="fas fa-clock"></i> Office Hours: Mon-Fri, 9AM-5PM</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 EE Power Peers. All rights reserved. | Designed for Electrical Engineering Students</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        // Back to Top Button
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('active');
+            } else {
+                backToTopButton.classList.remove('active');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Mobile Menu Toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                    }
+                }
+            });
+        });
+        
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav-container');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(255, 255, 255, 0.98)';
+                nav.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+            }
+        });
+        
+        // Fade in elements on scroll
+        const fadeElements = document.querySelectorAll('.section-content, .media-container, .faculty-profile, .testimonial, .event-item, .tool-item, .peer-group');
+        
+        const fadeInOnScroll = () => {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.style.opacity = "1";
+                    element.style.transform = "translateY(0)";
+                }
+            });
+        };
+        
+        // Initialize elements with fade properties
+        fadeElements.forEach(element => {
+            element.style.opacity = "0";
+            element.style.transform = "translateY(20px)";
+            element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        });
+        
+        window.addEventListener('scroll', fadeInOnScroll);
+        // Initial check in case elements are already in view
+        window.addEventListener('load', fadeInOnScroll);
+    </script>
+</body>
+</html>

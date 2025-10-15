@@ -1,0 +1,1399 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electrical Engineering Notes Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+            line-height: 1.4;
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+            font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+        }
+
+        .dark-mode {
+            background-color: #121212;
+            color: #f8f9fa;
+        }
+
+        .dark-mode .card-bg {
+            background-color: #1e1e1e;
+        }
+
+        .dark-mode .search-bar,
+        .dark-mode .passkey-input {
+            background-color: #2d2d2d;
+            color: #f8f9fa;
+            border-color: #444;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: clamp(8px, 2vw, 15px) 0;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: clamp(15px, 3vw, 20px);
+            padding: clamp(12px, 3vw, 18px);
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            border-radius: clamp(6px, 1.5vw, 10px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 0;
+        }
+
+        header>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: clamp(1.3rem, 5vw, 2rem);
+            margin-bottom: clamp(5px, 1.5vw, 8px);
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: clamp(1.1rem, 4vw, 1.6rem);
+            margin: clamp(10px, 2.5vw, 15px) 0 clamp(8px, 1.5vw, 10px);
+            color: #4361ee;
+            line-height: 1.2;
+        }
+
+        h3 {
+            font-size: clamp(0.95rem, 3.5vw, 1.3rem);
+            margin: clamp(8px, 2vw, 12px) 0 clamp(5px, 1.5vw, 8px);
+            line-height: 1.2;
+        }
+
+        p {
+            margin-bottom: clamp(6px, 1.5vw, 10px);
+            line-height: 1.3;
+        }
+
+        /* Paywall Section - Compact */
+        .paywall-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: clamp(10px, 3vw, 20px);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .payment-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 700px;
+            gap: clamp(12px, 3vw, 20px);
+        }
+
+        .payment-card {
+            background-color: #ffffff;
+            border-radius: clamp(6px, 1.5vw, 10px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            padding: clamp(15px, 4vw, 20px);
+            text-align: center;
+            width: 100%;
+            border: 1px solid #4361ee;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: clamp(3px, 1vw, 4px);
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+        }
+
+        .payment-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: clamp(12px, 3vw, 20px);
+            width: 100%;
+        }
+
+        .payment-details,
+        .passkey-section {
+            flex: 1;
+            min-width: min(280px, 90vw);
+            background: #ffffff;
+            border-radius: clamp(6px, 1.5vw, 10px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+            padding: clamp(15px, 3vw, 18px);
+            position: relative;
+        }
+
+        .payment-details::before,
+        .passkey-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: clamp(2px, 0.8vw, 3px);
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(4px, 1vw, 6px);
+            padding: clamp(8px, 2vw, 10px) clamp(12px, 2.5vw, 16px);
+            background-color: #4361ee;
+            color: white;
+            border: none;
+            border-radius: clamp(5px, 1.2vw, 8px);
+            cursor: pointer;
+            font-size: clamp(0.85rem, 2.2vw, 0.9rem);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin: clamp(2px, 0.8vw, 4px);
+            box-shadow: 0 3px 8px rgba(67, 97, 238, 0.25);
+        }
+
+        .btn:hover {
+            background-color: #3a0ca3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(67, 97, 238, 0.35);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-success {
+            background-color: #4cc9f0;
+        }
+
+        .btn-success:hover {
+            background-color: #3aa8d0;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #4361ee;
+            color: #4361ee;
+        }
+
+        .btn-outline:hover {
+            background-color: #4361ee;
+            color: white;
+        }
+
+        .passkey-form {
+            margin-top: clamp(10px, 2.5vw, 15px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .passkey-input {
+            padding: clamp(8px, 2vw, 10px);
+            width: 100%;
+            max-width: min(250px, 85vw);
+            border: 1px solid #ddd;
+            border-radius: clamp(5px, 1.2vw, 8px);
+            font-size: clamp(0.85rem, 2.2vw, 0.9rem);
+            margin-bottom: clamp(8px, 2vw, 12px);
+            text-align: center;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            color: #212529;
+        }
+
+        .passkey-input:focus {
+            outline: none;
+            border-color: #4361ee;
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+        }
+
+        .error-message {
+            color: #f72585;
+            margin-top: clamp(5px, 1.5vw, 8px);
+            font-weight: 600;
+            font-size: clamp(0.8rem, 2vw, 0.85rem);
+        }
+
+        /* Notes Section */
+        .notes-section {
+            display: none;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: clamp(12px, 2.5vw, 15px);
+            flex-wrap: wrap;
+            gap: clamp(8px, 2vw, 12px);
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-bar {
+            padding: clamp(8px, 2vw, 10px) clamp(10px, 2vw, 12px);
+            border: 1px solid #ddd;
+            border-radius: clamp(5px, 1.2vw, 8px);
+            font-size: clamp(0.85rem, 2.2vw, 0.9rem);
+            width: 100%;
+            max-width: min(250px, 85vw);
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            color: #212529;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #4361ee;
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+        }
+
+        .toc-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #ffffff;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            padding: clamp(6px, 1.5vw, 8px) 0;
+        }
+
+        .toc {
+            display: flex;
+            overflow-x: auto;
+            padding: 0 clamp(6px, 1.5vw, 8px);
+            scrollbar-width: thin;
+            width: 95%;
+            margin: 0 auto;
+            gap: clamp(2px, 0.8vw, 4px);
+        }
+
+        .toc::-webkit-scrollbar {
+            height: 3px;
+        }
+
+        .toc::-webkit-scrollbar-thumb {
+            background: #4361ee;
+            border-radius: 8px;
+        }
+
+        .toc-item {
+            flex: 0 0 auto;
+            white-space: nowrap;
+        }
+
+        .toc-item a {
+            text-decoration: none;
+            color: #212529;
+            padding: clamp(6px, 1.5vw, 8px) clamp(8px, 2vw, 12px);
+            border-radius: clamp(4px, 1vw, 6px);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: block;
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid transparent;
+            font-size: clamp(0.75rem, 2vw, 0.8rem);
+        }
+
+        .toc-item a:hover,
+        .toc-item a.active {
+            background-color: #4361ee;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(67, 97, 238, 0.25);
+        }
+
+        .unit {
+            background-color: #ffffff;
+            border-radius: clamp(6px, 1.5vw, 10px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+            padding: clamp(12px, 3vw, 18px);
+            margin-bottom: clamp(15px, 3vw, 20px);
+            transition: all 0.3s ease;
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .unit::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: clamp(2px, 0.8vw, 3px);
+            height: 100%;
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+        }
+
+        .unit-header {
+            margin-bottom: clamp(8px, 2vw, 12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: clamp(6px, 1.5vw, 10px);
+        }
+
+        .unit-content {
+            display: block;
+        }
+
+        .media-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: clamp(10px, 2.5vw, 15px);
+            margin: clamp(10px, 2.5vw, 15px) 0;
+        }
+
+        .media-item {
+            border-radius: clamp(5px, 1.2vw, 8px);
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+            position: relative;
+            padding-bottom: min(70%, 400px);
+            height: 0;
+            transition: all 0.3s ease;
+            min-height: 200px;
+        }
+
+        .media-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .media-item iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .media-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .key-points {
+            background-color: rgba(76, 201, 240, 0.08);
+            border-left: 3px solid #4cc9f0;
+            padding: clamp(10px, 2.5vw, 15px);
+            border-radius: clamp(4px, 1vw, 6px);
+            margin: clamp(10px, 2.5vw, 15px) 0;
+        }
+
+        .key-points h4 {
+            margin-bottom: clamp(5px, 1.5vw, 8px);
+            color: #4cc9f0;
+            display: flex;
+            align-items: center;
+            gap: clamp(5px, 1.5vw, 8px);
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+
+        .key-points ul {
+            padding-left: clamp(12px, 2.5vw, 16px);
+        }
+
+        .key-points li {
+            margin-bottom: clamp(4px, 1.2vw, 6px);
+            position: relative;
+            padding-left: clamp(5px, 1.2vw, 8px);
+            font-size: clamp(0.8rem, 2vw, 0.85rem);
+        }
+
+        .key-points li::before {
+            content: "•";
+            color: #4cc9f0;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: clamp(15px, 3vw, 20px);
+            right: clamp(15px, 3vw, 20px);
+            background-color: #4361ee;
+            color: white;
+            width: clamp(35px, 6vw, 45px);
+            height: clamp(35px, 6vw, 45px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: #3a0ca3;
+            transform: translateY(-3px);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: clamp(12px, 2.5vw, 15px);
+            right: clamp(12px, 2.5vw, 15px);
+            background-color: #4361ee;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: clamp(35px, 6vw, 45px);
+            height: clamp(35px, 6vw, 45px);
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 101;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(0.9rem, 2.2vw, 1rem);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(15deg);
+        }
+
+        /* Progress indicator */
+        .progress-container {
+            width: 100%;
+            height: clamp(2px, 0.8vw, 3px);
+            background-color: rgba(0, 0, 0, 0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 102;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Unit completion status */
+        .unit-status {
+            display: flex;
+            align-items: center;
+            gap: clamp(5px, 1.5vw, 8px);
+            font-size: clamp(0.75rem, 2vw, 0.8rem);
+            color: #6c757d;
+        }
+
+        .status-checkbox {
+            width: clamp(16px, 3.5vw, 18px);
+            height: clamp(16px, 3.5vw, 18px);
+            border-radius: 50%;
+            border: 1px solid #6c757d;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: clamp(0.65rem, 1.8vw, 0.7rem);
+        }
+
+        .status-checkbox.checked {
+            background-color: #4cc9f0;
+            border-color: #4cc9f0;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: clamp(15px, 3vw, 20px);
+            margin-top: clamp(20px, 4vw, 30px);
+            background: #212529;
+            color: white;
+            border-radius: clamp(6px, 1.5vw, 10px);
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: clamp(0.8rem, 2vw, 0.85rem);
+        }
+
+        /* Float button */
+        .float-btn {
+            z-index: 1000;
+            position: fixed;
+            bottom: clamp(5px, 3vw, 10px);
+            right: clamp(5px, 3vw, 10px);
+            background-color: #4CAF50;
+            color: #fff;
+            padding: clamp(5px, 1.5vw, 10px) clamp(6px, 2.5vw, 14px);
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+            font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+        }
+
+        .float-btn:hover {
+            background-color: #3e8e41;
+            box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Media Queries */
+        @media (max-width: 480px) {
+            .container,
+            header,
+            .controls,
+            .unit,
+            footer {
+                width: 98%;
+            }
+
+            .payment-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .payment-details,
+            .passkey-section {
+                min-width: 100%;
+            }
+
+            .unit-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .media-container {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .media-item {
+                padding-bottom: min(75%, 250px);
+                min-height: 150px;
+            }
+
+            .toc {
+                gap: 1px;
+            }
+
+            .toc-item a {
+                padding: 4px 8px;
+                font-size: 0.7rem;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+                margin: 2px 0;
+            }
+
+            .search-bar {
+                max-width: 100%;
+            }
+
+            .passkey-input {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .unit-status {
+                justify-content: center;
+                margin-top: 3px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .media-container {
+                grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .media-item {
+                padding-bottom: min(60%, 450px);
+                min-height: 250px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .media-item {
+                padding-bottom: min(55%, 500px);
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html" class="float-btn">Back to Home</a>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Paywall Section - Compact -->
+    <section class="paywall-section" id="paywallSection">
+        <div class="payment-container">
+            <div class="payment-card">
+                <h2>Electrical Engineering Notes</h2>
+                <p>Access comprehensive study materials for electrical installation units</p>
+                
+                <div class="payment-info">
+                    <div class="payment-details">
+                        <h3>Unlock Full Access</h3>
+                        <p>Pay Ksh 15 to unlock the full notes. Send to:</p>
+                        <div style="margin: 10px 0; font-size: 1rem; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i class="fas fa-mobile-alt"></i>
+                            0769882553 <span style="color: #6c757d; font-size: 0.85rem;">(James Kiladi)</span>
+                        </div>
+
+                        <div style="margin: 12px 0;">
+                            <button class="btn" id="copyNumberBtn">
+                                <i class="fas fa-copy"></i> Copy Number
+                            </button>
+                            <a href="https://wa.me/254769882553?text=Payment%20confirmation%20for%20notes"
+                                class="btn btn-success" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Confirm
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="passkey-section">
+                        <h3>Enter Passkey</h3>
+                        <p>After payment, enter the 5-digit passkey</p>
+
+                        <div class="passkey-form">
+                            <input type="text" class="passkey-input" id="passkeyInput"
+                                placeholder="Enter 5-digit passkey" maxlength="5">
+                            <button class="btn" id="submitPasskeyBtn">
+                                <i class="fas fa-key"></i> Submit
+                            </button>
+                            <div class="error-message" id="errorMessage"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <header>
+            <h1>Electrical Engineering Notes Portal</h1>
+            <p>Comprehensive study materials for electrical installation students</p>
+        </header>
+
+        <!-- Notes Section -->
+        <section class="notes-section" id="notesSection">
+            <div class="controls">
+                <input type="text" class="search-bar" id="searchBar" placeholder="Search units...">
+                <div class="unit-status">
+                    <span id="completedCount">0</span> of <span id="totalCount">6</span> units completed
+                </div>
+            </div>
+
+            <!-- Compact Horizontal TOC -->
+            <div class="toc-container" id="tocContainer">
+                <nav class="toc" id="toc">
+                    <div class="toc-item"><a href="#unit1" class="toc-link active">Conduit System</a></div>
+                    <div class="toc-item"><a href="#unit2" class="toc-link">Trunking System</a></div>
+                    <div class="toc-item"><a href="#unit3" class="toc-link">PVC Sheathed</a></div>
+                    <div class="toc-item"><a href="#unit4" class="toc-link">Machines</a></div>
+                    <div class="toc-item"><a href="#unit5" class="toc-link">Solar</a></div>
+                    <div class="toc-item"><a href="#unit6" class="toc-link">Bells & Alarms</a></div>
+                </nav>
+            </div>
+
+            <!-- Unit 1 -->
+            <div class="unit" id="unit1">
+                <div class="unit-header">
+                    <h2>1. Conduit System</h2>
+                    <div class="unit-status">
+                        <span>Mark as completed:</span>
+                        <div class="status-checkbox" data-unit="unit1">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="unit-content">
+                    <p>A conduit system is an enclosed channel designed to hold and protect electrical wires and cables. It provides a safe pathway for electrical wiring in buildings and other structures.</p>
+
+                    <h3>Types of Conduit Systems</h3>
+                    <ul>
+                        <li><strong>Rigid Metal Conduit (RMC)</strong>: Heavy-duty threaded steel tubing</li>
+                        <li><strong>Intermediate Metal Conduit (IMC)</strong>: Lighter than RMC but with similar strength</li>
+                        <li><strong>Electrical Metallic Tubing (EMT)</strong>: Thin-walled steel tubing, easy to bend</li>
+                        <li><strong>PVC Conduit</strong>: Non-metallic, corrosion-resistant</li>
+                        <li><strong>Flexible Metal Conduit (FMC)</strong>: Spiral-wound metal for vibration areas</li>
+                    </ul>
+
+                    <div class="media-container">
+                        <div class="media-item">
+                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                                alt="Conduit Installation">
+                            <p class="diagram-caption">Fig. 1: Conduit installation in commercial building</p>
+                        </div>
+                    </div>
+
+                    <h3>Installation Requirements</h3>
+                    <p>Conduit fill calculations must follow NEC guidelines:</p>
+                    <ul>
+                        <li>Maximum fill capacity: 40% for three or more conductors</li>
+                        <li>Derating factors for multiple conductors</li>
+                        <li>Proper bending radius to prevent conductor damage</li>
+                        <li>Support spacing requirements</li>
+                    </ul>
+
+                    <div class="media-container">
+                        <div class="media-item">
+                            <iframe src="https://www.youtube.com/embed/3Xb0h6Slaak" title="Conduit System Installation"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+                    <div class="key-points">
+                        <h4><i class="fas fa-lightbulb"></i> Key Points</h4>
+                        <ul>
+                            <li>Provides mechanical protection for electrical wiring</li>
+                            <li>Available in metallic and non-metallic varieties</li>
+                            <li>Must be properly grounded for safety</li>
+                            <li>Different types for different applications</li>
+                            <li>Requires appropriate fittings and connectors</li>
+                            <li>Must follow NEC fill capacity requirements</li>
+                        </ul>
+                    </div>
+
+                    <button class="btn">
+                        <i class="fas fa-download"></i> Download Notes (PDF)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Unit 2 -->
+            <div class="unit" id="unit2">
+                <div class="unit-header">
+                    <h2>2. Trunking System</h2>
+                    <div class="unit-status">
+                        <span>Mark as completed:</span>
+                        <div class="status-checkbox" data-unit="unit2">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="unit-content">
+                    <p>Trunking systems are surface-mounted raceways used to conceal and protect electrical cables. They provide a neat method for routing multiple cables along walls, ceilings, or floors.</p>
+
+                    <h3>Trunking System Components</h3>
+                    <ul>
+                        <li><strong>Base Trunking</strong>: Main channel that houses cables</li>
+                        <li><strong>Cover</strong>: Removable lid for access to cables</li>
+                        <li><strong>Bends and Elbows</strong>: For directional changes</li>
+                        <li><strong>Tees and Crosses</strong>: For branching connections</li>
+                        <li><strong>End Caps</strong>: To finish trunking runs</li>
+                        <li><strong>Support Brackets</strong>: For secure mounting</li>
+                    </ul>
+
+                    <div class="media-container">
+                        <div class="media-item">
+                            <img src="https://images.unsplash.com/photo-1621905251189-08d437c2f5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                                alt="Trunking Installation">
+                            <p class="diagram-caption">Fig. 1: Trunking installation in office environment</p>
+                        </div>
+                    </div>
+
+                    <h3>Installation Guidelines</h3>
+                    <p>Proper trunking installation requires:</p>
+                    <ul>
+                        <li>Adequate support spacing (typically 1.5-2 meters)</li>
+                        <li>Separation of power and data cables to prevent interference</li>
+                        <li>Proper sizing to allow for future expansion</li>
+                        <li>Compliance with fire rating requirements</li>
+                        <li>Access points at regular intervals for maintenance</li>
+                    </ul>
+
+                    <div class="media-container">
+                        <div class="media-item">
+                            <iframe src="https://www.youtube.com/embed/5YdF2V2T0qU" title="Trunking System Installation"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+                    <div class="key-points">
+                        <h4><i class="fas fa-lightbulb"></i> Key Points</h4>
+                        <ul>
+                            <li>Surface-mounted cable management solution</li>
+                            <li>Easy access for maintenance and modifications</li>
+                            <li>Available in PVC, metal, and composite materials</li>
+                            <li>Various sizes to accommodate different cable volumes</li>
+                            <li>Includes accessories like bends, tees, and junctions</li>
+                            <li>Allows separation of power and data cables</li>
+                        </ul>
+                    </div>
+
+                    <button class="btn">
+                        <i class="fas fa-download"></i> Download Notes (PDF)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Unit 3 -->
+            <div class="unit" id="unit3">
+                <div class="unit-header">
+                    <h2>3. PVC Sheathed System</h2>
+                    <div class="unit-status">
+                        <span>Mark as completed:</span>
+                        <div class="status-checkbox" data-unit="unit3">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="unit-content">
+                    <p>PVC sheathed wiring systems use cables insulated with PVC and protected by an outer PVC sheath. This system is widely used in residential and commercial buildings.</p>
+
+                    <h3>Types of PVC Cables</h3>
+                    <ul>
+                        <li><strong>Single-core PVC cables</strong>: For fixed installations in conduits</li>
+                        <li><strong>Multi-core PVC cables</strong>: For flexible connections and appliances</li>
+                        <li><strong>Flat Twin & Earth (T&E)</strong>: Most common for domestic wiring</li>
+                        <li><strong>Armored PVC cables</strong>: With steel wire armor for mechanical protection</li>
+                        <li><strong>Fire-resistant PVC cables</strong>: With special compounds for enhanced fire safety</li>
+                    </ul>
+
+                    <div class="media-container">
+                        <div class="media-item">
+                            <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                                alt="PVC Wiring">
+                            <p class="diagram-caption">Fig. 1: PVC cable cross-section</p>
+                        </div>
+                    </div>
+
+                    <h3>Installation Methods</h3>
+                    <p>PVC wiring can be installed using several methods:</p>
+                    <ul>
+                        <li><strong>Surface wiring</strong>: Fixed directly to walls using clips or cleats</li>
+                        <li><strong>Concealed wiring</strong>: Embedded in plaster or behind wall finishes</li>
+                        <li><strong>Conduit wiring</strong>: Pulled through PVC conduits for added protection</li>
+                        <li><strong>Trunking systems</strong>: Placed in surface-mounted trunking</li>
+                    </ul>
+
+                    <div class="media-container">
+                        <div class="media-item">
+                            <iframe src="https://www.youtube.com/embed/8h5F4dGpW4Y" title="PVC Wiring Installation"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+                    <div class="key-points">
+                        <h4><i class="fas fa-lightbulb"></i> Key Points</h4>
+                        <ul>
+                            <li>Cost-effective wiring solution</li>
+                            <li>Resistant to moisture and chemicals</li>
+                            <li>Easy to install and maintain</li>
+                            <li>Suitable for both surface and concealed wiring</li>
+                            <li>Available in single-core and multi-core varieties</li>
+                            <li>Color-coded for easy identification</li>
+                        </ul>
+                    </div>
+
+                    <button class="btn">
+                        <i class="fas fa-download"></i> Download Notes (PDF)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Unit 4 -->
+            <div class="unit" id="unit4">
+                <div class="unit-header">
+                    <h2>4. Machines</h2>
+                    <div class="unit-status">
+                        <span>Mark as completed:</span>
+                        <div class="status-checkbox" data-unit="unit4">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="unit-content">
+                    <p>Electrical machines include generators, motors, and transformers that convert energy between electrical and mechanical forms.</p>
+
+                    <h3>Types of Electrical Machines</h3>
+                    <ul>
+                        <li><strong>DC Machines</strong>: Brushed and brushless DC motors and generators</li>
+                        <li><strong>AC Machines</strong>: Induction motors, synchronous motors and generators</li>
+                        <li><strong>Transformers</strong>: Step-up, step-down, isolation, and instrument transformers</li>
+                        <li><strong>Special Machines</strong>: Stepper motors, servo motors, linear motors</li>
+                    </ul>
+
+                    <div class="media-container">
+                        <div class="media-item">
+                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                                alt="Electric Motor">
+                            <p class="diagram-caption">Fig. 1: Three-phase induction motor</p>
+                        </div>
+                    </div>
+
+                    <h3>Operating Principles</h3>
+                    <p>Electrical machines operate based on electromagnetic principles:</p>
+                    <ul>
+                        <li><strong>Faraday's Law of Induction</strong>: Basis for generator operation</li>
+                        <li><strong>Lorentz Force Law</strong>: Explains motor operation</li>
+                        <li><strong>Transformer Principle</strong>: Mutual induction between windings</li>
+                        <li><strong>Synchronous Speed</strong>: Relationship between frequency and poles in AC machines</li>
+                    </ul>
+
+                    <div class="media-container">
+                        <div class="media-item">
+                            <iframe src="https://www.youtube.com/embed/9ZC-_nIkCmo" title="Electrical Machines Overview"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+                    <div class="key-points">
+                        <h4><i class="fas fa-lightbulb"></i> Key Points</h4>
+                        <ul>
+                            <li>Convert between electrical and mechanical energy</li>
+                            <li>Include motors, generators, and transformers</li>
+                            <li>Operate on electromagnetic induction principles</li>
+                            <li>Classified by type (AC/DC), application, and power rating</li>
+                            <li>Require proper maintenance for optimal performance</li>
+                            <li>Efficiency depends on design, materials, and operating conditions</li>
+                        </ul>
+                    </div>
+
+                    <button class="btn">
+                        <i class="fas fa-download"></i> Download Notes (PDF)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Unit 5 -->
+            <div class="unit" id="unit5">
+                <div class="unit-header">
+                    <h2>5. Solar</h2>
+                    <div class="unit-status">
+                        <span>Mark as completed:</span>
+                        <div class="status-checkbox" data-unit="unit5">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="unit-content">
+                    <p>Solar energy systems convert sunlight into electricity using photovoltaic (PV) panels. These systems are becoming increasingly important as renewable energy sources.</p>
+
+                    <h3>Solar System Components</h3>
+                    <ul>
+                        <li><strong>PV Panels</strong>: Convert sunlight to DC electricity</li>
+                        <li><strong>Inverters</strong>: Convert DC to AC electricity for use in buildings</li>
+                        <li><strong>Charge Controllers</strong>: Regulate battery charging in off-grid systems</li>
+                        <li><strong>Batteries</strong>: Store energy for use when sunlight is unavailable</li>
+                        <li><strong>Mounting Systems</strong>: Secure panels to roofs or ground structures</li>
+                        <li><strong>Monitoring Systems</strong>: Track system performance and energy production</li>
+                    </ul>
+
+                    <div class="media-container">
+                        <div class="media-item">
+                            <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                                alt="Solar Panels">
+                            <p class="diagram-caption">Fig. 1: Rooftop solar panel installation</p>
+                        </div>
+                    </div>
+
+                    <h3>System Types</h3>
+                    <p>Solar installations can be configured in different ways:</p>
+                    <ul>
+                        <li><strong>Grid-tied Systems</strong>: Connected to utility grid, no battery storage</li>
+                        <li><strong>Off-grid Systems</strong>: Independent systems with battery storage</li>
+                        <li><strong>Hybrid Systems</strong>: Combine solar with other energy sources</li>
+                        <li><strong>Microgrids</strong>: Localized grids that can operate independently</li>
+                    </ul>
+
+                    <div class="media-container">
+                        <div class="media-item">
+                            <iframe src="https://www.youtube.com/embed/xKxrkht7CpY" title="Solar Power Systems"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+                    <div class="key-points">
+                        <h4><i class="fas fa-lightbulb"></i> Key Points</h4>
+                        <ul>
+                            <li>Renewable energy source with minimal environmental impact</li>
+                            <li>Components include panels, inverters, batteries, and controllers</li>
+                            <li>Can be grid-tied or off-grid systems</li>
+                            <li>Requires proper sizing based on energy needs and location</li>
+                            <li>Installation must comply with electrical codes and standards</li>
+                            <li>Regular maintenance ensures optimal performance</li>
+                        </ul>
+                    </div>
+
+                    <button class="btn">
+                        <i class="fas fa-download"></i> Download Notes (PDF)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Unit 6 -->
+            <div class="unit" id="unit6">
+                <div class="unit-header">
+                    <h2>6. Bells & Alarms</h2>
+                    <div class="unit-status">
+                        <span>Mark as completed:</span>
+                        <div class="status-checkbox" data-unit="unit6">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="unit-content">
+                    <p>Bell and alarm systems are essential safety and communication devices in buildings. These systems include doorbells, fire alarms, security alarms, and emergency notification systems.</p>
+
+                    <h3>Types of Alarm Systems</h3>
+                    <ul>
+                        <li><strong>Fire Alarm Systems</strong>: Detect smoke, heat, or flames and alert occupants</li>
+                        <li><strong>Intrusion Alarm Systems</strong>: Detect unauthorized entry through doors, windows, or motion</li>
+                        <li><strong>Access Control Systems</strong>: Regulate entry to buildings or specific areas</li>
+                        <li><strong>Emergency Notification Systems</strong>: Provide alerts for emergencies like severe weather</li>
+                        <li><strong>Doorbell Systems</strong>: Notify occupants of visitors</li>
+                    </ul>
+
+                    <div class="media-container">
+                        <div class="media-item">
+                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                                alt="Alarm System">
+                            <p class="diagram-caption">Fig. 1: Fire alarm control panel and detectors</p>
+                        </div>
+                    </div>
+
+                    <h3>System Components</h3>
+                    <p>Typical alarm systems include:</p>
+                    <ul>
+                        <li><strong>Control Panel</strong>: Central brain of the system</li>
+                        <li><strong>Sensors/Detectors</strong>: Smoke detectors, motion sensors, door contacts</li>
+                        <li><strong>Notification Devices</strong>: Bells, sirens, strobes, speakers</li>
+                        <li><strong>Power Supplies</strong>: Primary and backup power sources</li>
+                        <li><strong>Communication Modules</strong>: For remote monitoring and control</li>
+                    </ul>
+
+                    <div class="media-container">
+                        <div class="media-item">
+                            <iframe src="https://www.youtube.com/embed/7d6tNcG6Z6o" title="Alarm Systems Installation"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+                    <div class="key-points">
+                        <h4><i class="fas fa-lightbulb"></i> Key Points</h4>
+                        <ul>
+                            <li>Essential for safety and security in buildings</li>
+                            <li>Include fire alarms, security systems, and doorbells</li>
+                            <li>Often operate on low-voltage circuits</li>
+                            <li>Modern systems integrate with smart home technology</li>
+                            <li>Installation must comply with relevant codes and standards</li>
+                            <li>Regular testing ensures system reliability</li>
+                        </ul>
+                    </div>
+
+                    <button class="btn">
+                        <i class="fas fa-download"></i> Download Notes (PDF)
+                    </button>
+                </div>
+            </div>
+
+            <footer>
+                <p>Electrical Engineering Notes Portal &copy; 2023</p>
+                <p>For support, contact: 0769882553</p>
+            </footer>
+        </section>
+    </div>
+
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Valid passkeys from the provided JSON
+        const validKeys = [
+            "10234", "15329", "19875", "20341", "21567", "22789", "23905", "24136", "25387", "26741",
+            "27893", "28945", "29371", "30582", "31649", "32718", "33892", "34950", "35172", "36281",
+            "37405", "38521", "39674", "40713", "41829", "42956", "43182", "44297", "45310", "46729",
+            "47815", "48923", "49371", "50428", "51632", "52719", "53804", "54962", "55138", "56290",
+            "57341", "58423", "59607", "60735", "61842", "62951", "63107", "64259", "65381", "66420",
+            "67532", "68619", "69704", "70816", "71953", "72148", "73205", "74392", "75481", "76520",
+            "77649", "78732", "79805", "80914", "81053", "82147", "83269", "84351", "85429", "86510",
+            "87634", "88715", "89820", "90157", "91268", "92340", "93481", "94523", "95602", "96718",
+            "97851", "98940", "99073", "10028", "11139", "12274", "13365", "14438", "15590", "16627",
+            "17783", "18862", "19905", "21046", "22157", "23261", "24350", "25419", "26570", "27684"
+        ];
+
+        let usedPasskeys = JSON.parse(localStorage.getItem('usedPasskeys')) || [];
+        let completedUnits = JSON.parse(localStorage.getItem('completedUnits')) || [];
+
+        // DOM Elements
+        const paywallSection = document.getElementById('paywallSection');
+        const notesSection = document.getElementById('notesSection');
+        const copyNumberBtn = document.getElementById('copyNumberBtn');
+        const passkeyInput = document.getElementById('passkeyInput');
+        const submitPasskeyBtn = document.getElementById('submitPasskeyBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const searchBar = document.getElementById('searchBar');
+        const tocLinks = document.querySelectorAll('.toc-link');
+        const backToTop = document.getElementById('backToTop');
+        const themeToggle = document.getElementById('themeToggle');
+        const progressBar = document.getElementById('progressBar');
+        const statusCheckboxes = document.querySelectorAll('.status-checkbox');
+        const completedCountEl = document.getElementById('completedCount');
+        const totalCountEl = document.getElementById('totalCount');
+
+        // Update completed units count
+        function updateCompletedCount() {
+            completedCountEl.textContent = completedUnits.length;
+            totalCountEl.textContent = 6;
+        }
+
+        // Initialize unit completion status
+        function initializeUnitStatus() {
+            statusCheckboxes.forEach(checkbox => {
+                const unitId = checkbox.getAttribute('data-unit');
+                if (completedUnits.includes(unitId)) {
+                    checkbox.classList.add('checked');
+                }
+
+                checkbox.addEventListener('click', () => {
+                    checkbox.classList.toggle('checked');
+
+                    if (checkbox.classList.contains('checked')) {
+                        if (!completedUnits.includes(unitId)) {
+                            completedUnits.push(unitId);
+                        }
+                    } else {
+                        const index = completedUnits.indexOf(unitId);
+                        if (index > -1) {
+                            completedUnits.splice(index, 1);
+                        }
+                    }
+
+                    localStorage.setItem('completedUnits', JSON.stringify(completedUnits));
+                    updateCompletedCount();
+                });
+            });
+
+            updateCompletedCount();
+        }
+
+        // Copy phone number to clipboard
+        copyNumberBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText('0769882553')
+                .then(() => {
+                    const originalText = copyNumberBtn.innerHTML;
+                    copyNumberBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    setTimeout(() => {
+                        copyNumberBtn.innerHTML = originalText;
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+        });
+
+        // Validate passkey
+        submitPasskeyBtn.addEventListener('click', () => {
+            const enteredPasskey = passkeyInput.value.trim();
+
+            if (enteredPasskey.length !== 5) {
+                errorMessage.textContent = 'Passkey must be 5 digits';
+                return;
+            }
+
+            if (!validKeys.includes(enteredPasskey)) {
+                errorMessage.textContent = 'Invalid Passkey';
+                return;
+            }
+
+            if (usedPasskeys.includes(enteredPasskey)) {
+                errorMessage.textContent = 'Passkey already used';
+                return;
+            }
+
+            // Valid passkey
+            usedPasskeys.push(enteredPasskey);
+            localStorage.setItem('usedPasskeys', JSON.stringify(usedPasskeys));
+
+            paywallSection.style.display = 'none';
+            notesSection.style.display = 'block';
+
+            // Initialize notes section functionality
+            initializeNotesSection();
+        });
+
+        // Allow Enter key to submit passkey
+        passkeyInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                submitPasskeyBtn.click();
+            }
+        });
+
+        // Initialize notes section functionality
+        function initializeNotesSection() {
+            // Search functionality
+            searchBar.addEventListener('input', () => {
+                const searchTerm = searchBar.value.toLowerCase();
+                const units = document.querySelectorAll('.unit');
+
+                units.forEach(unit => {
+                    const title = unit.querySelector('h2').textContent.toLowerCase();
+                    if (title.includes(searchTerm)) {
+                        unit.style.display = 'block';
+                    } else {
+                        unit.style.display = 'none';
+                    }
+                });
+            });
+
+            // Table of Contents highlighting
+            window.addEventListener('scroll', () => {
+                const units = document.querySelectorAll('.unit');
+                const scrollPosition = window.scrollY + 80;
+
+                // Highlight active TOC link
+                units.forEach(unit => {
+                    const unitTop = unit.offsetTop;
+                    const unitHeight = unit.offsetHeight;
+                    const unitId = unit.getAttribute('id');
+
+                    if (scrollPosition >= unitTop && scrollPosition < unitTop + unitHeight) {
+                        tocLinks.forEach(link => link.classList.remove('active'));
+                        document.querySelector(`.toc-link[href="#${unitId}"]`).classList.add('active');
+                    }
+                });
+
+                // Show/hide back to top button
+                if (window.scrollY > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+
+                // Update progress bar
+                const winHeight = window.innerHeight;
+                const docHeight = document.documentElement.scrollHeight;
+                const scrollTop = window.pageYOffset;
+                const trackLength = docHeight - winHeight;
+                const progress = Math.floor(scrollTop / trackLength * 100);
+                progressBar.style.width = progress + '%';
+            });
+
+            // Smooth scroll for TOC links
+            tocLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 60,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Back to top functionality
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Dark/light mode toggle
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                } else {
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                }
+            });
+
+            // Initialize unit completion status
+            initializeUnitStatus();
+        }
+
+        // Check if user already has access
+        if (usedPasskeys.length > 0) {
+            paywallSection.style.display = 'none';
+            notesSection.style.display = 'block';
+            initializeNotesSection();
+        }
+    </script>
+</body>
+
+</html>
